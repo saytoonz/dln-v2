@@ -24,11 +24,22 @@
     <link rel="stylesheet" href="{{ url('css/bootstrap.css') }}" id="bscss">
     <!-- =============== APP STYLES ===============-->
     <link rel="stylesheet" href="{{ url('css/app.css') }}" id="maincss">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/color-calendar/dist/css/theme-basic.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/color-calendar/dist/css/theme-glass.css" />
+
+    <!-- SELECT2-->
+    <link rel="stylesheet" href="{{url('vendor/select2/dist/css/select2.css')}}">
+
     <!-- CHOSEN-->
     <link rel="stylesheet" href="{{ url('vendor/chosen-js/chosen.css') }}">
     <script src="{{ url('vendor/jquery/dist/jquery.js') }}"></script>
 
     <link type="text/css" href="{{ url('ckeditor5/sample/css/sample.css') }}" rel="stylesheet" media="screen" />
+
+
+
 </head>
 
 <body>
@@ -38,11 +49,11 @@
             <!-- START Top Navbar-->
             <nav class="navbar topnavbar">
                 <!-- START navbar header-->
-                <div class="navbar-header"><a class="navbar-brand" href="#/">
-                        <div class="brand-logo"><img class="img-fluid" src="{{ url('img/logo.png') }}"
-                                alt="App Logo"></div>
+                <div class="navbar-header"><a class="navbar-brand" href="#" style="color: white;">
+                        <div class="brand-logo"><img class="img-fluid" src="{{ url('imsg/logo.png') }}"
+                                alt="DLN"></div>
                         <div class="brand-logo-collapsed"><img class="img-fluid"
-                                src="{{ url('img/logo-single.png') }}" alt="App Logo"></div>
+                                src="{{ url('imsg/logo-single.png') }}" alt="DLN"></div>
                     </a></div><!-- END navbar header-->
                 <!-- START Left navbar-->
                 <ul class="navbar-nav mr-auto flex-row">
@@ -144,7 +155,8 @@
                                     <!-- User picture-->
                                     <div class="user-block-picture">
                                         <div class="user-block-status"><img class="img-thumbnail rounded-circle"
-                                                src="{{ url('img/user/02.jpg') }}" alt="Avatar" width="60" height="60">
+                                                src="{{ url('img/user/02.jpg') }}" alt="Avatar" width="60"
+                                                height="60">
                                             <div class="circle bg-success circle-lg"></div>
                                         </div>
                                     </div><!-- Name and Job-->
@@ -157,8 +169,7 @@
                         <li class="nav-heading"><span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                         </li>
                         <li class="">
-                            <a href=" #dashboard" title="Dashboard"
-                            data-toggle="collapse">
+                            <a href=" {{ url('admin') }}" title="Dashboard">
                             <em class="icon-speedometer"></em>
                             <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
                             </a>
@@ -198,24 +209,24 @@
                             <ul class="sidebar-nav sidebar-subnav collapse" id="supCourt">
                                 <li class="sidebar-subnav-header"></li>
                                 <li class=" ">
-                                    <a href="#" title="Court Dairy">
+                                    <a href="{{ url('court-dairy') }}" title="Court Dairy">
                                         <span>Court Dairy</span>
                                     </a>
                                 </li>
                                 <li class=" ">
-                                    <a href="#" title="Justices">
+                                    <a href="{{ url('court-justices') }}" title="Justices">
                                         <span>Justices</span>
                                     </a>
                                 </li>
 
                                 <li class=" ">
-                                    <a href="#" title="History">
+                                    <a href="{{ url('court-history') }}" title="History">
                                         <span>History</span>
                                     </a>
                                 </li>
 
                                 <li class=" ">
-                                    <a href="#" title="Resources">
+                                    <a href="{{ url('court-resources') }}" title="Resources">
                                         <span>Resources</span>
                                     </a>
                                 </li>
@@ -306,6 +317,26 @@
                                 <li class=" ">
                                     <a href="{{ url('site-setting') }}" title="Settings">
                                         <span>Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class=" ">
+                            <a href="#siteSettings" title="Advertisement" data-toggle="collapse">
+                                <em class="icon-settings"></em>
+                                <span data-localize="sidebar.nav.ADVERTISEMENT">Advertisement</span>
+                            </a>
+                            <ul class="sidebar-nav sidebar-subnav collapse" id="siteSettings">
+                                <li class="sidebar-subnav-header">Advertisement</li>
+                                <li class=" ">
+                                    <a href="{{ url('all-advs') }}" title="View Advertisement">
+                                        <span>All adverts</span>
+                                    </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="{{ url('add-adv') }}" title="Add Advertisement">
+                                        <span>Add Advert</span>
                                     </a>
                                 </li>
                             </ul>
@@ -559,10 +590,8 @@
 
         @yield('content')
 
-
-
-        <!-- Page footer-->
-        <footer class="footer-container"><span>&copy; 2021 - Angle</span></footer>
+    <!-- Page footer-->
+        <footer class="footer-container"><span>&copy; 2021 - DennisLaw News</span></footer>
     </div><!-- =============== VENDOR SCRIPTS ===============-->
     <!-- MODERNIZR-->
     <script src="{{ url('vendor/modernizr/modernizr.custom.js') }}"></script>
@@ -593,9 +622,59 @@
     <script src="{{ url('vendor/easy-pie-chart/dist/jquery.easypiechart.js') }}"></script>
     <!-- MOMENT JS-->
     <script src="{{ url('vendor/moment/min/moment-with-locales.js') }}"></script>
+
+    <script src="{{ url('vendor/sweetalert/dist/sweetalert.min.js') }}"></script>
+    <!-- SELECT2-->
+    <script src="{{url('vendor/select2/dist/js/select2.full.js')}}"></script>
+
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <!-- =============== APP SCRIPTS ===============-->
     <script src="{{ url('js/app.js') }}"></script>
+
     <script>
+        function deleteAlert(id, table) {
+            swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                    closeModal: false,
+                })
+                .then(willDelete => {
+                    if (!willDelete) throw null;
+                    return fetch(`{{ url('delete-api') }}/` + table + `/` + id);
+                })
+                .then(results => {
+                    return results.json();
+                })
+                .then((json) => {
+                    if (json == id) {
+                        $('#' + table + id).hide(100);
+                        swal("Poof! Deleted succesfully!", {
+                            icon: "success",
+                        });
+                    } else {
+                        swal("An error occured!", {
+                            icon: "error",
+                        });
+                    }
+
+                });
+        }
+
+
+
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
+                    .format('YYYY-MM-DD'));
+            });
+        });
         $('.chosen-select').chosen();
         // $('.wysiwyg').wysiwyg();
     </script>

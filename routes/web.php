@@ -17,23 +17,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [FrontController::class, 'index']);
+Route::get('article/{slug}', [FrontController::class, 'article']);
+Route::get('general-news/{slug}', [FrontController::class, 'generalNews']);
+Route::get('search-content', [FrontController::class, 'searchContent']);
+Route::post('add-comment', [CRUDController::class, 'insertData']);
+Route::get('add-like/{news_id}', [FrontController::class, 'addLike']);
+Route::get('add-dislike/{news_id}', [FrontController::class, 'addDisLike']);
 
-Route::get('details', function () {
-    return view('frontend.details');
-});
+Route::get('supreme-courtdiary', [FrontController::class, 'courtDairy']);
+Route::get('supreme-justices', [FrontController::class, 'supremeJustices']);
 
-
-Route::get('category', function () {
-    return view('frontend.category');
-});
+//Pages
+Route::get('page/{slug}', [FrontController::class, 'page']);
 
 
 
 Route::get('admin', function () {
     return view('backend.index');
 });
-
-
 
 //Site tabs /Categories
 Route::get('site-tabs', [AdminController::class, 'viewTabs']);
@@ -52,3 +53,24 @@ Route::post('post-news', [CRUDController::class, 'insertData']);
 Route::get('view-news', [AdminController::class, 'viewNews']);
 Route::get('edit-news/{id}', [AdminController::class, 'editNews']);
 Route::post('update-news/{id}', [CRUDController::class, 'updateData']);
+
+//Shared  APIs
+Route::get('delete-api/{tbl}/{id}', [AdminController::class, 'deleteWithApi']);
+
+//Supreme Court
+Route::get('court-dairy', [AdminController::class, 'courtDairy']);
+Route::post('add-dairy', [CRUDController::class, 'insertData']);
+Route::get('court-justices', [AdminController::class, 'justices']);
+Route::post('add-justice', [CRUDController::class, 'insertData']);
+Route::get('court-history', [AdminController::class, 'history']);
+Route::post('add-history', [CRUDController::class, 'insertData']);
+Route::get('court-resources', [AdminController::class, 'courtResources']);
+Route::post('add-resource', [CRUDController::class, 'insertData']);
+Route::post('add-resource-cats', [CRUDController::class, 'insertData']);
+
+
+//Advertisements
+Route::get('add-adv', [AdminController::class, 'addAdv']);
+Route::post('add-advert', [CRUDController::class, 'insertData']);
+Route::get('all-advs', [AdminController::class, 'allAdv']);
+

@@ -1,9 +1,48 @@
 @extends('frontend.master')
+@section('title')
+    <title>{{ $data->title }} | DLN</title>
+@endsection
 @section('content')
-    <main>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v12.0" nonce="HpWz1pQB"></script>
+<script>
+    <script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+</script>
+    <style>
+        main a {
+            color: #000000 !important;
+        }
+
+        main a:hover {
+            color: #000000 !important;
+        }
+
+        .about-prea img {
+            max-width: 100%;
+        }
+
+    </style>
+
+   <main>
 
         <div class="about-area">
             <div class="container">
+
 
                 <div class="row">
                     <div class="col-lg-12">
@@ -12,110 +51,148 @@
 
                             <div class="trending-animated">
                                 <ul id="js-news" class="js-hidden">
-                                    <li class="news-item">Bangladesh dolor sit amet, consectetur adipisicing elit.
-                                    </li>
-                                    <li class="news-item">Spondon IT sit amet, consectetur.......</li>
-                                    <li class="news-item">Rem ipsum dolor sit amet, consectetur adipisicing elit.
-                                    </li>
+                                    @foreach ($trending as $key => $item)
+                                        <div class="trending-animated">
+                                            <li class="news-item">
+                                                <a href="{{ url('article') }}/{{ $item->slug }}">
+                                                    {{ $item->title }}
+                                                </a>
+                                            </li>
+                                        </div>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-lg-8">
 
+                    @if (Session::has('flash-like'))
+                    <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
+                        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        {{ Session('flash-like') }}
+                    </div>
+                @endif
+                        <div class="flex-wr-s-s p-b-40" style="color: rgb(88, 87, 87) !important;">
+                            <span class="f1-s-3 cl8 m-r-15">
+                                by {{ $data->author }}
+                                <span class="m-rl-3"> - </span>
+                                <span>
+                                    {{ date('d M, Y', strtotime($data->created_at)) }}
+                                </span>
+                            </span>
+                            &nbsp;
+                            <span class="f1-s-3 cl8 m-r-15">
+                                <i class="fa fa-eye"></i> {{ $data->views + 1 }}
+                                @if ($data->views != 0)
+                                    views
+                                @else
+                                    view
+                                @endif
+
+                            </span>
+                            &nbsp;
+                            <span class="f1-s-3 cl8 hov-cl10 trans-03 m-r-15">
+                                <i class="fa fa-comment"></i> {{ count($comments) }}
+                                @if (count($comments) < 1)
+                                    comment
+                                @else
+                                    comments
+                                @endif
+                            </span>
+                            &nbsp;
+                            <span class="f1-s-3 cl8 hov-cl10 trans-03 m-r-15">
+                                <i class="fa fa-thumbs-up"></i> {{ $data->likes }}
+                                @if ($data->likes < 1)
+                                    like
+                                @else
+                                    likes
+                                @endif
+
+                            </span>
+                            &nbsp;
+                            <span class="f1-s-3 cl8 hov-cl10 trans-03 m-r-15">
+                                <i class="fa fa-thumbs-down"></i> {{ $data->dislikes }}
+                                @if ($data->dislikes < 1)
+                                    dislike
+                                @else
+                                    dislikes
+                                @endif
+                            </span>
+                        </div>
+
+
+
                         <div class="about-right mb-90">
                             <div class="about-img">
-                                <img src="{{url('img/trending/xtrending_top.jpg.pagespeed.ic.pJFnD2wwQf.jpg') }}" alt="">
+                                <img src="{{ url('news') }}/{{ $data->image }}" alt="{{ $data->title }}">
                             </div>
                             <div class="section-tittle mb-30 pt-30">
-                                <h3>Here come the moms in space</h3>
+                                <h3>{{ $data->title }}</h3>
                             </div>
+
+
                             <div class="about-prea">
-                                <p class="about-pera1 mb-25">Moms are like…buttons? Moms are like glue. Moms are like
-                                    pizza crusts. Moms are the ones who make sure things happen—from birth to school
-                                    lunch.</p>
-                                <p class="about-pera1 mb-25">Moms are like…buttons? Moms are like glue. Moms are like
-                                    pizza crusts. Moms are the ones who make sure things happen—from birth to school
-                                    lunch.</p>
-                                <p class="about-pera1 mb-25">
-                                    My hero when I was a kid was my mom. Same for everyone I knew. Moms are untouchable.
-                                    They’re elegant, smart, beautiful, kind…everything we want to be. At 29 years old,
-                                    my favorite compliment is being told that I look like my mom. Seeing myself in her
-                                    image, like this daughter up top, makes me so proud of how far I’ve come, and so
-                                    thankful for where I come from.
-                                    the refractor telescope uses a convex lens to focus the light on the eyepiece.
-                                    The reflector telescope has a concave lens which means it bends in. It uses mirrors
-                                    to focus the image that you eventually see.
-                                    Collimation is a term for how well tuned the telescope is to give you a good clear
-                                    image of what you are looking at. You want your telescope to have good collimation
-                                    so you are not getting a false image of the celestial body.
-                                    Aperture is a fancy word for how big the lens of your telescope is. But it’s an
-                                    important word because the aperture of the lens is the key to how powerful your
-                                    telescope is. Magnification has nothing to do with it, its all in the aperture.
-                                    Focuser is the housing that keeps the eyepiece of the telescope, or what you will
-                                    look through, in place. The focuser has to be stable and in good repair for you to
-                                    have an image you can rely on.
-                                    Mount and Wedge. Both of these terms refer to the tripod your telescope sits on. The
-                                    mount is the actual tripod and the wedge is the device that lets you attach the
-                                    telescope to the mount.
-                                    Moms are like…buttons? Moms are like glue. Moms are like pizza crusts. Moms are the
-                                    ones who make sure things happen—from birth to school lunch.</p>
+                                {!! $data->news_body !!}
                             </div>
-                            <div class="section-tittle">
-                                <h3>Unordered list style?</h3>
+
+                            <div>
+                                <br>
+                                <br>
+                                <a href="{{url('add-like')}}/{{ $data->id }}">
+                                    <button type="submit" class="button button-contactForm boxed-btn">
+                                        <i class="fa fa-thumbs-up"></i>
+                                        Like
+                                    </button>
+                                </a>
+                                &nbsp;
+                                <a href="{{url('add-dislike')}}/{{$data->id}}">
+                                <button class="btn-danger button  boxed-btn">
+                                    <i class="fa fa-thumbs-down"></i>
+                                    Dislike
+                                </button>
+                                </a>
                             </div>
-                            <div class="about-prea">
-                                <p class="about-pera1 mb-25">The refractor telescope uses a convex lens to focus the
-                                    light on the eyepiece.
-                                    The reflector telescope has a concave lens which means it bends in. It uses mirrors
-                                    to focus the image that you eventually see.</p>
-                                <p class="about-pera1 mb-25">Collimation is a term for how well tuned the telescope is
-                                    to give you a good clear image of what you are looking at. You want your telescope
-                                    to have good collimation so you are not getting a false image of the celestial body.
-                                </p>
-                                <p class="about-pera1 mb-25">
-                                    My hero when I was a kid was my mom. Same for everyone I knew. Moms are untouchable.
-                                    They’re elegant, smart, beautiful, kind…everything we want to be. At 29 years old,
-                                    my favorite compliment is being told that I look like my mom. Seeing myself in her
-                                    image, like this daughter up top, makes me so proud of how far I’ve come, and so
-                                    thankful for where I come from.
-                                    the refractor telescope uses a convex lens to focus the light on the eyepiece.
-                                    The reflector telescope has a concave lens which means it bends in. It uses mirrors
-                                    to focus the image that you eventually see.
-                                    Collimation is a term fo
-                                    Moms are like…buttons? Moms are like glue. Moms are like pizza crusts. Moms are the
-                                    ones who make sure things happen—from birth to school lunch.</p>
-                                <p class="about-pera1 mb-25">
-                                    Mount and Wedge. Both of these terms refer to the tripod your telescope sits on. The
-                                    mount is the actual tripod and the wedge is the device that lets you attach the
-                                    telescope to the mount.
-                                    Moms are like…buttons? Moms are like glue. Moms are like pizza crusts. Moms are the
-                                    ones who make sure things happen—from birth to school lunch.</p>
-                                <p class="about-pera1 mb-25">
-                                    Mount and Wedge. Both of these terms refer to the tripod your telescope sits on. The
-                                    mount is the actual tripod and the wedge is the device that lets you attach the
-                                    telescope to the mount.
-                                    Moms are like…buttons? Moms are like glue. Moms are like pizza crusts. Moms are the
-                                    ones who make sure things happen—from birth to school lunch.</p>
-                            </div>
+
                             <div class="social-share pt-30">
                                 <div class="section-tittle">
                                     <h3 class="mr-20">Share:</h3>
+
                                     <ul>
-                                        <li><a href="#"><img
-                                                    src="{{url('img/news/xicon-ins.png.pagespeed.ic.Y5RaQfaVo-.png') }}"
-                                                    alt=""></a></li>
-                                        <li><a href="#"><img
-                                                    src="{{url('img/news/xicon-fb.png.pagespeed.ic.mSPzk0pV5B.png') }}"
-                                                    alt=""></a></li>
-                                        <li><a href="#"><img
-                                                    src="{{url('img/news/xicon-tw.png.pagespeed.ic.MsswRZpbim.png') }}"
-                                                    alt=""></a></li>
-                                        <li><a href="#"><img
-                                                    src="{{url('img/news/xicon-yo.png.pagespeed.ic.XNQAiExtR8.png') }}"
-                                                    alt=""></a></li>
+                                        <li>
+                                            <div class="fb-share-button" data-href="{{url('article')}}/{{$data->slug}}" data-layout="button" data-size="large">
+                                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url('article')}}/{{$data->slug}}" class="fb-xfbml-parse-ignore">
+                                                    <img
+                                                    src="{{ url('img/news/xicon-fb.png.pagespeed.ic.mSPzk0pV5B.png') }}"
+                                                    alt="">
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large">
+                                                <img src="{{ url('img/news/xicon-tw.png.pagespeed.ic.MsswRZpbim.png') }}" alt="">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://chillyfacts.com/create-linkedin-share-button-on-website-webpages&title=Create LinkedIn Share button on Website Webpages&summary=chillyfacts.com&source=Chillyfacts" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
+                                                <img src="http://chillyfacts.com/wp-content/uploads/2017/06/LinkedIN.gif" alt="" width="54" height="20" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Whatsapp
+                                                <img src="{{ url('img/news/xicon-yo.png.pagespeed.ic.XNQAiExtR8.png') }}" alt="">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                Email
+                                                <img src="{{ url('img/news/xicon-yo.png.pagespeed.ic.XNQAiExtR8.png') }}" alt="">
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -123,9 +200,19 @@
 
                         <div class="row">
                             <div class="col-lg-8">
-                                <form class="form-contact contact_form mb-80"
-                                    action="https://preview.colorlib.com/theme/aznews/contact_process.php" method="post"
-                                    id="contactForm" novalidate>
+                                @if (Session::has('message'))
+                                    <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
+                                        <button class="close" type="button" data-dismiss="alert"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        {{ Session('message') }}
+                                    </div>
+                                @endif
+                                <form class="form-contact contact_form mb-80" action="{{ url('add-comment') }}"
+                                    method="post" id="contactForm" novalidate>
+                                    @csrf
+                                    <input type="hidden" name="news_id" value="{{ $data->id }}">
+                                    <input type="hidden" name="tbl" value="{{ encrypt('comments') }}">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
@@ -147,16 +234,7 @@
                                             <div class="form-group">
                                                 <input class="form-control error" name="email" id="email" type="email"
                                                     onfocus="this.placeholder = ''"
-                                                    onblur="this.placeholder = 'Enter email address'"
-                                                    placeholder="Email">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <input class="form-control error" name="subject" id="subject"
-                                                    type="text" onfocus="this.placeholder = ''"
-                                                    onblur="this.placeholder = 'Enter Subject'"
-                                                    placeholder="Enter Subject">
+                                                    onblur="this.placeholder = 'Enter email address'" placeholder="Email">
                                             </div>
                                         </div>
                                     </div>
@@ -166,65 +244,35 @@
                                 </form>
                             </div>
                         </div>
+
+                        <h4 class="f1-l-4 cl3 p-b-12">
+                            Comments
+                        </h4>
+                        <ul class="list-group">
+                            @if(count($comments) < 1)
+                                <li>
+                                    There are no comments.
+                                </li>
+                            @else
+                                @foreach ($comments as $item)
+                                    <li style="padding-top: 10px; padding-bottom: 10px; color: #333;">
+                                        <br>
+                                        <h6>{{ $item->name }}</h6>
+                                        {!! $item->message !!}
+                                        <br>
+                                        <br>
+                                        {{ $item->created_at }}
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                        <br>
+                        <br>
                     </div>
-                    <div class="col-lg-4">
-
-                        <div class="section-tittle mb-40">
-                            <h3>Follow Us</h3>
-                        </div>
-
-                        <div class="single-follow mb-45">
-                            <div class="single-box">
-                                <div class="follow-us d-flex align-items-center">
-                                    <div class="follow-social">
-                                        <a href="#"><img src="{{url('img/news/xicon-fb.png.pagespeed.ic.mSPzk0pV5B.png') }}"
-                                                alt=""></a>
-                                    </div>
-                                    <div class="follow-count">
-                                        <span>8,045</span>
-                                        <p>Fans</p>
-                                    </div>
-                                </div>
-                                <div class="follow-us d-flex align-items-center">
-                                    <div class="follow-social">
-                                        <a href="#"><img src="{{url('img/news/xicon-tw.png.pagespeed.ic.MsswRZpbim.png') }}"
-                                                alt=""></a>
-                                    </div>
-                                    <div class="follow-count">
-                                        <span>8,045</span>
-                                        <p>Fans</p>
-                                    </div>
-                                </div>
-                                <div class="follow-us d-flex align-items-center">
-                                    <div class="follow-social">
-                                        <a href="#"><img src="{{url('img/news/xicon-ins.png.pagespeed.ic.Y5RaQfaVo-.png') }}"
-                                                alt=""></a>
-                                    </div>
-                                    <div class="follow-count">
-                                        <span>8,045</span>
-                                        <p>Fans</p>
-                                    </div>
-                                </div>
-                                <div class="follow-us d-flex align-items-center">
-                                    <div class="follow-social">
-                                        <a href="#"><img src="{{url('img/news/xicon-yo.png.pagespeed.ic.XNQAiExtR8.png') }}"
-                                                alt=""></a>
-                                    </div>
-                                    <div class="follow-count">
-                                        <span>8,045</span>
-                                        <p>Fans</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="news-poster d-none d-lg-block">
-                            <img src="{{url('img/news/xnews_card.jpg.pagespeed.ic.5EdXWkQK-8.png') }}" alt="">
-                        </div>
-                    </div>
+                    @include('frontend.side-bar')
                 </div>
             </div>
         </div>
 
     </main>
-    @endsection
+@endsection

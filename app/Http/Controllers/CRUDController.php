@@ -45,7 +45,11 @@ class CRUDController extends Controller
         }
 
         DB::table($tbl)->insert($data);
-        $request->session()->flash('message', "Data inserted successfully");
+        if($tbl ==  'resource_cats'){
+            $request->session()->flash('message-2', "Category created successfully");
+        }else{
+            $request->session()->flash('message', "Data inserted successfully");
+        }
         return redirect()->back();
     }
 
@@ -78,7 +82,6 @@ class CRUDController extends Controller
         if($request->has('image')){
             $data['image'] = $this->uploadImage($tbl, $data['image']);
         }
-
 
         if($request->has('footer_image')){
             $data['footer_image'] = $this->uploadImage($tbl, $data['footer_image']);

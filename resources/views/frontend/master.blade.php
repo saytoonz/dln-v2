@@ -4,9 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>News HTML-5 Template </title>
+    @yield('title')
+    <title>Dennislaw News </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Your Website Title" />
+    <meta property="og:description"   content="Your description" />
+    <meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+
+
+
     <link rel="manifest" href="site.html">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('img/favicon.ico') }}">
 
@@ -18,6 +27,35 @@
     <link rel="stylesheet"
         href="{{ url('css/bootstrap.min.css%2bowl.carousel.min.css%2bticker-style.css%2bflaticon.css%2bslicknav.css%2banimate.min.css%2bmagnific-popup.css%2bfontawesome-all.min') }}" />
     <link rel="stylesheet" href="{{ url('css/style.css') }}">
+    <style>
+        #search_output{
+            position: absolute;
+            width: 100%;
+            height: auto;
+            max-height: 50vh;
+            overflow: hidden;
+            overflow-y: scroll;
+            padding: 10px;
+            box-sizing: border-box;
+            background: #fff;
+            top: 100%;
+            left: 0;
+            z-index: 20;
+            border: 3px solid #105f8d;
+            display: none;
+        }
+        .search-result{
+            list-style: none;
+        }
+        .search-result li a{
+            /* padding: 0 0 0 5px; */
+            display: block;
+            color: #333;
+        }
+        .search-result li:last-child a{
+            padding-bottom: 0px;
+        }
+    </style>
 </head>
 
 <body>
@@ -84,7 +122,7 @@
                                     <a href="/">
                                         @if ($setting->image)
                                             <img src="{{ url('settings') }}/{{ $setting->image }}" width="120"
-                                                alt="DLN" style="margin-top: 20px;">
+                                                alt="DLN" style="margin-top: 20 px;">
                                         @endif
                                     </a>
                                 </div>
@@ -94,8 +132,16 @@
                                         <ul id="navigation">
                                             <li><a href="{{ url('/') }}">Home</a></li>
                                             @foreach ($categories as $category)
-                                                <li><a href="{{ url('category') }}/{{ $category->slug }}"
-                                                        class="text-sentencecase">{{ $category->title }}</a></li>
+                                                <li>
+                                                    <a href="#" class="text-sentencecase">{{ $category->title }}</a>
+                                                    @if (count($category->subCats)>0)
+                                                    <ul class="submenu">
+                                                        @foreach ($category->subCats as $item)
+                                                            <li><a href="{{url('')}}/{{$item->slug}}">{{$item->title}}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                    @endif
+                                                </li>
                                             @endforeach
 
                                             {{-- <li><a href="#">General News</a>
@@ -128,11 +174,13 @@
                                 <div class="header-right-btn f-right d-none d-lg-block">
                                     <i class="fas fa-search special-tag"></i>
                                     <div class="search-box">
-                                        <form action="#">
-                                            <input type="text" placeholder="Search">
-                                        </form>
+                                        {{-- <form action="#"> --}}
+                                            <input type="text" placeholder="Search" id="search_content" onkeyup="searchContent()">
+
+                                        {{-- </form> --}}
                                     </div>
                                 </div>
+                                    <div id="search_output" class="col-12"></div>
                             </div>
 
                             <div class="col-12">
@@ -234,15 +282,14 @@
                         <div class="col-lg-6">
                             <div class="footer-menu f-right">
                                 <ul>
-
-                                    @foreach ($categories as $category)
+                                    <li><a href="#">Store</a></li>
+                                    @foreach ($pages as $page)
                                         <li>
-                                            <a href="{{ url('category') }}/{{ $category->slug }}">
-                                                {{ $category->title }}
+                                            <a href="{{ url('page') }}/{{ $page->slug }}">
+                                                {{ $page->title }}
                                             </a>
                                         </li>
                                     @endforeach
-                                    <li><a href="#">Terms of use</a></li>
                                     <li><a href="#">Contact</a></li>
                                 </ul>
                             </div>
@@ -338,6 +385,27 @@
     </script>
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"rayId":"6895a5433eb103ee","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.8.1","si":10}'>
+    </script>
+
+    <script>
+       function searchContent() {
+            var text = $('#search_content').val();
+            if(text.length < 1){
+                 $('#search_output').hide();
+                return false;
+            }else{
+                $.ajax({
+                    type: 'get',
+                    url: '{{url('search-content')}}',
+                    data: {text:text},
+                    success: function (res) {
+                        $('#search_output').show();
+                        $('#search_output').html(res);
+                    }
+                });
+            }
+        }
+        searchContent()
     </script>
 </body>
 

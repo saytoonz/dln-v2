@@ -8,22 +8,22 @@
 
 
             @if (Session::has('flash-error-message'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                {{ Session('flash-error-message') }}
-            </div>
-        @endif
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    {{ Session('flash-error-message') }}
+                </div>
+            @endif
 
-        @if (Session::has('flash-success-message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                {{ Session('flash-success-message') }}
-            </div>
-        @endif
+            @if (Session::has('flash-success-message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    {{ Session('flash-success-message') }}
+                </div>
+            @endif
 
-            <form method="post" action="{{url('update-news')}}/{{$data->id}}" enctype="multipart/form-data">
+            <form method="post" action="{{ url('update-news') }}/{{ $data->id }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <input type="hidden" name="tbl" value="{{ encrypt('news') }}">
                 <input type="hidden" name="id" value="{{ $data->id }}">
@@ -35,25 +35,27 @@
                                 <div class="form-group">
                                     <label>Heading</label>
                                     <input class="mb-3 form-control form-control-lg" type="text" id="heading"
-                                        placeholder="News title..." name="title" onkeyup="generateSlug()" value="{{ $data->title}}">
+                                        placeholder="News title..." name="title" onkeyup="generateSlug()"
+                                        value="{{ $data->title }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Slug</label>
                                     <input class="mb-3 form-control form-control-lg" type="text" name="slug" id="slug"
-                                        placeholder="slug" value="{{ $data->slug}}">
+                                        placeholder="slug" value="{{ $data->slug }}">
                                 </div>
 
                                 <div class="form-group">
                                     <textarea class="form-control" name="news_body" id="editor">
-                                        {{ $data->news_body}}
-                                    </textarea>
+                                            {{ $data->news_body }}
+                                        </textarea>
                                 </div>
 
 
                                 <div class="form-group">
                                     <label>Short Description</label>
-                                    <textarea name="short_desc" class="mb-3 form-control" cols="5" required>{{!! $data->short_desc !!}}</textarea>
+                                    <textarea name="short_desc" class="mb-3 form-control" cols="5"
+                                        required>{!! $data->short_desc !!}</textarea>
                                     <div class="clearfix">
                                         <div class="float-left">
                                             <button class="btn btn-secondary" type="submit" name="status" value="draft">
@@ -80,67 +82,43 @@
                                         <tr>
                                             <th><strong>Comment ID</strong></th>
                                             <th><strong>Date</strong></th>
-                                            <th><strong>Username</strong></th>
-                                            <th><strong>Comment excerpt</strong></th>
+                                            <th><strong>Name</strong></th>
+                                            <th><strong>Email</strong></th>
+                                            <th><strong>Comment</strong></th>
                                             <th class="text-center"><strong>Current status</strong></th>
                                             <th class="text-right" style="width:130px"><strong>Actions</strong></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>123</td>
-                                            <td>10/05/2015</td>
-                                            <td><a href="">Jack Jordan</a></td>
-                                            <td>Sed quis eros libero, a euismod nisl....</td>
-                                            <td class="text-center"><span class="badge badge-success">Approved</span>
-                                            </td>
-                                            <td class="text-right"><button class="btn btn-sm btn-secondary"
-                                                    type="button"><em class="fas fa-pencil-alt"></em></button><button
-                                                    class="btn btn-sm btn-danger" type="button"><em
-                                                        class="fas fa-trash-alt"></em></button><button
-                                                    class="btn btn-sm btn-success" type="button"><em
-                                                        class="fa fa-check"></em></button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>456</td>
-                                            <td>10/07/2015</td>
-                                            <td><a href="">Hailey Mckinney</a></td>
-                                            <td>Nulla facilisi.</td>
-                                            <td class="text-center"><span class="badge badge-success">Approved</span>
-                                            </td>
-                                            <td class="text-right"><button class="btn btn-sm btn-secondary"
-                                                    type="button"><em class="fas fa-pencil-alt"></em></button><button
-                                                    class="btn btn-sm btn-danger" type="button"><em
-                                                        class="fas fa-trash-alt"></em></button><button
-                                                    class="btn btn-sm btn-success" type="button"><em
-                                                        class="fa fa-check"></em></button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>789</td>
-                                            <td>11/05/2015</td>
-                                            <td><a href="">Peyton Reyes</a></td>
-                                            <td>Quisque enim nisi, semper non pulvinar et, aliquam id lorem...</td>
-                                            <td class="text-center"><span class="badge badge-warning">Pending</span></td>
-                                            <td class="text-right"><button class="btn btn-sm btn-secondary"
-                                                    type="button"><em class="fas fa-pencil-alt"></em></button><button
-                                                    class="btn btn-sm btn-danger" type="button"><em
-                                                        class="fas fa-trash-alt"></em></button><button
-                                                    class="btn btn-sm btn-success" type="button"><em
-                                                        class="fa fa-check"></em></button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>999</td>
-                                            <td>10/06/2015</td>
-                                            <td><a href="">Darryl Harper</a></td>
-                                            <td>Nulla facilisi.</td>
-                                            <td class="text-center"><span class="badge badge-danger">Rejected</span></td>
-                                            <td class="text-right"><button class="btn btn-sm btn-secondary"
-                                                    type="button"><em class="fas fa-pencil-alt"></em></button><button
-                                                    class="btn btn-sm btn-danger" type="button" disabled=""><em
-                                                        class="fas fa-trash-alt"></em></button><button
-                                                    class="btn btn-sm btn-success" type="button"><em
-                                                        class="fa fa-check"></em></button></td>
-                                        </tr>
+                                        @foreach ($comments as $comment)
+                                            <tr>
+                                                <td>{{ $comment->id }}</td>
+                                                <td>{{ $comment->created_at }}</td>
+                                                <td>{{ $comment->name }}</td>
+                                                <td>{{ $comment->email }}</td>
+                                                <td>{{ $comment->message }}</td>
+                                                <td class="text-center">
+                                                    @if ($comment->status == 'approved')
+                                                        <span class="badge badge-success">Approved</span>
+                                                    @else
+                                                        @if ($comment->status == 'pending')
+                                                            <span class="badge badge-warning">Pending</span>
+                                                        @else
+                                                            <span class="badge badge-danger">Rejected</span>
+                                                        @endif
+                                                    @endif
+                                                </td>
+                                                <td class="text-right">
+                                                    <button class="btn btn-sm btn-danger" type="button">
+                                                        <em class="fas fa-trash-alt"></em>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-success" type="button">
+                                                        <em class="fa fa-check"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -150,26 +128,27 @@
                         <div class="card card-default">
 
                             <div class="card-body" style="min-height: 200px !important; background: #f1f1f1;">
-                                @if ($data->image != "")
+                                @if ($data->image != '')
 
-                                <div class="form-group">
-                                    <label>Featured Image</label>
-                                    <p><img id="output" style="width:  100% !important;" src="{{ url('news')}}/{{ $data->image}}"></p>
-                                    <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)"
-                                            style="display: none"></p>
-                                    <p><label for="file" style="cursor: pointer" class="btn btn-primary">Replace
-                                            Image</label></p>
-                                </div>
+                                    <div class="form-group">
+                                        <label>Featured Image</label>
+                                        <p><img id="output" style="width:  100% !important;"
+                                                src="{{ url('news') }}/{{ $data->image }}"></p>
+                                        <p><input type="file" accept="image/*" name="image" id="file"
+                                                onchange="loadFile(event)" style="display: none"></p>
+                                        <p><label for="file" style="cursor: pointer" class="btn btn-primary">Replace
+                                                Image</label></p>
+                                    </div>
                                 @else
 
-                                <div class="form-group">
-                                    <label>Featured Image</label>
-                                    <p><img id="output" style="width:  100% !important;"></p>
-                                    <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)"
-                                            style="display: none"></p>
-                                    <p><label for="file" style="cursor: pointer" class="btn btn-primary">Upload
-                                            Image</label></p>
-                                </div>
+                                    <div class="form-group">
+                                        <label>Featured Image</label>
+                                        <p><img id="output" style="width:  100% !important;"></p>
+                                        <p><input type="file" accept="image/*" name="image" id="file"
+                                                onchange="loadFile(event)" style="display: none"></p>
+                                        <p><label for="file" style="cursor: pointer" class="btn btn-primary">Upload
+                                                Image</label></p>
+                                    </div>
                                 @endif
                             </div>
                             <br>
@@ -179,18 +158,20 @@
                                 @foreach ($categories as $category)
                                     <p>
                                         <label for="{{ $category->id }}">
-                                        <input type="checkbox" name="categories_id[]" value="{{ $category->id }}" @if (in_array($category->id, $newsCat)) checked @endif> {{ $category->title }}
+                                            <input type="checkbox" name="categories_id[]" value="{{ $category->id }}"
+                                                @if (in_array($category->id, $newsCat)) checked @endif> {{ $category->title }}
                                         </label>
                                     </p>
                                 @endforeach
                                 <h4 class="my-2">Sub-Categories</h4>
-                                    @foreach ($subcategories as $subCat)
-                                        <p>
-                                            <label for="{{ $subCat->id }}">
-                                            <input type="checkbox" name="categories_id[]" value="{{ $subCat->id }}" @if (in_array($subCat->id, $newsSubCat)) checked @endif> {{ $subCat->title }}
-                                            </label>
+                                @foreach ($subcategories as $subCat)
+                                    <p>
+                                        <label for="{{ $subCat->id }}">
+                                            <input type="checkbox" name="categories_id[]" value="{{ $subCat->id }}"
+                                                @if (in_array($subCat->id, $newsSubCat)) checked @endif> {{ $subCat->title }}
+                                        </label>
                                     </p>
-                                    @endforeach
+                                @endforeach
 
                                 <p class="my-2">Tags</p>
                                 <select class="chosen-select form-control" title="tags" multiple>
@@ -221,12 +202,12 @@
                                 <div class="form-group">
                                     <p>Description</p>
                                     <textarea class="form-control" rows="5" placeholder="Max 255 characters..."
-                                        name="seo_description" required> {{ $data->seo_description}}</textarea>
+                                        name="seo_description" required> {{ $data->seo_description }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <p>Keywords</p>
                                     <textarea class="form-control" rows="5" name="seo_keywords" required
-                                        placeholder="Separate with comma (,). Max 1000 characters...">{{ $data->seo_keywords}}</textarea>
+                                        placeholder="Separate with comma (,). Max 1000 characters...">{{ $data->seo_keywords }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="card-body">
