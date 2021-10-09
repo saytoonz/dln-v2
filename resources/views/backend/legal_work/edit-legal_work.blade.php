@@ -4,7 +4,7 @@
     <section class="section-container">
         <!-- Page content-->
         <div class="content-wrapper">
-            <div class="content-heading">Edit News</div>
+            <div class="content-heading">Edit Legal Work</div>
 
 
             @if (Session::has('flash-error-message'))

@@ -26,6 +26,7 @@ Route::get('add-dislike/{news_id}', [FrontController::class, 'addDisLike']);
 
 Route::get('supreme-courtdiary', [FrontController::class, 'courtDairy']);
 Route::get('supreme-justices', [FrontController::class, 'supremeJustices']);
+Route::get('supreme-resources', [FrontController::class, 'supremeResources']);
 
 //Pages
 Route::get('page/{slug}', [FrontController::class, 'page']);
@@ -41,11 +42,14 @@ Route::get('site-tabs', [AdminController::class, 'viewTabs']);
 Route::post('add-category', [CRUDController::class, 'insertData']);
 Route::get('edit-category/{id}', [AdminController::class, 'editCategory']);
 Route::post('update-category/{id}', [CRUDController::class, 'updateData']);
-Route::post('multiple-delete', [AdminController ::class, 'multipleDelete']);
+
 //Site settings
 Route::get('site-setting', [AdminController::class, 'settings']);
 Route::post('add-settings', [CRUDController::class, 'insertData']);
 Route::post('update-settings/{id}', [CRUDController::class, 'updateData']);
+
+//Site Pages
+Route::get('site-pages', [AdminController::class, 'sitePages']);
 
 //Add news
 Route::get('add-news', [AdminController::class, 'addNews']);
@@ -55,7 +59,9 @@ Route::get('edit-news/{id}', [AdminController::class, 'editNews']);
 Route::post('update-news/{id}', [CRUDController::class, 'updateData']);
 
 //Shared  APIs
+Route::post('multiple-delete', [AdminController ::class, 'multipleDelete']);
 Route::get('delete-api/{tbl}/{id}', [AdminController::class, 'deleteWithApi']);
+Route::get('update-api/{tbl}/{id}/{field}/{value}', [AdminController::class, 'updateWithApi']);
 
 //Supreme Court
 Route::get('court-dairy', [AdminController::class, 'courtDairy']);
@@ -73,4 +79,55 @@ Route::post('add-resource-cats', [CRUDController::class, 'insertData']);
 Route::get('add-adv', [AdminController::class, 'addAdv']);
 Route::post('add-advert', [CRUDController::class, 'insertData']);
 Route::get('all-advs', [AdminController::class, 'allAdv']);
+Route::get('edit-advert/{id}', [AdminController::class, 'editAdv']);
+Route::post('update-advert/{id}', [CRUDController::class, 'updateData']);
 
+
+//Happilex
+Route::get('add-happilex',  [AdminController::class, 'addHappilex']);
+Route::post('add-happilex-category', [CRUDController::class, 'insertData']);
+Route::post('post-happilex', [CRUDController::class, 'insertData']);
+Route::get('view-happilex',  [AdminController::class, 'viewHappilex']);
+Route::get('edit-happilex/{id}',  [AdminController::class, 'editHappilex']);
+Route::post('update-happilex/{id}', [CRUDController::class, 'updateData']);
+
+//Opinions and Features
+Route::get('add-opinions-features', [AdminController::class, 'addOpinion']);
+Route::post('post-opinions', [CRUDController::class, 'insertData']);
+Route::get('view-opinions-features', [AdminController::class, 'viewOpinions']);
+Route::get('edit-opinions/{id}', [AdminController::class, 'editOpinions']);
+Route::post('update-opinions/{id}', [CRUDController::class, 'updateData']);
+
+Route::get('opinions-cats', [AdminController::class, 'viewOpinionCat']);
+Route::post('add-opinions-category', [CRUDController::class, 'insertData']);
+Route::get('opinions-edit-category/{id}', [AdminController::class, 'editOpinionCat']);
+Route::post('update-opinions-category/{id}', [CRUDController::class, 'updateData']);
+
+//Law firms
+Route::get('law-firms', [AdminController::class, 'lawFirms']);
+Route::get('add-law-firms', [AdminController::class, 'addLawFirms']);
+Route::get('edit-law-firm/{id}', [AdminController::class, 'editLawFirms']);
+Route::post('post-law_firms', [CRUDController::class, 'insertData']);
+Route::post('update-firm/{id}', [CRUDController::class, 'updateData']);
+
+
+
+//Legal Works
+Route::get('add-legal_work', [AdminController::class, 'addLegal']);
+Route::post('post-legal_work', [CRUDController::class, 'insertData']);
+Route::get('view-legal_work', [AdminController::class, 'viewLegal']);
+Route::get('edit-legal_work/{id}', [AdminController::class, 'editLegal']);
+Route::post('update-legal_work/{id}', [CRUDController::class, 'updateData']);
+
+
+Route::get('add-page', [AdminController::class, 'addPage']);
+Route::post('post-page', [CRUDController::class, 'insertData']);
+Route::post('update-page/{id}', [CRUDController::class, 'updateData']);
+Route::get('view-page', [AdminController::class, 'viewLegal']);
+
+
+Route::get('add-store-product', [AdminController::class, 'addProduct']);
+Route::get('view-store-products', [AdminController::class, 'viewProducts']);
+Route::post('add-store-category', [CRUDController::class, 'insertData']);
+Route::get('edit-product/{id}', [AdminController::class, 'editProduct']);
+Route::post('update-product/{id}', [CRUDController::class, 'updateData']);

@@ -5,7 +5,9 @@
         <!-- Page content-->
         <div class="content-wrapper">
             <div class="content-heading">
-                <div>View Advertisements</div>
+                <div>View Law Firm
+                    <small>All Law Firms ({{ $allPosts }})</small>
+                </div>
             </div>
             @if (Session::has('flash-error-message'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -24,10 +26,22 @@
             @endif
 
             <div class="row">
+                <!-- Article Content-->
                 <div class="col-xl-12">
+
+                    <div class="ml-auto">
+                        <div class="col-12 d-flex justify-content-end pt-4">
+                            <br>
+                            <input type="text" class="form-control" name="daterange"
+                                value="01/01/2018 - 01/15/2018" />
+                            <button class="btn btn-primary">
+                                Filter
+                            </button>
+                        </div>
+                    </div>
                     <form method="POST" action="{{ url('multiple-delete') }}">
                         {{ csrf_field() }}
-                        <input type="hidden" name="tbl" value="{{ encrypt('advertisements') }}">
+                        <input type="hidden" name="tbl" value="{{ encrypt('law_firms') }}">
                         <input type="hidden" name="tblid" value="{{ encrypt('id') }}">
                         <div class="card">
                             <div class="card-footer">
@@ -42,7 +56,7 @@
                                             <div class="input-group-append">
                                                 <button class="btn btn-secondary" type="submit">Apply</button>
                                                 &nbsp;
-                                                <a href="{{ asset('add-adv') }}" class="btn-secondary btn">Add New Ad</a>
+                                                <a href="{{ asset('add-law-firms') }}" class="btn-secondary btn">Add Law Firm</a>
 
                                             </div>
                                         </div>
@@ -50,7 +64,7 @@
                                     <div class="ml-auto">
                                         <div class="col-12 d-flex justify-content-end pt-4"
                                             class="li: { list-style: none; }">
-                                            {{ $data->links('pagination::bootstrap-4') }}
+                                            {{ $firms->links('pagination::bootstrap-4') }}
                                         </div>
                                     </div>
                                 </div>
@@ -66,46 +80,41 @@
                                                             class="fa fa-check"></span></label>
                                                 </div>
                                             </th>
-                                            <th>Title</th>
-                                            <th>Link</th>
-                                            <th>Location</th>
-                                            <th>Image</th>
-                                            <th>Status</th>
+                                            <th>Firm Name</th>
+                                            <th>Lawyer</th>
+                                            <th>About Firm</th>
+                                            <th>Position</th>
+                                            <th>Slug</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (count($data) > 0)
-                                            @foreach ($data as $ad)
+                                        @if (count($firms) > 0)
+                                            @foreach ($firms as $firm)
                                                 <tr>
                                                     <td>
 
                                                         <div class="checkbox c-checkbox">
                                                             <label>
                                                                 <input type="checkbox" name="select-data[]"
-                                                                    value="{{ $ad->id }}">
+                                                                    value="{{ $firm->id }}">
                                                                 <span class="fa fa-check"></span>
                                                             </label>
                                                         </div>
                                                     </td>
                                                     <td><a
-                                                            href="{{ url('edit-advert') }}/{{ $ad->id }}">{{ $ad->title }}</a>
+                                                            href="{{ url('edit-law-firm') }}/{{ $firm->id }}">{{ $firm->law_firm }}</a>
                                                     </td>
-                                                    <td>{{ $ad->url }}</td>
-                                                    <td>{{ $ad->location }}</td>
-                                                    <td>
-                                                        <a href="{{ url('advertisement') }}/{{ $ad->image }}" target="_blank">
-                                                            <img src="{{ url('advertisement') }}/{{ $ad->image }}"
-                                                                alt="IMG" width="270px" style="border-radius: 5px;">
-                                                        </a>
-                                                    </td>
-                                                    <td>{{ $ad->status }}</td>
+                                                    <td>{{ $firm->lawyer }}</td>
+                                                    <td> {!! Str::substr($firm->about, 0, 200) !!}...</td>
+                                                    <td>{{ $firm->position }}</td>
+                                                    <td> {{ $firm->slug}}</td>
                                                 </tr>
 
                                             @endforeach
                                         @else
                                             <tr>
                                                 <td colspan='9' align="center">
-                                                    No data found.
+                                                    No news found.
                                                 </td>
                                             </tr>
                                         @endif
@@ -116,7 +125,7 @@
                     </form>
                     <div class="row">
                         <div class="col-12 d-flex justify-content-end pt-4" class="li: { list-style: none; }">
-                            {{ $data->links('pagination::bootstrap-4') }}
+                            {{ $firms->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
 

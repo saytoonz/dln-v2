@@ -5,51 +5,56 @@
         <!-- Page content-->
         <div class="content-wrapper">
             <div class="content-heading">
-                <div>Site Tabs<small>The Tabs that would show on top of the main website for navigations</small></div>
+                <div>Edit Opinion Category</div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
                     <!-- START card-->
                     <div class="card card-default">
-                        <div class="card-header">Create New Tab</div>
+                        <div class="card-header">Edit Tab</div>
                         @if (Session::has('message'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <button class="close" type="button" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
                                 {{ Session('message') }}
                             </div>
+
                         @endif
                         <div class="card-body">
-                            <form method="post" action="{{ url('add-category') }}">
+                            <form method="post" action="{{ url('update-opinions-category') }}/{{ $singleData->id }}">
                                 {{ csrf_field() }}
-                                <input type="hidden" name="tbl" value="{{ encrypt('categories') }}">
+                                <input type="hidden" name="tbl" value="{{ encrypt('opinion_cats') }}">
+                                <input type="hidden" name="id" value="{{ $singleData->id }}">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" type="text" name="title" placeholder="Tab name" required
-                                        id='tabName' onkeyup="generateSlug()">
+                                    <input class="form-control" value="{{ $singleData->title }}" type="text"
+                                        name="title" placeholder="Tab name" required id='tabName' onkeyup="generateSlug()">
                                 </div>
 
                                 <div class="form-group">
                                     <label>Slug</label>
-                                    <input class="form-control" type="text" name="slug" placeholder="Slug" id='tabSlug'
-                                        readonly>
+                                    <input class="form-control" type="text" name="slug" value="{{ $singleData->slug }}"
+                                        placeholder="Slug" id='tabSlug' readonly>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select class="custom-select custom-select-sm" name="status">
-                                        <option>Active</option>
-                                        <option>Inactive</option>
+                                        <option value="{{ $singleData->status }}">{{ $singleData->status }}</option>
+                                         @if ($singleData->status == 'Inactive')
+                                            <option>Active</option>
+                                        @else
+                                            <option>Inactive</option>
+                                        @endif
                                     </select>
                                 </div>
 
-                                <button class="btn btn-sm btn-secondary" type="submit">Add New</button>
+                                <button class="btn btn-sm btn-secondary" type="submit">Update</button>
                             </form>
                         </div>
                     </div><!-- END card-->
                 </div>
-
                 <div class="col-xl-6">
                     <!-- START card-->
 
@@ -75,7 +80,7 @@
                             <div class="card-footer">
                                 <div class="d-flex">
                                     <div>
-                                        <input type="hidden" name="tbl" value="{{ encrypt('categories') }}">
+                                        <input type="hidden" name="tbl" value="{{ encrypt('opinion_cats') }}">
                                         <input type="hidden" name="tblid" value="{{ encrypt('id') }}">
                                         <div class="input-group">
                                             <select class="custom-select" name="bulk-action">
@@ -114,8 +119,8 @@
                                             @foreach ($data as $category)
                                                 <tr>
                                                     <td>
-
                                                         @if ($category->slug != 'feature')
+
                                                         <div class="checkbox c-checkbox">
                                                             <label>
                                                                 <input type="checkbox" name="select-data[]"
@@ -124,9 +129,10 @@
                                                             </label>
                                                         </div>
                                                         @endif
+
                                                     </td>
                                                     <td><a
-                                                            href="{{ url('edit-category') }}/{{ $category->id }}">{{ $category->title }}</a>
+                                                            href="{{ url('opinions-edit-category') }}/{{ $category->id }}">{{ $category->title }}</a>
                                                     </td>
                                                     <td>{{ $category->slug }}</td>
                                                     <td>{{ $category->status }}</td>
@@ -146,8 +152,11 @@
                     </form>
                 </div>
 
+
+                <!-- END card-->
             </div>
-            <!-- END row-->
+        </div>
+        <!-- END row-->
         </div>
     </section>
 

@@ -31,10 +31,6 @@ class CRUDController extends Controller
             $data['reviewers'] = implode(',',$request->reviewers);
         }
 
-        if($request->has('tags')){
-            $data['tags'] = implode(',',$request->tags);
-        }
-
 
         if($request->has('image')){
             $data['image'] = $this->uploadImage($tbl, $data['image']);
@@ -45,7 +41,7 @@ class CRUDController extends Controller
         }
 
         DB::table($tbl)->insert($data);
-        if($tbl ==  'resource_cats'){
+        if($tbl == 'resource_cats' || $tbl == "happilex_cats" || $tbl=="store_categories"){
             $request->session()->flash('message-2', "Category created successfully");
         }else{
             $request->session()->flash('message', "Data inserted successfully");
@@ -75,9 +71,6 @@ class CRUDController extends Controller
             $data['reviewers'] = implode(',',$request->reviewers);
         }
 
-        if($request->has('tags')){
-            $data['tags'] = implode(',',$request->tags);
-        }
 
         if($request->has('image')){
             $data['image'] = $this->uploadImage($tbl, $data['image']);
@@ -93,6 +86,10 @@ class CRUDController extends Controller
     }
 
     public function uploadImage($location, $fileName)  {
+        if($location == "advertisements")
+        {
+            $location = "advertisement";
+        }
        $name = date('ymdgis').$fileName->getClientOriginalName();
         $fileName->move(public_path().'/'.$location, $name);
         return $name;

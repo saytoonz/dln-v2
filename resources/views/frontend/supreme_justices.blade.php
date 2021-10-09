@@ -50,11 +50,16 @@
                                 @foreach ($data as $item)
                                     <div class="col-md-6">
                                             <img src="{{ url('justices') }}/{{ $item->image }}" width="100%"
-                                                style="margin-bottom: 15px;" alt="{{ $item->title }}">
-                                        <p align='justify'>
-                                            {!! Str::substr($item->description, 0, 100) !!}
-                                        </p>
-                                        <a href="{{ url('article') }}/{{ $item->slug }}">Read More &raquo;</a>
+                                                style="margin-bottom: 15px; border-radius: 10px;" alt="{{ $item->name }}">
+                                                <p style="font-size: 20px;">
+                                                    <strong>
+                                                        {!! $item->name !!}
+                                                    </strong>
+                                                </p>
+                                                <p align='justify'>
+                                                    {!! $item->description !!}
+                                                </p>
+                                        {{-- <a href="{{ url('article') }}/{{ $item->slug }}">Read More &raquo;</a> --}}
 
                                     </div>
                                 @endforeach

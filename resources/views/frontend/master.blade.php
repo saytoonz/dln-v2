@@ -133,8 +133,10 @@
                                             <li><a href="{{ url('/') }}">Home</a></li>
                                             @foreach ($categories as $category)
                                                 <li>
-                                                    <a href="#" class="text-sentencecase">{{ $category->title }}</a>
-                                                    @if (count($category->subCats)>0)
+                                                    <a href="@if ($category->title != "Tech") {{url('#')}} @else {{url('general-news/tech')}} @endif" class="text-sentencecase">
+                                                        {{ $category->title }}
+                                                    </a>
+                                                    @if (count($category->subCats)>0 && $category->title != "Tech")
                                                     <ul class="submenu">
                                                         @foreach ($category->subCats as $item)
                                                             <li><a href="{{url('')}}/{{$item->slug}}">{{$item->title}}</a></li>

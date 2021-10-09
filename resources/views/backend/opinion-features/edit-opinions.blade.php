@@ -23,9 +23,9 @@
                 </div>
             @endif
 
-            <form method="post" action="{{ url('update-news') }}/{{ $data->id }}" enctype="multipart/form-data">
+            <form method="post" action="{{ url('update-opinions') }}/{{ $data->id }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
-                <input type="hidden" name="tbl" value="{{ encrypt('news') }}">
+                <input type="hidden" name="tbl" value="{{ encrypt('opinions') }}">
                 <input type="hidden" name="id" value="{{ $data->id }}">
                 <div class="row">
                     <!-- Article Content-->
@@ -46,9 +46,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <textarea class="form-control" name="news_body" id="editor">
-                                            {{ $data->news_body }}
-                                        </textarea>
+                                    <textarea class="form-control" name="body" id="editor">{{ $data->body }}</textarea>
                                 </div>
 
 
@@ -71,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="lead">List of Comments</p>
+                        {{-- <p class="lead">List of Comments</p>
                         <div class="card">
                             <div class="table-responsive">
                                 <table class="table table-hover">
@@ -121,7 +119,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> --}}
                     </div><!-- Article sidebar-->
                     <div class="col-xl-3">
                         <div class="card card-default">
@@ -132,7 +130,7 @@
                                     <div class="form-group">
                                         <label>Featured Image</label>
                                         <p><img id="output" style="width:  100% !important;"
-                                                src="{{ url('news') }}/{{ $data->image }}"></p>
+                                                src="{{ url('opinions') }}/{{ $data->image }}"></p>
                                         <p><input type="file" accept="image/*" name="image" id="file"
                                                 onchange="loadFile(event)" style="display: none"></p>
                                         <p><label for="file" style="cursor: pointer" class="btn btn-primary">Replace
@@ -153,43 +151,22 @@
                             <br>
                             <div class="card-body">
                                 <p class="lead">News Data</p>
-
-                                <p class="my-2">Author</p>
-                                <input class="form-control" type="text" name="author"  value="{{ $data->author }}">
-
-                                <h4 class="my-2">Categories</h4>
-                                @foreach ($categories as $category)
-                                    <p>
-                                        <label for="{{ $category->id }}">
-                                            <input type="checkbox" name="categories_id[]" value="{{ $category->id }}"
-                                                @if (in_array($category->id, $newsCat)) checked @endif> {{ $category->title }}
-                                        </label>
-                                    </p>
-                                @endforeach
-                                <h4 class="my-2">Sub-Categories</h4>
-                                @foreach ($subcategories as $subCat)
-                                    <p>
-                                        <label for="{{ $subCat->id }}">
-                                            <input type="checkbox" name="subcategories_id[]" value="{{ $subCat->id }}"
-                                                @if (in_array($subCat->id, $newsSubCat)) checked @endif> {{ $subCat->title }}
-                                        </label>
-                                    </p>
-                                @endforeach
+                                <h4 class="my-2">Category</h4>
+                                <select name="cat_id" class="custom-select custom-select-sm" required>
+                                    <option selected value="{{ $data->category->id }}">
+                                        {{ $data->category->title }}
+                                    </option>
+                                    @foreach ($categories as $item)
+                                        @if ($data->category->id != $item->id)
+                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
 
                                 <p class="my-2">Tags</p>
                                 <input class="form-control" type="text" name="tags" data-role="tagsinput"  value="{{ $data->tags }}">
 
-                                <p class="my-2">Reviewers</p>
-                                <select class="chosen-select form-control" name="reviewers[]" multiple>
-                                    <option>adam@email.com</option>
-                                    <option>amalie@email.com</option>
-                                    <option>wladimir@email.com</option>
-                                    <option>samantha@email.com</option>
-                                    <option>estefanía@email.com</option>
-                                    <option>natasha@email.com</option>
-                                    <option>nicole@email.com</option>
-                                    <option>adrian@email.com</option>
-                                </select>
+
                                 <p class="lead mt-3">SEO Metadata</p>
                                 <div class="form-group">
                                     <p>Title</p>

@@ -5,7 +5,7 @@
         <!-- Page content-->
         <div class="content-wrapper">
             <div class="content-heading">
-                <div>Site Tabs<small>The Tabs that would show on top of the main website for navigations</small></div>
+                <div>Opinions and Features Categories</div>
             </div>
 
             <div class="row">
@@ -21,9 +21,9 @@
                             </div>
                         @endif
                         <div class="card-body">
-                            <form method="post" action="{{ url('add-category') }}">
+                            <form method="post" action="{{ url('add-opinions-category') }}">
                                 {{ csrf_field() }}
-                                <input type="hidden" name="tbl" value="{{ encrypt('categories') }}">
+                                <input type="hidden" name="tbl" value="{{ encrypt('opinion_cats') }}">
                                 <div class="form-group">
                                     <label>Name</label>
                                     <input class="form-control" type="text" name="title" placeholder="Tab name" required
@@ -75,7 +75,7 @@
                             <div class="card-footer">
                                 <div class="d-flex">
                                     <div>
-                                        <input type="hidden" name="tbl" value="{{ encrypt('categories') }}">
+                                        <input type="hidden" name="tbl" value="{{ encrypt('opinion_cats') }}">
                                         <input type="hidden" name="tblid" value="{{ encrypt('id') }}">
                                         <div class="input-group">
                                             <select class="custom-select" name="bulk-action">
@@ -126,7 +126,7 @@
                                                         @endif
                                                     </td>
                                                     <td><a
-                                                            href="{{ url('edit-category') }}/{{ $category->id }}">{{ $category->title }}</a>
+                                                            href="{{ url('opinions-edit-category') }}/{{ $category->id }}">{{ $category->title }}</a>
                                                     </td>
                                                     <td>{{ $category->slug }}</td>
                                                     <td>{{ $category->status }}</td>

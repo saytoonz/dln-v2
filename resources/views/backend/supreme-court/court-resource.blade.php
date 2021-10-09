@@ -18,7 +18,7 @@
                             {{ Session('message') }}
                         </div>
                     @endif
-                    <div class="pr-3">
+                    <div class="pr-3" style="background: #fff; padding: 5px 15px 5px 15px;">
                         <form method="post" action="{{ url('add-resource') }}" enctype="multipart/form-data"
                             class="mb-4">
                             @csrf
@@ -73,7 +73,7 @@
                     <br>
                     <br>
 
-                    <div class="pr-3">
+                    <div class="pr-3"  style="background: #fff; padding: 5px 5px 5px 15px;">
 
                         @if (Session::has('message-2'))
                             <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">

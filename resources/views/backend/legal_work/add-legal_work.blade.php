@@ -4,7 +4,7 @@
     <section class="section-container">
         <!-- Page content-->
         <div class="content-wrapper">
-            <div class="content-heading">Add News</div>
+            <div class="content-heading">Add Legal Work</div>
 
             @if (Session::has('message'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -14,9 +14,9 @@
                 </div>
             @endif
 
-            <form method="post" action="{{url('post-news')}}" enctype="multipart/form-data">
+            <form method="post" action="{{url('post-legal_work')}}" enctype="multipart/form-data">
                 {{ csrf_field() }}
-                <input type="hidden" name="tbl" value="{{ encrypt('news') }}">
+                <input type="hidden" name="tbl" value="{{ encrypt('legal_works') }}">
                 <div class="row">
                     <!-- Article Content-->
                     <div class="col-xl-9">
@@ -123,22 +123,7 @@
 
                                 </div>
                             </div>
-                            {{-- <div class="card-body">
-                                <h4>Publish</h4>
-                                <div class="form-group">
-                                    <button class="btn btn-secondary" name="draft">Save Draft</button>
-                                </div>
-                                <p>Status: Draft <a href="#">Edit</a></p>
-                                <p>Visibility: Public <a href="#">Edit</a></p>
-                                <p>Publish: Immediately <a href="#">Edit</a></p>
 
-                                <div class="row">
-                                    <div class="col-sm-12 ">
-                                        <button class="btn btn-primary" style="float:  right;"
-                                            name="publish">Publish</button>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <br>
                         </div>
                     </div>
@@ -151,7 +136,6 @@
 
     <script src="{{ url('ckeditor5/ckeditor.js') }}"></script>
     <script src="{{ url('ckfinder/ckfinder.js') }}"></script>
-    {{-- <script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script> --}}
     <script>
         var loadFile = function(event) {
             var image = document.getElementById('output');

@@ -4,7 +4,7 @@
     <section class="section-container">
         <!-- Page content-->
         <div class="content-wrapper">
-            <div class="content-heading">Add News</div>
+            <div class="content-heading">Add Opinion/Feature</div>
 
             @if (Session::has('message'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -14,9 +14,9 @@
                 </div>
             @endif
 
-            <form method="post" action="{{url('post-news')}}" enctype="multipart/form-data">
+            <form method="post" action="{{url('post-opinions')}}" enctype="multipart/form-data">
                 {{ csrf_field() }}
-                <input type="hidden" name="tbl" value="{{ encrypt('news') }}">
+                <input type="hidden" name="tbl" value="{{ encrypt('opinions') }}">
                 <div class="row">
                     <!-- Article Content-->
                     <div class="col-xl-9">
@@ -25,7 +25,7 @@
                                 <div class="form-group">
                                     <label>Heading</label>
                                     <input class="mb-3 form-control form-control-lg" type="text" id="heading"
-                                        placeholder="News title..." name="title" onkeyup="generateSlug()">
+                                        placeholder="Opinion title..." name="title" required onkeyup="generateSlug()">
                                 </div>
 
                                 <div class="form-group">
@@ -35,13 +35,19 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <textarea class="form-control" name="news_body" id="editor"></textarea>
+                                    <textarea class="form-control" name="body" id="editor"></textarea>
                                 </div>
-
 
                                 <div class="form-group">
                                     <label>Short Description</label>
                                     <textarea name="short_desc" class="mb-3 form-control" cols="5" required></textarea>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>Source</label>
+                                    <input class="mb-3 form-control form-control-lg" type="text" name="source" placeholder="Source">
+
                                     <div class="clearfix">
                                         <div class="float-left">
                                             <button class="btn btn-secondary" type="submit" name="status" value="draft">
@@ -66,46 +72,23 @@
                                     <label>Featured Image</label>
                                     <p><img id="output" style="width:  100% !important;"></p>
                                     <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)"
-                                            style="display: none"></p>
+                                            style="display: none" required></p>
                                     <p><label for="file" style="cursor: pointer" class="btn btn-primary">Upload
                                             Image</label></p>
                                 </div>
                             </div>
                             <br>
                             <div class="card-body">
-                                <p class="lead">News Data</p>
-
-                                <p class="my-2">Author</p>
-                                <input class="form-control" type="text" name="author">
-
-
+                                <p class="lead">Post Data</p>
                                 <p class="my-2">Categories</p>
-                                <select class="chosen-select form-control" required name="categories_id[]" multiple>
+                                <select class="chosen-select form-control" required name="cat_id">
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
                                 </select>
-                                <p class="my-2">Sub-Categories</p>
-                                <select class="chosen-select form-control" required name="subcategories_id[]" multiple>
-                                    @foreach ($subcategories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                    @endforeach
-                                </select>
-
                                 <p class="my-2">Tags</p>
                                 <input class="form-control" type="text" name="tags" data-role="tagsinput">
 
-                                <p class="my-2">Reviewers</p>
-                                <select class="chosen-select form-control" name="reviewers[]" multiple>
-                                    <option>adam@email.com</option>
-                                    <option>amalie@email.com</option>
-                                    <option>wladimir@email.com</option>
-                                    <option>samantha@email.com</option>
-                                    <option>estefanía@email.com</option>
-                                    <option>natasha@email.com</option>
-                                    <option>nicole@email.com</option>
-                                    <option>adrian@email.com</option>
-                                </select>
                                 <p class="lead mt-3">SEO Metadata</p>
                                 <div class="form-group">
                                     <p>Title</p>
@@ -119,26 +102,9 @@
                                 </div>
                                 <div class="form-group">
                                     <p>Keywords</p>
-                                    <input class="form-control" type="text" name="seo_keywords" data-role="tagsinput" placeholder="Add keywords...">
-
+                                <input class="form-control" type="text" name="seo_keywords" data-role="tagsinput" placeholder="Max 1000 characters...">
                                 </div>
                             </div>
-                            {{-- <div class="card-body">
-                                <h4>Publish</h4>
-                                <div class="form-group">
-                                    <button class="btn btn-secondary" name="draft">Save Draft</button>
-                                </div>
-                                <p>Status: Draft <a href="#">Edit</a></p>
-                                <p>Visibility: Public <a href="#">Edit</a></p>
-                                <p>Publish: Immediately <a href="#">Edit</a></p>
-
-                                <div class="row">
-                                    <div class="col-sm-12 ">
-                                        <button class="btn btn-primary" style="float:  right;"
-                                            name="publish">Publish</button>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <br>
                         </div>
                     </div>

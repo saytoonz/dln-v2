@@ -197,7 +197,21 @@ class FrontController extends Controller
 
     public function supremeJustices()
     {
-        $data = DB::table('court_dairy')->get();
+        $data = DB::table('justices')->get();
         return view('frontend.supreme_justices', ['data'=> $data]);
+    }
+
+    public function supremeResources()
+    {
+        $data = DB::table('resources')->get();
+
+        $resources = DB::table('resources')->orderBy('id', 'DESC')->get();
+        foreach ($resources as  $res) {
+            $catName = DB::table('resource_cats')->where('id', $res->category_id)->value('title');
+            $res->category_name = $catName;
+        }
+        $resources = $resources->groupBy('category_name');
+
+        return view('frontend.resources', ['data'=> $resources]);
     }
 }

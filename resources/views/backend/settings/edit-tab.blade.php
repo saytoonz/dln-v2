@@ -5,7 +5,7 @@
         <!-- Page content-->
         <div class="content-wrapper">
             <div class="content-heading">
-                <div>Site Tabs<small>The Tabs that would show on top of the main website for navigations</small></div>
+                <div>Edit Site Tabs<small>The Tabs that would show on top of the main website for navigations</small></div>
             </div>
 
             <div class="row">
@@ -119,6 +119,7 @@
                                             @foreach ($data as $category)
                                                 <tr>
                                                     <td>
+                                                        @if ($category->slug != 'feature')
 
                                                         <div class="checkbox c-checkbox">
                                                             <label>
@@ -127,6 +128,8 @@
                                                                 <span class="fa fa-check"></span>
                                                             </label>
                                                         </div>
+                                                        @endif
+
                                                     </td>
                                                     <td><a
                                                             href="{{ url('edit-category') }}/{{ $category->id }}">{{ $category->title }}</a>
