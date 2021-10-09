@@ -8,11 +8,11 @@
     <title>Dennislaw News </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:url"           content="https://www.your-domain.com/your-page.html" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Your Website Title" />
-    <meta property="og:description"   content="Your description" />
-    <meta property="og:image"         content="https://www.your-domain.com/path/image.jpg" />
+    <meta property="og:url" content="https://www.your-domain.com/your-page.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Your Website Title" />
+    <meta property="og:description" content="Your description" />
+    <meta property="og:image" content="https://www.your-domain.com/path/image.jpg" />
 
 
 
@@ -28,7 +28,7 @@
         href="{{ url('css/bootstrap.min.css%2bowl.carousel.min.css%2bticker-style.css%2bflaticon.css%2bslicknav.css%2banimate.min.css%2bmagnific-popup.css%2bfontawesome-all.min') }}" />
     <link rel="stylesheet" href="{{ url('css/style.css') }}">
     <style>
-        #search_output{
+        #search_output {
             position: absolute;
             width: 100%;
             height: auto;
@@ -44,17 +44,21 @@
             border: 3px solid #105f8d;
             display: none;
         }
-        .search-result{
+
+        .search-result {
             list-style: none;
         }
-        .search-result li a{
+
+        .search-result li a {
             /* padding: 0 0 0 5px; */
             display: block;
             color: #333;
         }
-        .search-result li:last-child a{
+
+        .search-result li:last-child a {
             padding-bottom: 0px;
         }
+
     </style>
 </head>
 
@@ -80,9 +84,10 @@
                                 </div>
                                 <div class="header-info-right">
                                     <ul class="header-social">
-                                    @foreach ($setting->social as $key=>$social)
-                                    <li><a href="{{$social}}"><i class="fab fa-{{$icons[$key]}}"></i></a></li>
-                                    @endforeach
+                                        @foreach ($setting->social as $key => $social)
+                                            <li><a href="{{ $social }}"><i
+                                                        class="fab fa-{{ $icons[$key] }}"></i></a></li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -133,15 +138,28 @@
                                             <li><a href="{{ url('/') }}">Home</a></li>
                                             @foreach ($categories as $category)
                                                 <li>
-                                                    <a href="@if ($category->title != "Tech") {{url('#')}} @else {{url('general-news/tech')}} @endif" class="text-sentencecase">
+                                                    <a href="  @if ($category->title !=
+                                                        'Tech')
+
+                                                        @if ($category->title != 'Happilex')
+                                                            {{ url('#') }}
+                                                        @else
+                                                            {{ url('happilex/all') }}
+                                                        @endif
+
+                                                    @else
+                                                        {{ url('general-news/tech') }}
+                                                        @endif" class="text-sentencecase">
                                                         {{ $category->title }}
                                                     </a>
-                                                    @if (count($category->subCats)>0 && $category->title != "Tech")
-                                                    <ul class="submenu">
-                                                        @foreach ($category->subCats as $item)
-                                                            <li><a href="{{url('')}}/{{$item->slug}}">{{$item->title}}</a></li>
-                                                        @endforeach
-                                                    </ul>
+                                                    @if (count($category->subCats) > 0 && $category->title != 'Tech')
+                                                        <ul class="submenu">
+                                                            @foreach ($category->subCats as $item)
+                                                                <li><a
+                                                                        href="{{ url('') }}/{{ $item->slug }}">{{ $item->title }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
                                                     @endif
                                                 </li>
                                             @endforeach
@@ -177,12 +195,13 @@
                                     <i class="fas fa-search special-tag"></i>
                                     <div class="search-box">
                                         {{-- <form action="#"> --}}
-                                            <input type="text" placeholder="Search" id="search_content" onkeyup="searchContent()">
+                                        <input type="text" placeholder="Search" id="search_content"
+                                            onkeyup="searchContent()">
 
                                         {{-- </form> --}}
                                     </div>
                                 </div>
-                                    <div id="search_output" class="col-12"></div>
+                                <div id="search_output" class="col-12"></div>
                             </div>
 
                             <div class="col-12">
@@ -229,7 +248,8 @@
 
                                 <div class="footer-social">
                                     @foreach ($setting->social as $key => $social)
-                                     <a href="{{$social}}  "><i class="fab fa-{{$icons[$key]}}"></i></a>
+                                        <a href="{{ $social }}  "><i
+                                                class="fab fa-{{ $icons[$key] }}"></i></a>
                                     @endforeach
                                 </div>
                             </div>
@@ -284,7 +304,7 @@
                         <div class="col-lg-6">
                             <div class="footer-menu f-right">
                                 <ul>
-                                    <li><a href="#">Store</a></li>
+                                    <li><a href="{{ url('store') }}/all">Store</a></li>
                                     @foreach ($pages as $page)
                                         <li>
                                             <a href="{{ url('page') }}/{{ $page->slug }}">
@@ -390,17 +410,19 @@
     </script>
 
     <script>
-       function searchContent() {
+        function searchContent() {
             var text = $('#search_content').val();
-            if(text.length < 1){
-                 $('#search_output').hide();
+            if (text.length < 1) {
+                $('#search_output').hide();
                 return false;
-            }else{
+            } else {
                 $.ajax({
                     type: 'get',
-                    url: '{{url('search-content')}}',
-                    data: {text:text},
-                    success: function (res) {
+                    url: '{{ url('search-content') }}',
+                    data: {
+                        text: text
+                    },
+                    success: function(res) {
                         $('#search_output').show();
                         $('#search_output').html(res);
                     }

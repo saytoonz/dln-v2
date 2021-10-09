@@ -32,11 +32,10 @@ class FrontController extends Controller
             $icons = [];
         }
 
-        if($categories){
+        if ($categories) {
             foreach ($categories as $cat) {
                 $subCat = DB::table('sub_categories')->where('category_id', $cat->id)->where("status", 'active')->get();
                 $cat->subCats = $subCat;
-
             }
         }
         view()->share([
@@ -99,7 +98,7 @@ class FrontController extends Controller
             ->orWhere('subcategories_id', 'LIKE', '%,10,%')
             ->orWhere('subcategories_id', 'LIKE', '10,%')
             ->orWhere('subcategories_id', 'LIKE', '%,10')
-                ->orWhere('subcategories_id', 10)
+            ->orWhere('subcategories_id', 10)
 
             ->where('status', 'publish')->orderByDesc('id')->limit(10)->get();
 
@@ -117,14 +116,15 @@ class FrontController extends Controller
 
 
     public function page($slug)
-    {        if($slug == 'supreme-history'){
+    {
+        if ($slug == 'supreme-history') {
             $data = DB::table('history')->get()->last();
             $data->title = "Supreme Court History";
             $data->body = $data->history;
-        }else{
+        } else {
             $data = DB::table('pages')->where('slug', $slug)->first();
         }
-        return view('frontend.pages', ['data' => $data]);
+        return view('frontend.pages.pages', ['data' => $data]);
     }
 
 
@@ -140,7 +140,7 @@ class FrontController extends Controller
 
     public function generalNews($slug)
     {
-        $subCat = DB::table('sub_categories')->where('slug', 'general-news/'.$slug)->first();
+        $subCat = DB::table('sub_categories')->where('slug', 'general-news/' . $slug)->first();
         $category = DB::table('categories')->where('id', $subCat->category_id)->first();
         $news = DB::table('news')
             ->orWhere('subcategories_id', 'LIKE', '%,' . $subCat->id . ',%')
@@ -152,18 +152,19 @@ class FrontController extends Controller
     }
 
 
-    public function searchContent(){
+    public function searchContent()
+    {
         $text = $_GET["text"];
-        $data = DB::table('news')->where('title', 'LIKE', '%' . $text. '%')
-        ->orWhere('news_body', 'LIKE', '%' . $text. '%')->limit(20)->get();
+        $data = DB::table('news')->where('title', 'LIKE', '%' . $text . '%')
+            ->orWhere('news_body', 'LIKE', '%' . $text . '%')->limit(20)->get();
 
         $output = '';
         echo '<ul class="search-result">';
         if (count($data) > 0) {
-            foreach ($data as $key=>$d) {
-               echo '<li><a href="'.config('app.asset_url').'/article/'.$d->slug.'">'.$d->title.'</a></li>';
+            foreach ($data as $key => $d) {
+                echo '<li><a href="' . config('app.asset_url') . '/article/' . $d->slug . '">' . $d->title . '</a></li>';
             }
-        }else{
+        } else {
             echo '<li><a href="#">Sorry! No data found.</a></li>';
         }
         echo '</ul>';
@@ -172,14 +173,16 @@ class FrontController extends Controller
     }
 
 
-    public function addLike($news_id){
+    public function addLike($news_id)
+    {
         $data = DB::table('news')->where('id', $news_id)->first();
         $likes = $data->likes + 1;
         DB::table('news')->where('id', $data->id)->update(['likes' => $likes]);
         session()->flash('flash-like', "Post liked successfully.");
         return redirect()->back();
     }
-    public function addDisLike($news_id){
+    public function addDisLike($news_id)
+    {
         $data = DB::table('news')->where('id', $news_id)->first();
         $dislikes = $data->dislikes + 1;
         DB::table('news')->where('id', $data->id)->update(['dislikes' => $dislikes]);
@@ -192,13 +195,13 @@ class FrontController extends Controller
     public function courtDairy()
     {
         $data = DB::table('court_dairy')->get();
-        return view('frontend.court_dairy', ['data'=> $data]);
+        return view('frontend.court_dairy', ['data' => $data]);
     }
 
     public function supremeJustices()
     {
         $data = DB::table('justices')->get();
-        return view('frontend.supreme_justices', ['data'=> $data]);
+        return view('frontend.supreme_justices', ['data' => $data]);
     }
 
     public function supremeResources()
@@ -212,6 +215,73 @@ class FrontController extends Controller
         }
         $resources = $resources->groupBy('category_name');
 
-        return view('frontend.resources', ['data'=> $resources]);
+        return view('frontend.resources', ['data' => $resources]);
+    }
+
+
+
+    public function store($catSlug)
+    {
+        $categories = DB::table('store_categories')->where('status', 'active')->get();
+
+        foreach ($categories as $cat) {
+            $cat->totalItems = DB::table('store_products')->where('cat_id', $cat->id)->where('status', 'active')->count();
+            $cat->isSelected = $cat->slug == $catSlug;
+        }
+
+        if ($catSlug == 'all') {
+            $title = "Latest Products";
+            $useIsSelected = false;
+            $products = DB::table('store_products')->where('status', 'active')->paginate(50);
+        } else {
+            $useIsSelected = true;
+            $cat = DB::table('store_categories')->where('slug', $catSlug)->first();
+            $title =  $cat->title . " Products";
+            $products = DB::table('store_products')->where('cat_id', $cat->id)->where('status', 'active')->paginate(50);
+        }
+
+        foreach ($products as $value) {
+            $value->categ = DB::table('store_categories')->where('id', $value->cat_id)->value('title');
+        }
+        return view('frontend.pages.store', [
+            'products' => $products,
+            'title' => $title,
+            'storeCats' => $categories,
+            'useIsSelected' => $useIsSelected
+        ]);
+    }
+
+
+
+    public function happilex($catSlug)
+    {
+        $categories = DB::table('happilex_cats')->where('status', 'active')->get();
+
+        foreach ($categories as $cat) {
+            $cat->totalItems = DB::table('happilexes')->where('cat_id', $cat->id)->count();
+            $cat->isSelected = $cat->slug == $catSlug;
+        }
+
+        if ($catSlug == 'all') {
+            $title = "Latest";
+            $useIsSelected = false;
+            $happilexes = DB::table('happilexes')->paginate(50);
+        } else {
+            $useIsSelected = true;
+            $cat = DB::table('happilex_cats')->where('slug', $catSlug)->first();
+            $title =  $cat->title;
+            $happilexes = DB::table('happilexes')->where('cat_id', $cat->id)->paginate(50);
+        }
+
+        foreach ($happilexes as $value) {
+            $value->categ = DB::table('happilex_cats')->where('id', $value->cat_id)->value('title');
+            $value->comments = DB::table('happilex_comments')->where('status', 'approved')->where('happilex_id', $value->id)->count();
+        }
+        return view('frontend.pages.store', [
+            'products' => $happilexes,
+            'title' => $title,
+            'storeCats' => $categories,
+            'useIsSelected' => $useIsSelected
+        ]);
     }
 }

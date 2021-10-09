@@ -68,6 +68,11 @@ class AdminController extends Controller
         return view('backend.pages.add-page', ['pages'=>$pages]);
     }
 
+    public function editSitePages($id){
+        $data = DB::table('pages')->where('id', $id)->first();
+        return view('backend.pages.edit-page', ['data'=>$data]);
+    }
+
 
     public function addOpinion()
     {

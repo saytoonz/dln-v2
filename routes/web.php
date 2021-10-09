@@ -28,8 +28,13 @@ Route::get('supreme-courtdiary', [FrontController::class, 'courtDairy']);
 Route::get('supreme-justices', [FrontController::class, 'supremeJustices']);
 Route::get('supreme-resources', [FrontController::class, 'supremeResources']);
 
+
+Route::get('happilex/{category_slug}', [FrontController::class, 'happilex']);
+
 //Pages
 Route::get('page/{slug}', [FrontController::class, 'page']);
+Route::get('store/{category_slug}', [FrontController::class, 'store']);
+
 
 
 
@@ -50,6 +55,8 @@ Route::post('update-settings/{id}', [CRUDController::class, 'updateData']);
 
 //Site Pages
 Route::get('site-pages', [AdminController::class, 'sitePages']);
+Route::get('edit-pages/{id}', [AdminController::class, 'editSitePages']);
+Route::post('update-page/{id}', [CRUDController::class, 'updateData']);
 
 //Add news
 Route::get('add-news', [AdminController::class, 'addNews']);
