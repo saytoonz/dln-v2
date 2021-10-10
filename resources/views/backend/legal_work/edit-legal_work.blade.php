@@ -25,7 +25,7 @@
 
             <form method="post" action="{{ url('update-news') }}/{{ $data->id }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
-                <input type="hidden" name="tbl" value="{{ encrypt('news') }}">
+                <input type="hidden" name="tbl" value="{{ encrypt('legal_works') }}">
                 <input type="hidden" name="id" value="{{ $data->id }}">
                 <div class="row">
                     <!-- Article Content-->
@@ -107,11 +107,11 @@
                                                 </td>
                                                 <td class="text-right">
                                                     <button class="btn btn-sm btn-danger" type="button"
-                                                    onclick="updateAlert('{{ $comment->id }}', 'comments', 'status', 'rejected')">
+                                                    onclick="updateAlert('{{ $comment->id }}', 'legal_work_comments', 'status', 'rejected')">
                                                         <em class="fas fa-trash-alt"></em>
                                                     </button>
                                                     <button class="btn btn-sm btn-success" type="button"
-                                                    onclick="updateAlert('{{ $comment->id }}', 'comments', 'status', 'approved')">
+                                                    onclick="updateAlert('{{ $comment->id }}', 'legal_work_comments', 'status', 'approved')">
                                                         <em class="fa fa-check"></em>
                                                     </button>
                                                 </td>
@@ -132,7 +132,7 @@
                                     <div class="form-group">
                                         <label>Featured Image</label>
                                         <p><img id="output" style="width:  100% !important;"
-                                                src="{{ url('news') }}/{{ $data->image }}"></p>
+                                                src="{{ url('legal_works') }}/{{ $data->image }}"></p>
                                         <p><input type="file" accept="image/*" name="image" id="file"
                                                 onchange="loadFile(event)" style="display: none"></p>
                                         <p><label for="file" style="cursor: pointer" class="btn btn-primary">Replace

@@ -17,7 +17,7 @@
 
 
     <link rel="manifest" href="site.html">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ url('img/favicon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url('img/favicon.jpg') }}">
 
     <link rel="stylesheet"
         href="{{ url('css/A.bootstrap.min.css%2bowl.carousel.min.css%2bticker-style.css%2bflaticon.css%2bslicknav.css%2banimate.min.css%2bmagnific-popup.css%2bfontawesome-all.mi') }}" />
@@ -134,7 +134,7 @@
 
                                 <div class="main-menu d-none d-md-block">
                                     <nav>
-                                        <ul id="navigation">
+                                        <ul id="navigation"  style="background-color: white; color: #000 !important;">
                                             <li><a href="{{ url('/') }}">Home</a></li>
                                             @foreach ($categories as $category)
                                                 <li>
@@ -224,7 +224,9 @@
 
 
     {{-- Footer --}}
+    <br>
     <footer>
+
         <div class="footer-area footer-padding fix">
             <div class="container">
                 <div class="row d-flex justify-content-between">
@@ -328,6 +330,7 @@
     </footer>
 
 
+
     <script src="{{ url('js/vendor/modernizr-3.5.0.min.js') }}"></script>
 
     <script src="{{ url('js/vendor/jquery-1.12.4.min.js') }}"></script>
@@ -412,6 +415,18 @@
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"rayId":"6895a5433eb103ee","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.8.1","si":10}'>
     </script>
+
+
+<script src="{{url('js/jquery-listnav.js')}}"></script>
+<script>
+    $(function() {
+        $('#columnistList').listnav({
+            initHidden: true,
+            includeAll: true,
+            initLetter: "All"
+        });
+    });
+</script>
 
     <script>
         function searchContent() {

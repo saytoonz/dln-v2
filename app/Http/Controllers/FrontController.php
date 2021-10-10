@@ -380,4 +380,69 @@ class FrontController extends Controller
         return redirect()->back();
     }
 
+
+    public function legalWorks()
+    {
+        $data = DB::table('legal_works')->where('status', 'publish')->get()->groupBy('author');
+        return view('frontend.legalworks.legalwork', ['data'=>$data]);
+    }
+
+    public function getAuthorLegalWorks($writer)
+    {
+        $author = str_replace('+', ' ', $writer);
+        $data = DB::table('legal_works')->where('author',$author)->where('status', 'publish')->orderBy('id')->paginate(50);
+        foreach ($data as $legal) {
+            if($legal->subcategories_id){
+                $sub = explode(',', $legal->subcategories_id);
+                foreach ($sub as $subId) {
+                    $cat = DB::table('sub_categories')->where('id', $subId)->get();
+                    $legal->subCats[] = $cat;
+                }
+            }
+        }
+        return view('frontend.legalworks.author-legalworks', ['data'=>$data, 'author'=>$author]);
+    }
+
+
+    public function getLegalWork($id)
+    {
+        $data = DB::table('legal_works')->where('id', $id)->first();
+        $comments = DB::table('legal_work_comments')->where('news_id', $data->id)->where('status', 'approved')->get();
+        $views = $data->views + 1;
+        DB::table('legal_works')->where('id', $data->id)->update(['views' => $views]);
+        return view('frontend.legalworks.legal-details', ['data' => $data, 'comments' => $comments]);
+    }
+
+
+    public function addLegalLike($id)
+    {
+        $data = DB::table('legal_works')->where('id', $id)->first();
+        $likes = $data->likes + 1;
+        DB::table('legal_works')->where('id', $data->id)->update(['likes' => $likes]);
+        session()->flash('flash-like', "Post liked successfully.");
+        return redirect()->back();
+    }
+
+    public function addLegalDisLike($id)
+    {
+        $data = DB::table('legal_works')->where('id', $id)->first();
+        $dislikes = $data->dislikes + 1;
+        DB::table('legal_works')->where('id', $data->id)->update(['dislikes' => $dislikes]);
+
+        session()->flash('flash-like', "Post disliked successfully.");
+        return redirect()->back();
+    }
+
+
+
+    public function lawFirm()
+    {
+        $data = DB::table('law_firms')->orderByDesc('id')->paginate(50);
+        return view('frontend.lawfirms.firms', ['data' => $data]);
+    }
+
+    public function viewFirm($slug)
+    {
+        return view();
+    }
 }

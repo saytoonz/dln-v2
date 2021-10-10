@@ -38,10 +38,23 @@ Route::get('add-happilex-dislike/{happilex_id}', [FrontController::class, 'addHa
 Route::get('page/{slug}', [FrontController::class, 'page']);
 Route::get('store/{category_slug}', [FrontController::class, 'store']);
 
+//Opinions and Features
 Route::get('opinions-and-features/{slug}', [FrontController::class, 'opinions']);
 Route::get('view-opinions/{slug}', [FrontController::class, 'viewOpinion']);
 Route::get('add-opinion-like/{id}', [FrontController::class, 'addOpinionLike']);
 Route::get('add-opinion-dislike/{id}', [FrontController::class, 'addOpinionDisLike']);
+
+//Legal Works
+Route::get('legal-works', [FrontController::class, 'legalWorks']);
+Route::get('legal-work/{author}', [FrontController::class, 'getAuthorLegalWorks']);
+Route::get('legal/{id}', [FrontController::class, 'getLegalWork']);
+Route::get('add-legal_works-like/{id}', [FrontController::class, 'addLegalLike']);
+Route::get('add-legal_works-dislike/{id}', [FrontController::class, 'addLegalDisLike']);
+
+//Law firms
+Route::get('lawfirm', [FrontController::class, 'lawFirm']);
+Route::get('view-firms/{slug}', [FrontController::class, 'viewFirm']);
+
 
 
 
