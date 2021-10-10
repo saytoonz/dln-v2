@@ -138,11 +138,15 @@
                                             <li><a href="{{ url('/') }}">Home</a></li>
                                             @foreach ($categories as $category)
                                                 <li>
-                                                    <a href="  @if ($category->title !=
+                                                    <a href="   @if ($category->title !=
                                                         'Tech')
 
                                                         @if ($category->title != 'Happilex')
-                                                            {{ url('#') }}
+                                                            @if ($category->title != 'Opinions' && $category->title != 'Opinions/Features')
+                                                                {{ url('#') }}
+                                                            @else
+                                                                {{ url('opinions-and-features/all') }}
+                                                            @endif
                                                         @else
                                                             {{ url('happilex/all') }}
                                                         @endif

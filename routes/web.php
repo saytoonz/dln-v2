@@ -30,10 +30,19 @@ Route::get('supreme-resources', [FrontController::class, 'supremeResources']);
 
 
 Route::get('happilex/{category_slug}', [FrontController::class, 'happilex']);
+Route::get('view-happilex/{slug}', [FrontController::class, 'viewHappilex']);
+Route::get('add-happilex-like/{happilex_id}', [FrontController::class, 'addHappilexLike']);
+Route::get('add-happilex-dislike/{happilex_id}', [FrontController::class, 'addHappilexDisLike']);
 
 //Pages
 Route::get('page/{slug}', [FrontController::class, 'page']);
 Route::get('store/{category_slug}', [FrontController::class, 'store']);
+
+Route::get('opinions-and-features/{slug}', [FrontController::class, 'opinions']);
+Route::get('view-opinions/{slug}', [FrontController::class, 'viewOpinion']);
+Route::get('add-opinion-like/{id}', [FrontController::class, 'addOpinionLike']);
+Route::get('add-opinion-dislike/{id}', [FrontController::class, 'addOpinionDisLike']);
+
 
 
 
@@ -88,9 +97,6 @@ Route::post('add-advert', [CRUDController::class, 'insertData']);
 Route::get('all-advs', [AdminController::class, 'allAdv']);
 Route::get('edit-advert/{id}', [AdminController::class, 'editAdv']);
 Route::post('update-advert/{id}', [CRUDController::class, 'updateData']);
-
-
-//Happilex
 Route::get('add-happilex',  [AdminController::class, 'addHappilex']);
 Route::post('add-happilex-category', [CRUDController::class, 'insertData']);
 Route::post('post-happilex', [CRUDController::class, 'insertData']);

@@ -232,12 +232,12 @@ class FrontController extends Controller
         if ($catSlug == 'all') {
             $title = "Latest Products";
             $useIsSelected = false;
-            $products = DB::table('store_products')->where('status', 'active')->paginate(50);
+            $products = DB::table('store_products')->where('status', 'active')->orderByDesc('id')->paginate(50);
         } else {
             $useIsSelected = true;
             $cat = DB::table('store_categories')->where('slug', $catSlug)->first();
             $title =  $cat->title . " Products";
-            $products = DB::table('store_products')->where('cat_id', $cat->id)->where('status', 'active')->paginate(50);
+            $products = DB::table('store_products')->where('cat_id', $cat->id)->where('status', 'active')->orderByDesc('id')->paginate(50);
         }
 
         foreach ($products as $value) {
@@ -265,23 +265,119 @@ class FrontController extends Controller
         if ($catSlug == 'all') {
             $title = "Latest";
             $useIsSelected = false;
-            $happilexes = DB::table('happilexes')->paginate(50);
+            $happilexes = DB::table('happilexes')->orderByDesc('id')->paginate(50);
         } else {
             $useIsSelected = true;
             $cat = DB::table('happilex_cats')->where('slug', $catSlug)->first();
             $title =  $cat->title;
-            $happilexes = DB::table('happilexes')->where('cat_id', $cat->id)->paginate(50);
+            $happilexes = DB::table('happilexes')->where('cat_id', $cat->id)->orderByDesc('id')->paginate(50);
         }
 
         foreach ($happilexes as $value) {
             $value->categ = DB::table('happilex_cats')->where('id', $value->cat_id)->value('title');
             $value->comments = DB::table('happilex_comments')->where('status', 'approved')->where('happilex_id', $value->id)->count();
         }
-        return view('frontend.pages.store', [
+        return view('frontend.happilex.happilex', [
             'products' => $happilexes,
             'title' => $title,
             'storeCats' => $categories,
             'useIsSelected' => $useIsSelected
         ]);
     }
+
+
+
+    public function viewHappilex($slug)
+    {
+
+        $data = DB::table('happilexes')->where('slug', $slug)->first();
+        $comments = DB::table('happilex_comments')->where('happilex_id', $data->id)->where('status', 'approved')->get();
+        $views = $data->views + 1;
+        DB::table('happilexes')->where('id', $data->id)->update(['views' => $views]);
+        return view('frontend.happilex.detail-happilex', ['data' => $data, 'comments' => $comments]);
+
+    }
+
+
+    public function addHappilexLike($happilex_id)
+    {
+        $data = DB::table('happilexes')->where('id', $happilex_id)->first();
+        $likes = $data->likes + 1;
+        DB::table('happilexes')->where('id', $data->id)->update(['likes' => $likes]);
+        session()->flash('flash-like', "Post liked successfully.");
+        return redirect()->back();
+    }
+
+    public function addHappilexDisLike($happilex_id)
+    {
+        $data = DB::table('happilexes')->where('id', $happilex_id)->first();
+        $dislikes = $data->dislikes + 1;
+        DB::table('happilexes')->where('id', $data->id)->update(['dislikes' => $dislikes]);
+
+        session()->flash('flash-like', "Post disliked successfully.");
+        return redirect()->back();
+    }
+
+
+    public function opinions($catSlug)
+    {
+        $categories = DB::table('opinion_cats')->where('status', 'active')->get();
+
+        foreach ($categories as $cat) {
+            $cat->totalItems = DB::table('opinions')->where('cat_id', $cat->id)->count();
+            $cat->isSelected = $cat->slug == $catSlug;
+        }
+
+        if ($catSlug == 'all') {
+            $title = "Latest";
+            $useIsSelected = false;
+            $opinions = DB::table('opinions')->orderByDesc('id')->paginate(50);
+        } else {
+            $useIsSelected = true;
+            $cat = DB::table('opinion_cats')->where('slug', $catSlug)->first();
+            $title =  $cat->title;
+            $opinions = DB::table('opinions')->where('cat_id', $cat->id)->orderByDesc('id')->paginate(50);
+        }
+
+        foreach ($opinions as $value) {
+            $value->categ = DB::table('opinion_cats')->where('id', $value->cat_id)->value('title');
+        }
+        return view('frontend.opinions-feature.opinion', [
+            'products' => $opinions,
+            'title' => $title,
+            'storeCats' => $categories,
+            'useIsSelected' => $useIsSelected
+        ]);
+    }
+
+
+    public function viewOpinion($slug)
+    {
+        $data = DB::table('opinions')->where('slug', $slug)->first();
+        // $comments = DB::table('comments')->where('news_id', $data->id)->where('status', 'approved')->get();
+        $views = $data->views + 1;
+        DB::table('opinions')->where('id', $data->id)->update(['views' => $views]);
+        return view('frontend.opinions-feature.opinion-detail', ['data' => $data]);
+    }
+
+
+    public function addOpinionLike($id)
+    {
+        $data = DB::table('opinions')->where('id', $id)->first();
+        $likes = $data->likes + 1;
+        DB::table('opinions')->where('id', $data->id)->update(['likes' => $likes]);
+        session()->flash('flash-like', "Post liked successfully.");
+        return redirect()->back();
+    }
+
+    public function addOpinionDisLike($id)
+    {
+        $data = DB::table('opinions')->where('id', $id)->first();
+        $dislikes = $data->dislikes + 1;
+        DB::table('opinions')->where('id', $data->id)->update(['dislikes' => $dislikes]);
+
+        session()->flash('flash-like', "Post disliked successfully.");
+        return redirect()->back();
+    }
+
 }

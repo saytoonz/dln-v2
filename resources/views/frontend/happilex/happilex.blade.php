@@ -1,7 +1,13 @@
 @extends('frontend.master')
 @section('content')
     <link rel="stylesheet" href="{{ url('css/store.css') }}">
-
+<style>
+    .best-selling .properties .properties-card .properties-caption .properties-footer .price span {
+    font-weight: 400;
+    color: #006ead;
+    font-size: 15px;
+}
+</style>
     <main>
         <div class="about-area">
             <div class="container">
@@ -23,13 +29,13 @@
 
 
                                                     <a class="nav-link @if (!$useIsSelected)  bg-light text-secondary @else  bg-primary text-white @endif"" href="
-                                                        {{ url('store') }}/all">All</a>
+                                                        {{ url('happilex') }}/all">All</a>
 
 
 
                                                     @foreach ($storeCats as $cat)
                                                         <a class="nav-link  @if ($cat->isSelected)  bg-light text-secondary @else  bg-primary text-white @endif"
-                                                            href="{{ url('store') }}/{{ $cat->slug }}">{{ $cat->title }}
+                                                            href="{{ url('happilex') }}/{{ $cat->slug }}">{{ $cat->title }}
                                                             <span
                                                                 class="badge badge-primary">{{ $cat->totalItems }}</span></a>
                                                     @endforeach
@@ -59,28 +65,34 @@
                                             @foreach ($products as $item)
 
                                                 <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                                                    <div class="properties pb-30">
-                                                        <div class="properties-card">
-                                                            <div class="properties-img">
-                                                                <img src="{{ url('store_products') }}/{{ $item->image }}"
-                                                                    alt="" />
-                                                            </div>
-                                                            <div class="properties-caption properties-caption2">
-                                                                <h3>{{ $item->title }}</h3>
-                                                                <p>{{ $item->bio }}</p>
-                                                                <div
-                                                                    class="properties-footer d-flex justify-content-between align-items-center ">
-                                                                    <div class="review">
-                                                                        <p>{{ $item->categ }}</p>
-                                                                        <div class="price">
-                                                                            <span>GH&#8373; {{ $item->price }}</span>
+                                                    <a href="{{url('view-happilex')}}/{{$item->slug}}">
+                                                        <div class="properties pb-30">
+                                                            <div class="properties-card">
+                                                                <div class="properties-img">
+                                                                    <img src="{{ url('happilexes') }}/{{ $item->image }}"
+                                                                        alt="" />
+                                                                </div>
+                                                                <div class="properties-caption properties-caption2">
+                                                                    <h3>{{ $item->title }}</h3>
+                                                                    <p>{{ $item->categ }} </p>
+                                                                    <div
+                                                                        class="properties-footer d-flex justify-content-between align-items-center ">
+                                                                        <div class="review">
+                                                                            <p> Source: {{ $item->source }} </p>
+                                                                            <div class="price">
+                                                                                <span> <i
+                                                                                        class="fa fa-eye"></i> {{ $item->views }}
+                                                                                    <i
+                                                                                        class="fa fa-comment"></i> {{ $item->comments }}
+                                                                                </span>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </a>
                                                 </div>
 
                                             @endforeach
@@ -105,7 +117,6 @@
                         </section>
 
                     </div>
-
                 </div>
             </div>
         </div>
