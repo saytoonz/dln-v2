@@ -87,7 +87,8 @@
 
                                     <div class="trand-right-single d-flex">
                                         <div class="trand-right-img" style="width: 40%;">
-                                            <img style="width: 100%;" src="{{ url('news') }}/{{ $latestNews[$i]->image }}"
+                                            <img style="width: 100%;"
+                                                src="{{ url('news') }}/{{ $latestNews[$i]->image }}"
                                                 alt="{!! Str::substr($latestNews[$i]->title, 0, 300) !!}">
                                         </div>
                                         <div class="trand-right-cap">
@@ -111,7 +112,7 @@
 
         <section class="bg0 p-t-70">
             <div class="container">
-                <div class="row justify-content-center">
+                <div class="row">
                     <div class="col-md-10 col-lg-8">
                         @if (count($latestNews) > 0)
                             <div class="p-b-20">
@@ -153,9 +154,82 @@
 
 
                     </div>
+                    <div class="col-lg-4">
+                        <div class="col-md-12">
+                            @if (count($recHappilex) > 0)
+                                <a href="{{ url('happilex/all') }}">
+                                    <h5>
+                                        <span
+                                            style="padding:4px 12px;background: #105f8d;color: #fff;  border-radius: 3px;">
+                                            Recent Happilex
+                                        </span>
+                                    </h5>
+                                </a>
+
+                                <div class="justify-content-center col-12">
+                                    @foreach ($recHappilex as $item)
+                                        <div class="card" style="width: 18rem;">
+                                            <img class="card-img-top"
+                                                src="{{ url('happilexes') }}/{{ $item->image }}" alt="Card image cap">
+                                            <div class="card-body">
+                                                <p class="card-text">{{ $item->title }}</p>
+                                            </div>
+                                        </div>
+
+                                    @endforeach
+                                    <br>
+                                </div>
+                            @endif
+
+                            @if ($sidebarTopAds)
+                                <div class="news-poster d-none d-lg-block">
+                                    <a href="{{$sidebarTopAds->url}}" target="_blank">
+                                    <img src="{{ url('advertisement') }}/{{$sidebarTopAds->image}}" alt="{{$sidebarTopAds->title}}" title="{{ $sidebarTopAds->title }}"
+                                        style="width:100%"></a>
+                                </div>
+                            @endif
+                            <br>
+                            <section class="newsletter">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="content">
+                                                @if (Session::has('message'))
+                                                    <div class="alert alert-success alert-dismissible fade show"
+                                                        role="alert">
+                                                        <button class="close" type="button" data-dismiss="alert"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span></button>
+                                                        {{ Session('message') }}
+                                                    </div>
+                                                @endif
+                                                <h6>SUBSCRIBE TO OUR NEWSLETTER</h6>
+                                                <form method="post" action="{{ url('join-news-letter') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="tbl"
+                                                        value="{{ encrypt('news_letters') }}">
+                                                    <div class="input-group">
+                                                        <input type="email" name="email" class="form-control"
+                                                            placeholder="Enter your email">
+                                                        <span class="input-group-btn">
+                                                            <button class="button" type="submit">
+                                                                <i class="fa fa-paper-plane"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
 
 
-                    @include('frontend.side-bar')
+                    </div>
+
+
+                    {{-- @include('frontend.side-bar') --}}
 
                 </div>
             </div>
@@ -263,7 +337,8 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{ url('news') }}/{{ $item->image }}"
+                                                                    alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -290,7 +365,8 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{ url('news') }}/{{ $item->image }}"
+                                                                    alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -316,7 +392,8 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{ url('news') }}/{{ $item->image }}"
+                                                                    alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -343,7 +420,8 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{ url('news') }}/{{ $item->image }}"
+                                                                    alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -368,7 +446,8 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{ url('news') }}/{{ $item->image }}"
+                                                                    alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -388,78 +467,81 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        @if (count($happilex) > 0)
+                            <div class="weekly2-news-area weekly2-pading gray-bg">
+                                <div class="container">
+                                    <div class="weekly2-wrapper">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="section-tittle mb-30">
+                                                    <a href="{{ url('happilex/all') }}">
+                                                        <h3 id="catId">Happilex</h3>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 d-flex">
+                                                @foreach ($happilex as $item)
+                                                    <div class="card" style="width: 18rem;">
+                                                        <img class="card-img-top"
+                                                            src="{{ url('happilexes') }}/{{ $item->image }}"
+                                                            alt="Card image cap">
+                                                        <div class="card-body">
+                                                            <a href="{{ url('view-happilex') }}/{{ $item->slug }}">
+                                                                <p class="card-text">
+                                                                    {{ Str::substr($item->title, 0, 100) }}</p>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if (count($justices) > 0)
+                            <div class="recent-articles">
+                                <div class="container">
+                                    <div class="recent-wrapper">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="section-tittle mb-30">
+                                                    <a href="{{ url('supreme-justices') }}">
+                                                        <h3 id="catId">Justices</h3>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 d-flex">
+                                                @foreach ($justices as $item)
+                                                    <div class="card" style="width: 18rem;">
+                                                        <img class="card-img-top"
+                                                            src="{{ url('justices') }}/{{ $item->image }}"
+                                                            alt="{{ $item->name }}">
+                                                        <div class="card-body">
+                                                            <p class="card-text">
+                                                                {{ Str::substr($item->description, 0, 100) }}</p>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     @include('frontend.side-bar')
                 </div>
             </div>
         </section>
-
-
-        @if (count($happilex) > 0)
-            <div class="weekly2-news-area weekly2-pading gray-bg">
-                <div class="container">
-                    <div class="weekly2-wrapper">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="section-tittle mb-30">
-                                    <a href="{{ url('happilex/all') }}">
-                                        <h3 id="catId">Happilex</h3>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex">
-                                @foreach ($happilex as $item)
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ url('happilexes') }}/{{ $item->image }}"
-                                                alt="Card image cap">
-                                            <div class="card-body">
-                                    <a href="{{ url('view-happilex') }}/{{ $item->slug }}">
-                                                <p class="card-text">{{Str::substr($item->title, 0, 100) }}</p>
-                                    </a>
-                                            </div>
-                                        </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
-        @if (count($justices) > 0)
-            <div class="recent-articles">
-                <div class="container">
-                    <div class="recent-wrapper">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="section-tittle mb-30">
-                                    <a href="{{ url('supreme-justices') }}">
-                                        <h3 id="catId">Justices</h3>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 d-flex">
-                                @foreach ($justices as $item)
-                                    <div class="card" style="width: 18rem;">
-                                        <img class="card-img-top" src="{{ url('justices') }}/{{ $item->image }}"
-                                            alt="{{ $item->name }}">
-                                        <div class="card-body">
-                                            <p class="card-text">{{ Str::substr($item->description, 0, 100) }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-
     </main>
 
     {{-- @stop --}}

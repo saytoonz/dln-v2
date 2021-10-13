@@ -60,6 +60,48 @@
         }
 
     </style>
+    <style>
+        .newsletter {
+            padding: 80px 0;
+            background: #19beda;
+        }
+
+        .newsletter .content {
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .newsletter .content h2 {
+            color: #243c4f;
+            margin-bottom: 40px;
+        }
+
+        .newsletter .content .form-control {
+            height: 50px;
+            border-color: #ffffff;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .newsletter .content.form-control:focus {
+            box-shadow: none;
+            border: 2px solid #243c4f;
+        }
+
+        .newsletter .content .button {
+            height: 50px !important;
+            width: 50px !important;
+            border-radius: 0 3px 3px 0;
+            background: #243c4f;
+            color: #fff;
+            font-weight: 600;
+            border: 0px;
+
+        }
+
+    </style>
 </head>
 
 <body>
@@ -91,11 +133,14 @@
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="header-info-left">
                                     <ul>
-                                        <li> <img
-                                                src="http://openweathermap.org/img/w/{{ $weather->weather[0]->icon }}.png"
-                                                alt="" height="35px" />
-                                            {{ $weather->main->temp }}ºc, {{ $weather->weather[0]->description }}
-                                        </li>
+                                        @if ($weather)
+                                            <li> <img
+                                                    src="http://openweathermap.org/img/w/{{ $weather->weather[0]->icon }}.png"
+                                                    alt="" height="35px" />
+                                                {{ $weather->main->temp }}ºc,
+                                                {{ $weather->weather[0]->description }}
+                                            </li>
+                                        @endif
 
                                         <li><i class="fa fa-clock" style="font-size: 14px;"></i>
                                             {{ date('h:m a l jS F, Y') }}</li>
@@ -129,65 +174,68 @@
                                 </div>
                             </div>
                             <div class="col-xl-9 col-lg-9 col-md-9">
-                                <div class="header-banner f-right ">
-                                    <img src="{{ url('img/hero/xheader_card.jpg.pagespeed.ic.50jhqtxwaN.jpg') }}"
-                                        alt="">
-                                </div>
+                                @if (count($sidebarLeaderBoardAds) > 0)
+                                    <div class="header-banner f-right ">
+                                       <a href="{{$sidebarLeaderBoardAds[0]->url}}" target="_blank">
+                                        <img src="{{ url('advertisement') }}/{{$sidebarLeaderBoardAds[0]->image}}" height="120px"
+                                        alt="{{$sidebarLeaderBoardAds[0]->title}}" title="{{$sidebarLeaderBoardAds[0]->title}}">
+                                       </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="header-bottom header-sticky">
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
+                    <div class="header-bottom header-sticky">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
 
-                                <div class="sticky-logo">
-                                    <a href="/">
-                                        @if ($setting->image)
-                                            <img src="{{ url('settings') }}/{{ $setting->image }}" width="120"
-                                                alt="DLN" style="margin-top: 20 px;">
-                                        @endif
-                                    </a>
-                                </div>
+                                    <div class="sticky-logo">
+                                        <a href="/">
+                                            @if ($setting->image)
+                                                <img src="{{ url('settings') }}/{{ $setting->image }}" width="120"
+                                                    alt="DLN" style="margin-top: 20 px;">
+                                            @endif
+                                        </a>
+                                    </div>
 
-                                <div class="main-menu d-none d-md-block">
-                                    <nav>
-                                        <ul id="navigation" style="background-color: white; color: #000 !important;">
-                                            <li><a href="{{ url('/') }}">Home</a></li>
-                                            @foreach ($categories as $category)
-                                                <li>
-                                                    <a href="        @if ($category->title
-                                                        != 'Tech')
+                                    <div class="main-menu d-none d-md-block">
+                                        <nav>
+                                            <ul id="navigation"
+                                                style="background-color: white; color: #000 !important;">
+                                                <li><a href="{{ url('/') }}">Home</a></li>
+                                                @foreach ($categories as $category)
+                                                    <li>
+                                                        <a href="         @if ($category->title != 'Tech')
 
-                                                        @if ($category->title != 'Happilex')
-                                                            @if ($category->title != 'Opinions' && $category->title != 'Opinions/Features')
-                                                                {{ url('#') }}
+                                                            @if ($category->title != 'Happilex')
+                                                                @if ($category->title != 'Opinions' && $category->title != 'Opinions/Features')
+                                                                    {{ url('#') }}
+                                                                @else
+                                                                    {{ url('opinions-and-features/all') }}
+                                                                @endif
                                                             @else
-                                                                {{ url('opinions-and-features/all') }}
+                                                                {{ url('happilex/all') }}
                                                             @endif
+
                                                         @else
-                                                            {{ url('happilex/all') }}
+                                                            {{ url('general-news/tech') }}
+                                                            @endif" class="text-sentencecase">
+                                                            {{ $category->title }}
+                                                        </a>
+                                                        @if (count($category->subCats) > 0 && $category->title != 'Tech')
+                                                            <ul class="submenu">
+                                                                @foreach ($category->subCats as $item)
+                                                                    <li><a
+                                                                            href="{{ url('') }}/{{ $item->slug }}">{{ $item->title }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
                                                         @endif
+                                                    </li>
+                                                @endforeach
 
-                                                    @else
-                                                        {{ url('general-news/tech') }}
-                                                        @endif" class="text-sentencecase">
-                                                        {{ $category->title }}
-                                                    </a>
-                                                    @if (count($category->subCats) > 0 && $category->title != 'Tech')
-                                                        <ul class="submenu">
-                                                            @foreach ($category->subCats as $item)
-                                                                <li><a
-                                                                        href="{{ url('') }}/{{ $item->slug }}">{{ $item->title }}</a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @endif
-                                                </li>
-                                            @endforeach
-
-                                            {{-- <li><a href="#">General News</a>
+                                                {{-- <li><a href="#">General News</a>
                                                 <ul class="submenu">
                                                     <li><a href="elements.html">Latest</a></li>
                                                 </ul>
@@ -209,32 +257,32 @@
                                             <li><a href="about.html">Opinions/Features</a></li>
                                             <li><a href="latest_news.html">Tech</a></li>
                                             <li><a href="contact.html">Hapilex</a></li> --}}
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-2 col-md-4">
-                                <div class="header-right-btn f-right d-none d-lg-block">
-                                    <i class="fas fa-search special-tag"></i>
-                                    <div class="search-box">
-                                        {{-- <form action="#"> --}}
-                                        <input type="text" placeholder="Search" id="search_content"
-                                            onkeyup="searchContent()">
-
-                                        {{-- </form> --}}
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>
-                                <div id="search_output" class="col-12"></div>
-                            </div>
+                                <div class="col-xl-2 col-lg-2 col-md-4">
+                                    <div class="header-right-btn f-right d-none d-lg-block">
+                                        <i class="fas fa-search special-tag"></i>
+                                        <div class="search-box">
+                                            {{-- <form action="#"> --}}
+                                            <input type="text" placeholder="Search" id="search_content"
+                                                onkeyup="searchContent()">
 
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-md-none"></div>
+                                            {{-- </form> --}}
+                                        </div>
+                                    </div>
+                                    <div id="search_output" class="col-12"></div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="mobile_menu d-block d-md-none"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </header>
     {{-- Header --}}
 
@@ -243,9 +291,19 @@
 
 
     {{-- Footer --}}
+
+    <div class="col-12 justify-content-center" align='center'>
+        @if (count($sidebarLeaderBoardAds) > 1)
+            <div class="header-banner justify-content-center">
+               <a href="{{$sidebarLeaderBoardAds[1]->url}}" target="_blank">
+                <img src="{{ url('advertisement') }}/{{$sidebarLeaderBoardAds[1]->image}}" height="120px"
+                alt="{{$sidebarLeaderBoardAds[1]->title}}" title="{{$sidebarLeaderBoardAds[1]->title}}">
+               </a>
+            </div>
+        @endif
+    </div>
     <br>
     <footer>
-
         <div class="footer-area footer-padding fix">
             <div class="container">
                 <div class="row d-flex justify-content-between">

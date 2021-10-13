@@ -17,6 +17,12 @@ class FrontController extends Controller
 
         $happilex = DB::table('happilexes')->orderByDesc('id')->limit(1)->get();
 
+        //Ads
+        $sidebarTopAds = DB::table('advertisements')->where('location','sidebar-top')->where('status','display')->inRandomOrder()->get()->first();
+        $sidebarBottomAds = DB::table('advertisements')->where('location','sidebar-bottom')->where('status','display')->inRandomOrder()->first();
+        $sidebarLeaderBoardAds = DB::table('advertisements')->where('location','leaderboard')->where('status','display')->inRandomOrder()->limit(2)->get();
+
+
         $latestNews = DB::table('news')
             ->where('categories_id', 'NOT LIKE', '%,9,%')
             ->where('categories_id', 'NOT LIKE', '9,%')
@@ -50,6 +56,9 @@ class FrontController extends Controller
             'pages' => $pages,
             'recHappilex' => $happilex,
             'weather' => $this->getWeather(),
+            'sidebarTopAds'=> $sidebarTopAds,
+            'sidebarBottomAds'=> $sidebarBottomAds,
+            'sidebarLeaderBoardAds'=> $sidebarLeaderBoardAds,
         ]);
     }
 
@@ -107,9 +116,9 @@ class FrontController extends Controller
             ->where('status', 'publish')->orderByDesc('id')->limit(10)->get();
 
 
-        $justices = DB::table('justices')->orderByDesc('id')->limit(5)->get();
+        $justices = DB::table('justices')->orderByDesc('id')->limit(4)->get();
 
-        $happilex = DB::table('happilexes')->orderByDesc('id')->limit(5)->get();
+        $happilex = DB::table('happilexes')->orderByDesc('id')->limit(4)->get();
 
         return view('frontend.index', [
             'featured' => $featured,

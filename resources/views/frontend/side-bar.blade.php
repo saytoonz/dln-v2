@@ -23,6 +23,41 @@
                 <br>
             </div>
         @endif
+        <section class="newsletter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="content">
+                            @if (Session::has('message'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <button class="close" type="button" data-dismiss="alert"
+                                        aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    {{ Session('message') }}
+                                </div>
+                            @endif
+                            <h6>SUBSCRIBE TO OUR NEWSLETTER</h6>
+                            <form method="post" action="{{ url('join-news-letter') }}">
+                                @csrf
+                                <input type="hidden" name="tbl" value="{{ encrypt('news_letters') }}">
+                                <div class="input-group">
+                                    <input type="email" name="email" class="form-control"
+                                        placeholder="Enter your email">
+                                    <span class="input-group-btn">
+                                        <button class="button" type="submit">
+                                            <i class="fa fa-paper-plane"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <br>
+        <br>
         @if (count($latestNews) > 0)
             <h5>
                 <span style="padding:4px 12px; margin: 5px; background: #105f8d;color: #fff; border-radius: 3px;">
@@ -59,19 +94,25 @@
     <div class="single-follow mb-45">
         <div class="single-box">
             @foreach ($setting->social as $key => $social)
-            <div class="follow-us d-flex align-items-center">
-                <a href="{{ $social }}"><i
-                    class="fab fa-{{ $icons[$key] }}"></i></a>
-                <div class="follow-count uppercase">
-                    <span>{{$icons[$key]}}</span>
-                    {{-- <p>Fans</p> --}}
+                <div class="follow-us d-flex align-items-center">
+                    <a href="{{ $social }}" target="_blank"><i class="fab fa-{{ $icons[$key] }}"></i></a>
+                    <a href="{{ $social }}" target="_blank">
+                        <div class="follow-count uppercase">
+                            <span>{{ $icons[$key] }}</span>
+                            {{-- <p>Fans</p> --}}
+                        </div>
+                    </a>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>
 
-    <div class="news-poster d-none d-lg-block">
-        <img src="{{ url('img/news/xnews_card.jpg.pagespeed.ic.5EdXWkQK-8.png') }}" alt="">
-    </div>
+    @if ($sidebarBottomAds)
+        <div class="news-poster d-none d-lg-block">
+            <a href="{{ $sidebarBottomAds->url }}" target="_blank">
+                <img src="{{ url('advertisement') }}/{{ $sidebarBottomAds->image }}"
+                    alt="{{ $sidebarBottomAds->title }}" title="{{ $sidebarBottomAds->title }}"
+                    style="width:100%"></a>
+        </div>
+    @endif
 </div>
