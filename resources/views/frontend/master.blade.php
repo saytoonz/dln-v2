@@ -64,16 +64,20 @@
 
 <body>
 
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="{{ url('img/favicon.jpg') }}" alt="DLN">
+    @if (URL::current() != url('/'))
+        <div id="preloader-active">
+            <div class="preloader d-flex align-items-center justify-content-center">
+                <div class="preloader-inner position-relative">
+                    <div class="preloader-circle"></div>
+                    <div class="preloader-img pere-text">
+                        <img src="{{ url('img/favicon.jpg') }}" alt="DLN">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+
+
 
 
 
@@ -90,9 +94,11 @@
                                         <li> <img
                                                 src="http://openweathermap.org/img/w/{{ $weather->weather[0]->icon }}.png"
                                                 alt="" height="35px" />
-                                            {{ $weather->main->temp }}ºc, {{ $weather->weather[0]->description }}</li>
+                                            {{ $weather->main->temp }}ºc, {{ $weather->weather[0]->description }}
+                                        </li>
 
-                                        <li><i class="fa fa-clock" style="font-size: 14px;"></i> {{ date('h:m a l jS F, Y') }}</li>
+                                        <li><i class="fa fa-clock" style="font-size: 14px;"></i>
+                                            {{ date('h:m a l jS F, Y') }}</li>
                                     </ul>
                                 </div>
                                 <div class="header-info-right">
@@ -151,7 +157,7 @@
                                             <li><a href="{{ url('/') }}">Home</a></li>
                                             @foreach ($categories as $category)
                                                 <li>
-                                                    <a href="       @if ($category->title
+                                                    <a href="        @if ($category->title
                                                         != 'Tech')
 
                                                         @if ($category->title != 'Happilex')
