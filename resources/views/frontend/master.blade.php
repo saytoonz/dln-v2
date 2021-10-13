@@ -4,26 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    @yield('title')
-    <title>Dennislaw News </title>
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:url" content="https://www.your-domain.com/your-page.html" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url('img/favicon.jpg') }}">
+    @yield('title')
+    <title>{{ $setting->title }}</title>
+    <meta name="description" content="{{ $setting->description }}">
+    <meta name="keywords" content="{{ $setting->keywords }}">
+    <meta property="og:url" content="{{ url('/') }}" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Your Website Title" />
-    <meta property="og:description" content="Your description" />
-    <meta property="og:image" content="https://www.your-domain.com/path/image.jpg" />
-
+    <meta property="og:title" content="{{ $setting->title }}" />
+    <meta property="og:description" content="{{ $setting->description }}" />
+    <meta property="og:keywords" content="{{ $setting->keywords }}" />
+    <meta property="og:image" content="{{ url('img/favicon.jpg') }}" />
+    <link rel="canonical" href="{{ url('/') }}" />
 
 
     <link rel="manifest" href="site.html">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ url('img/favicon.jpg') }}">
-
     <link rel="stylesheet"
         href="{{ url('css/A.bootstrap.min.css%2bowl.carousel.min.css%2bticker-style.css%2bflaticon.css%2bslicknav.css%2banimate.min.css%2bmagnific-popup.css%2bfontawesome-all.mi') }}" />
     <link rel="stylesheet"
         href="{{ url('css/A.style.css%2bresponsive.css%2cMcc.eF4rHpdAaB.css.pagespeed.cf.Cme7bce2dn.css') }}" />
-
     <link rel="stylesheet"
         href="{{ url('css/bootstrap.min.css%2bowl.carousel.min.css%2bticker-style.css%2bflaticon.css%2bslicknav.css%2banimate.min.css%2bmagnific-popup.css%2bfontawesome-all.min') }}" />
     <link rel="stylesheet" href="{{ url('css/style.css') }}">
@@ -64,6 +64,17 @@
 
 <body>
 
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{{ url('img/favicon.jpg') }}" alt="DLN">
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <header>
@@ -76,10 +87,12 @@
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="header-info-left">
                                     <ul>
-                                        <li><img src="{{ url('img/icon/xheader_icon1.png.pagespeed.ic.-4tN99ZtbH.png') }}"
-                                                alt="">34ºc, Sunny </li>
-                                        <li><img src="{{ url('img/icon/xheader_icon1.png.pagespeed.ic.-4tN99ZtbH.png') }}"
-                                                alt="">{{ date('l M   d, Y') }}</li>
+                                        <li> <img
+                                                src="http://openweathermap.org/img/w/{{ $weather->weather[0]->icon }}.png"
+                                                alt="" height="35px" />
+                                            {{ $weather->main->temp }}ºc, {{ $weather->weather[0]->description }}</li>
+
+                                        <li><i class="fa fa-clock" style="font-size: 14px;"></i> {{ date('h:m a l jS F, Y') }}</li>
                                     </ul>
                                 </div>
                                 <div class="header-info-right">
@@ -134,12 +147,12 @@
 
                                 <div class="main-menu d-none d-md-block">
                                     <nav>
-                                        <ul id="navigation"  style="background-color: white; color: #000 !important;">
+                                        <ul id="navigation" style="background-color: white; color: #000 !important;">
                                             <li><a href="{{ url('/') }}">Home</a></li>
                                             @foreach ($categories as $category)
                                                 <li>
-                                                    <a href="   @if ($category->title !=
-                                                        'Tech')
+                                                    <a href="       @if ($category->title
+                                                        != 'Tech')
 
                                                         @if ($category->title != 'Happilex')
                                                             @if ($category->title != 'Opinions' && $category->title != 'Opinions/Features')
@@ -265,22 +278,30 @@
                         <div class="single-footer-caption mt-60">
                             <div class="footer-tittle">
                                 <h4>Newsletter</h4>
-                                <p>Heaven fruitful doesn't over les idays appear creeping</p>
+                                <p>Subscribe to our news letter</p>
 
                                 <div class="footer-form">
                                     <div id="mc_embed_signup">
-                                        <form target="_blank"
-                                            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                        @if (Session::has('message'))
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                <button class="close" type="button" data-dismiss="alert"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                {{ Session('message') }}
+                                            </div>
+                                        @endif
+                                        <form method="post" action="{{ url('join-news-letter') }}"
                                             class="subscribe_form relative mail_part">
+                                            @csrf
+                                            <input type="hidden" name="tbl" value="{{ encrypt('news_letters') }}">
                                             <input type="email" name="email" id="newsletter-form-email"
                                                 placeholder="Email Address" class="placeholder hide-on-focus"
                                                 onfocus="this.placeholder = ''"
                                                 onblur="this.placeholder = ' Email Address '">
                                             <div class="form-icon">
-                                                <button type="submit" name="submit" id="newsletter-submit"
+                                                <button type="submit" id="newsletter-submit"
                                                     class="email_icon newsletter-submit button-contactForm"><img
-                                                        src="{{ url('img/logo/xform-iocn.png.pagespeed.ic.0DvTTXDOa2.png') }}"
-                                                        alt=""></button>
+                                                        src="{{ url('img/form-iocn.png') }}" alt=""></button>
                                             </div>
                                             <div class="mt-10 info"></div>
                                         </form>
@@ -318,7 +339,7 @@
                                             </a>
                                         </li>
                                     @endforeach
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="{{ url('contact-us') }}">Contact</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -417,16 +438,16 @@
     </script>
 
 
-<script src="{{url('js/jquery-listnav.js')}}"></script>
-<script>
-    $(function() {
-        $('#columnistList').listnav({
-            initHidden: true,
-            includeAll: true,
-            initLetter: "All"
+    <script src="{{ url('js/jquery-listnav.js') }}"></script>
+    <script>
+        $(function() {
+            $('#columnistList').listnav({
+                initHidden: true,
+                includeAll: true,
+                initLetter: "All"
+            });
         });
-    });
-</script>
+    </script>
 
     <script>
         function searchContent() {

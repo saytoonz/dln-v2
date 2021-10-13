@@ -97,7 +97,7 @@
                                                     <td><img src="{{ url('store_products') }}/{{ $item->image }}" alt=""
                                                             width="200px" style="border-radius: 5px;"></td>
                                                     <td> GH&#8373; {{ number_format($item->price, 2, '.', ''); }}</td>
-                                                    <td>{{ $item->category->title }}</td>
+                                                    <td>{{ $item->category }}</td>
                                                     <td> {{ $item->status }}</td>
                                                 </tr>
 

@@ -1,6 +1,6 @@
 @extends('frontend.master')
 @section('title')
-    <title>{{ '$data->title' }} | DLN</title>
+    <title>Supreme Court Justices | DLN</title>
 @endsection
 @section('content')
 

@@ -1,6 +1,15 @@
 @extends('frontend.master')
 @section('title')
     <title>{{ $subCategory->title }} News | DLN</title>
+    <meta name="description" content="{{ $subCategory->title }} News | DLN">
+    <meta name="keywords" content="{{ $subCategory->title }},News,DLN" />
+
+    <meta property="og:url" content="{{ url('/') }}/{{$subCategory->slug}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ $setting->title }}" />
+    <meta property="og:description" content="{{ $subCategory->title }} News | DLN" />
+    <meta property="og:keywords" content="{{ $subCategory->title }},News,DLN" />
+    <meta property="og:image" content="{{ url('img/favicon.jpg') }}" />
 @endsection
 @section('content')
     <style>
@@ -40,10 +49,12 @@
 
                             </div>
                         </div>
+                        <br>
 
                         <div class="row">
                             @if (count($news) > 1)
-                                @foreach ($news as $item)
+                                @foreach ($news as $key=>$item)
+                                @if ($key > 0)
                                     <div class="col-md-6">
                                         <a href="{{ url('article') }}/{{ $item->slug }}">
                                             <img src="{{ url('news') }}/{{ $item->image }}" width="100%"
@@ -53,8 +64,10 @@
                                             {!! Str::substr($item->short_desc, 0, 100) !!}
                                         </p>
                                         <a href="{{ url('article') }}/{{ $item->slug }}">Read More &raquo;</a>
-
+                                        <br>
+                                        <br>
                                     </div>
+                                    @endif
                                 @endforeach
                             @endif
                         </div>

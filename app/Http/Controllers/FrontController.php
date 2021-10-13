@@ -9,10 +9,13 @@ class FrontController extends Controller
 {
     public function __construct()
     {
+        // $request->header('User-Agent');
         $categories = DB::table('categories')->where("status", 'Active')->get();
         $setting = DB::table('settings')->first();
         $trending = DB::table('news')->where('status', 'publish')->orderByDesc('views')->get();
         $pages = DB::table('pages')->get();
+
+        $happilex = DB::table('happilexes')->orderByDesc('id')->limit(1)->get();
 
         $latestNews = DB::table('news')
             ->where('categories_id', 'NOT LIKE', '%,9,%')
@@ -45,6 +48,8 @@ class FrontController extends Controller
             'trending' =>  $trending,
             'latestNews' => $latestNews,
             'pages' => $pages,
+            'recHappilex' => $happilex,
+            'weather' => $this->getWeather(),
         ]);
     }
 
@@ -99,8 +104,12 @@ class FrontController extends Controller
             ->orWhere('subcategories_id', 'LIKE', '10,%')
             ->orWhere('subcategories_id', 'LIKE', '%,10')
             ->orWhere('subcategories_id', 10)
-
             ->where('status', 'publish')->orderByDesc('id')->limit(10)->get();
+
+
+        $justices = DB::table('justices')->orderByDesc('id')->limit(5)->get();
+
+        $happilex = DB::table('happilexes')->orderByDesc('id')->limit(5)->get();
 
         return view('frontend.index', [
             'featured' => $featured,
@@ -111,6 +120,8 @@ class FrontController extends Controller
             'us' => $us,
             'middleEast' => $middleEast,
             'others' => $others,
+            'justices' => $justices,
+            'happilex' => $happilex,
         ]);
     }
 
@@ -295,7 +306,6 @@ class FrontController extends Controller
         $views = $data->views + 1;
         DB::table('happilexes')->where('id', $data->id)->update(['views' => $views]);
         return view('frontend.happilex.detail-happilex', ['data' => $data, 'comments' => $comments]);
-
     }
 
 
@@ -354,7 +364,6 @@ class FrontController extends Controller
     public function viewOpinion($slug)
     {
         $data = DB::table('opinions')->where('slug', $slug)->first();
-        // $comments = DB::table('comments')->where('news_id', $data->id)->where('status', 'approved')->get();
         $views = $data->views + 1;
         DB::table('opinions')->where('id', $data->id)->update(['views' => $views]);
         return view('frontend.opinions-feature.opinion-detail', ['data' => $data]);
@@ -384,15 +393,15 @@ class FrontController extends Controller
     public function legalWorks()
     {
         $data = DB::table('legal_works')->where('status', 'publish')->get()->groupBy('author');
-        return view('frontend.legalworks.legalwork', ['data'=>$data]);
+        return view('frontend.legalworks.legalwork', ['data' => $data]);
     }
 
     public function getAuthorLegalWorks($writer)
     {
         $author = str_replace('+', ' ', $writer);
-        $data = DB::table('legal_works')->where('author',$author)->where('status', 'publish')->orderBy('id')->paginate(50);
+        $data = DB::table('legal_works')->where('author', $author)->where('status', 'publish')->orderBy('id')->paginate(50);
         foreach ($data as $legal) {
-            if($legal->subcategories_id){
+            if ($legal->subcategories_id) {
                 $sub = explode(',', $legal->subcategories_id);
                 foreach ($sub as $subId) {
                     $cat = DB::table('sub_categories')->where('id', $subId)->get();
@@ -400,7 +409,7 @@ class FrontController extends Controller
                 }
             }
         }
-        return view('frontend.legalworks.author-legalworks', ['data'=>$data, 'author'=>$author]);
+        return view('frontend.legalworks.author-legalworks', ['data' => $data, 'author' => $author]);
     }
 
 
@@ -443,6 +452,31 @@ class FrontController extends Controller
 
     public function viewFirm($slug)
     {
-        return view();
+        $data = DB::table('law_firms')->where('slug', $slug)->first();
+        return view('frontend.lawfirms.view-firm', ['data' => $data]);
+    }
+
+
+    public function contactUs()
+    {
+        return view('frontend.contact');
+    }
+    public function getWeather()
+    {
+
+        $googleApiUrl = "http://api.openweathermap.org/data/2.5/weather?q=Accra,ghana&&Appid=9fcd327828f76eb1832f6eb4e61538e1";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $googleApiUrl);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+
+        curl_close($ch);
+        $data = json_decode($response);
+        return $data;
     }
 }

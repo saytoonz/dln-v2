@@ -113,7 +113,7 @@ class AdminController extends Controller
     public function addNews()
     {
         $categories = DB::table('categories')->get();
-        $subcategories = DB::table('sub_categories')->get();
+        $subcategories = DB::table('sub_categories')->where('slug','LIKE', 'general-news/%')->get();
         return view('backend.news.add-news', ['categories' => $categories, 'subcategories' => $subcategories]);
     }
 
@@ -152,7 +152,7 @@ class AdminController extends Controller
 
     public function editNews($id)
     {
-        $subcategories = DB::table('sub_categories')->get();
+        $subcategories = DB::table('sub_categories')->where('slug','LIKE', 'general-news/%')->get();
         $comments = DB::table('comments')->where('news_id', $id)->paginate();
         $categories = DB::table('categories')->get();
         $news = DB::table('news')->where('id', $id)->first();
@@ -394,7 +394,7 @@ class AdminController extends Controller
     {
         $products = DB::table('store_products')->orderByDesc('id')->paginate();
         foreach ($products as $value) {
-            $value->category = DB::table('store_categories')->where('id', $value->cat_id)->first();
+            $value->category = DB::table('store_categories')->where('id', $value->cat_id)->value('title');
         }
         $allProducts = DB::table('store_products')->count();
         $activeProducts = DB::table('store_products')->where('status', 'active')->count();

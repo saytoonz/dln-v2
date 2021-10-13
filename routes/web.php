@@ -55,6 +55,11 @@ Route::get('add-legal_works-dislike/{id}', [FrontController::class, 'addLegalDis
 Route::get('lawfirm', [FrontController::class, 'lawFirm']);
 Route::get('view-firms/{slug}', [FrontController::class, 'viewFirm']);
 
+//Contact us
+Route::get('contact-us', [FrontController::class, 'contactUs']);
+Route::post('contact', [CRUDController::class, 'insertData']);
+Route::post('join-news-letter', [CRUDController::class, 'insertData']);
+
 
 
 

@@ -1,7 +1,9 @@
 @extends('frontend.master')
+@section('title')
+    <title>Legal Works | DLN</title>
+@endsection
 @section('content')
 <link rel="stylesheet" href="{{ url('css/listnav.css') }}">
-{{-- <link rel="stylesheet" href="{{ url('css/listnav.css') }}"> --}}
 <style>
     main a {
         color: #105f8d !important;

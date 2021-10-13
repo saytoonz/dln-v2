@@ -101,12 +101,12 @@
                                     <div class="form-group">
                                         <label>Logo</label>
                                         @if (!empty($data->image))
-                                        <p><img src="{{ url('/settings') }}/{{ $data->image }}" alt="" id="output"></p>
+                                        <p><img src="{{ url('/settings') }}/{{ $data->image }}" alt="" id="output" width="100%"></p>
                                         <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none"></p>
                                         <p><label for="file" style="cursor: pointer" class="btn btn-primary" >Replace Image</label></p>
 
                                         @else
-                                        <p><img id="output"></p>
+                                        <p><img id="output" width="100%"></p>
                                         <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none"></p>
                                         <p><label for="file" style="cursor: pointer" class="btn btn-primary" >Upload Image</label></p>
                                         @endif
@@ -115,11 +115,11 @@
                                     <div class="form-group">
                                         <label>Footer Logo</label>
                                         @if (!empty($data->image))
-                                        <p><img src="{{ url('/settings') }}/{{ $data->footer_image }}" alt="" id="output_footer"></p>
+                                        <p><img src="{{ url('/settings') }}/{{ $data->footer_image }}" alt="" id="output_footer" width="100%"></p>
                                         <p><input type="file" accept="image/*" name="footer_image" id="footer_image" onchange="loadFileFooter(event)" style="display: none"></p>
                                         <p><label for="footer_image" style="cursor: pointer" class="btn btn-primary" >Replace Image</label></p>
                                         @else
-                                        <p><img id="output_footer"></p>
+                                        <p><img id="output_footer" width="100%"></p>
                                         <p><input type="file" accept="image/*" name="footer_image" id="footer_image" onchange="loadFileFooter(event)" style="display: none"></p>
                                         <p><label for="footer_image" style="cursor: pointer" class="btn btn-primary" >Upload Image</label></p>
                                         @endif

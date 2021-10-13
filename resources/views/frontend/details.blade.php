@@ -1,6 +1,16 @@
 @extends('frontend.master')
 @section('title')
-    <title>{{ $data->title }} | DLN</title>
+    <title>{{ $data->seo_title }} | DLN</title>
+    <meta name="description" content="{{ $data->seo_description }}">
+    <meta name="keywords" content="{{ $data->seo_keywords }}" />
+
+    <meta property="og:url" content="{{ url('article') }}/{{$data->slug}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ $data->seo_title }}" />
+    <meta property="og:description" content="{{ $data->seo_description }}" />
+    <meta property="og:keywords" content="{{ $data->seo_keywords }}" />
+    <meta property="og:image" content="{{ url('news') }}/{{$data->image}}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url('news') }}/{{$data->image}}">
 @endsection
 @section('content')
 <div id="fb-root"></div>
@@ -161,39 +171,7 @@
                                 <div class="section-tittle">
                                     <h3 class="mr-20">Share:</h3>
 
-                                    <ul>
-                                        <li>
-                                            <div class="fb-share-button" data-href="{{url('article')}}/{{$data->slug}}" data-layout="button" data-size="large">
-                                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url('article')}}/{{$data->slug}}" class="fb-xfbml-parse-ignore">
-                                                    <img
-                                                    src="{{ url('img/news/xicon-fb.png.pagespeed.ic.mSPzk0pV5B.png') }}"
-                                                    alt="">
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large">
-                                                <img src="{{ url('img/news/xicon-tw.png.pagespeed.ic.MsswRZpbim.png') }}" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://chillyfacts.com/create-linkedin-share-button-on-website-webpages&title=Create LinkedIn Share button on Website Webpages&summary=chillyfacts.com&source=Chillyfacts" onclick="window.open(this.href, 'mywin', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;">
-                                                <img src="http://chillyfacts.com/wp-content/uploads/2017/06/LinkedIN.gif" alt="" width="54" height="20" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Whatsapp
-                                                <img src="{{ url('img/news/xicon-yo.png.pagespeed.ic.XNQAiExtR8.png') }}" alt="">
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Email
-                                                <img src="{{ url('img/news/xicon-yo.png.pagespeed.ic.XNQAiExtR8.png') }}" alt="">
-                                            </a>
-                                        </li>
-                                    </ul>
+                                @include('frontend.inc.sharebtn')
                                 </div>
                             </div>
                         </div>

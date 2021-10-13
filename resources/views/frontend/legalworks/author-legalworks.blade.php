@@ -1,6 +1,11 @@
 @extends('frontend.master')
 @section('title')
-    <title>{{ $author }} ({{count($data)}}) | Legal Works</title>
+    <title>{{ $author }} ({{count($data)}}) | Legal Works (DNL)</title>
+
+    <meta name="description" content="{{ $author }} ({{count($data)}}) | Legal Works (DNL)">
+    <meta property="og:url" content="{{ url('legal-work') }}/{{ str_replace(' ', '+', $author)}}" />
+    <meta property="og:title" content="{{ $author }} ({{count($data)}}) | Legal Works (DNL)" />
+    <meta property="og:description" content="{{ $author }} ({{count($data)}}) | Legal Works (DNL)" />
 @endsection
 @section('content')
     <style>

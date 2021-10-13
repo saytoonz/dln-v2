@@ -1,4 +1,7 @@
 @extends('frontend.master')
+@section('title')
+    <title>{{ $data->title }} | DLN</title>
+@endsection
 @section('content')
     <style>
         main a {

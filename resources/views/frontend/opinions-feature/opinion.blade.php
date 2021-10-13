@@ -1,4 +1,7 @@
 @extends('frontend.master')
+@section('title')
+    <title>Opinions and features | DLN</title>
+@endsection
 @section('content')
     <link rel="stylesheet" href="{{ url('css/store.css') }}">
 <style>

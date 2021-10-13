@@ -1,6 +1,6 @@
 @extends('frontend.master')
 @section('title')
-    <title>{{ '$data->title' }} | DLN</title>
+    <title>Resources | DLN</title>
 @endsection
 @section('content')
     <style>

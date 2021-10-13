@@ -1,4 +1,7 @@
 @extends('frontend.master')
+@section('title')
+    <title>Home | DLN</title>
+@endsection
 @section('content')
     <style>
         main a {
@@ -83,8 +86,8 @@
                                 @for ($i = 3; $i < (count($latestNews) > 8 ? 8 : count($latestNews)); $i++)
 
                                     <div class="trand-right-single d-flex">
-                                        <div class="trand-right-img">
-                                            <img src="{{ url('news') }}/ {{ $latestNews[$i]->image }}"
+                                        <div class="trand-right-img" style="width: 40%;">
+                                            <img style="width: 100%;" src="{{ url('news') }}/{{ $latestNews[$i]->image }}"
                                                 alt="{!! Str::substr($latestNews[$i]->title, 0, 300) !!}">
                                         </div>
                                         <div class="trand-right-cap">
@@ -260,7 +263,7 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -287,7 +290,7 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -313,7 +316,7 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -340,7 +343,7 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -365,7 +368,7 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="single-what-news mb-100">
                                                             <div class="what-img">
-                                                                <img src="{{ $item->image }}" alt="IMG" />
+                                                                <img src="{{url('news')}}/{{ $item->image }}" alt="IMG" />
                                                             </div>
                                                             <div class="what-cap">
                                                                 <span
@@ -393,75 +396,69 @@
         </section>
 
 
-
-        <div class="weekly2-news-area weekly2-pading gray-bg">
-            <div class="container">
-                <div class="weekly2-wrapper">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-tittle mb-30">
-                                <h3 id="catId">Happilex</h3>
+        @if (count($happilex) > 0)
+            <div class="weekly2-news-area weekly2-pading gray-bg">
+                <div class="container">
+                    <div class="weekly2-wrapper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="section-tittle mb-30">
+                                    <a href="{{ url('happilex/all') }}">
+                                        <h3 id="catId">Happilex</h3>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="weekly2-news-active dot-style d-flex dot-style">
-                                <div class="weekly2-single">
-                                    <div class="weekly2-img">
-                                        <img src="3.png" alt="" />
-                                    </div>
-                                    <div class="weekly2-caption">
-                                        <span class="color1">Category</span>
-                                        <p>date published</p>
-                                        <h4>
-                                            <a href="happilexdetails.php">
-                                                Title
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-12 d-flex">
+                                @foreach ($happilex as $item)
+                                        <div class="card" style="width: 18rem;">
+                                            <img class="card-img-top" src="{{ url('happilexes') }}/{{ $item->image }}"
+                                                alt="Card image cap">
+                                            <div class="card-body">
+                                    <a href="{{ url('view-happilex') }}/{{ $item->slug }}">
+                                                <p class="card-text">{{Str::substr($item->title, 0, 100) }}</p>
+                                    </a>
+                                            </div>
+                                        </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
 
-
-
-        <div class="recent-articles">
-            <div class="container">
-                <div class="recent-wrapper">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-tittle mb-30">
-                                <h3 id="catId">Justices</h3>
+        @if (count($justices) > 0)
+            <div class="recent-articles">
+                <div class="container">
+                    <div class="recent-wrapper">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="section-tittle mb-30">
+                                    <a href="{{ url('supreme-justices') }}">
+                                        <h3 id="catId">Justices</h3>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="recent-active dot-style d-flex dot-style">
-                                <div class="single-recent mb-100">
-                                    <div class="what-img">
-                                        <img src="3.png" alt="" />
+                        <div class="row">
+                            <div class="col-12 d-flex">
+                                @foreach ($justices as $item)
+                                    <div class="card" style="width: 18rem;">
+                                        <img class="card-img-top" src="{{ url('justices') }}/{{ $item->image }}"
+                                            alt="{{ $item->name }}">
+                                        <div class="card-body">
+                                            <p class="card-text">{{ Str::substr($item->description, 0, 100) }}</p>
+                                        </div>
                                     </div>
-                                    <div class="what-cap">
-                                        <span class="color1">Justice Name></span>
-                                        <h4>
-                                            <a href="javascript:void(0)">
-                                                Justice Info
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
 
     </main>
 

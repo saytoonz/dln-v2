@@ -4,9 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" type="image/x-icon" href="{{ url('favicon.ico') }}">
-    <title>DLN | ADMIN</title><!-- =============== VENDOR STYLES ===============-->
-    <!-- FONT AWESOME-->
+    <link rel="icon" type="image/x-icon" href="{{ url('img/favicon.jpg') }}">
+    <title>DLN | ADMIN</title>x
     <link rel="stylesheet" href="{{ url('vendor/@fortawesome/fontawesome-free/css/brands.css') }}">
     <link rel="stylesheet" href="{{ url('vendor/@fortawesome/fontawesome-free/css/regular.css') }}">
     <link rel="stylesheet" href="{{ url('vendor/@fortawesome/fontawesome-free/css/solid.css') }}">
@@ -50,10 +49,10 @@
             <nav class="navbar topnavbar">
                 <!-- START navbar header-->
                 <div class="navbar-header"><a class="navbar-brand" href="#" style="color: white;">
-                        <div class="brand-logo"><img class="img-fluid" src="{{ url('imsg/logo.png') }}"
-                                alt="DLN"></div>
+                        <div class="brand-logo"><img class="img-fluid" src="{{ url('img/favicon.jpg') }}"
+                                alt="DLN" style="width: 50px"></div>
                         <div class="brand-logo-collapsed"><img class="img-fluid"
-                                src="{{ url('imsg/logo-single.png') }}" alt="DLN"></div>
+                                src="{{ url('img/favicon.jpg') }}" alt="DLN"></div>
                     </a></div><!-- END navbar header-->
                 <!-- START Left navbar-->
                 <ul class="navbar-nav mr-auto flex-row">
@@ -95,7 +94,8 @@
                                 <div class="item user-block">
                                     <!-- User picture-->
                                     <div class="user-block-picture">
-                                        <div class="user-block-status"><img class="img-thumbnail rounded-circle"
+                                        <div class="user-block-status">
+                                            <img class="img-thumbnail rounded-circle"
                                                 src="{{ url('img/user/02.jpg') }}" alt="Avatar" width="60"
                                                 height="60">
                                             <div class="circle bg-success circle-lg"></div>
@@ -121,7 +121,7 @@
                         </li>
                         <li class="">
                             <a href=" #news" title="News" data-toggle="collapse">
-                            <em class="icon-settings"></em>
+                            <em class="icon-note"></em>
                             <span data-localize="sidebar.nav.NEWS">News</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="news">
@@ -144,7 +144,7 @@
                         <li class="">
                             <a href=" #supCourt" title="Supreme"
                             data-toggle="collapse">
-                            <em class="icon-settings"></em>
+                            <em class="icon-vector"></em>
                             <span data-localize="sidebar.nav.SUPREMECOURT">Supreme Court</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="supCourt">
@@ -177,7 +177,7 @@
                         <li class="">
                             <a href=" #Chambers" title="Chambers"
                             data-toggle="collapse">
-                            <em class="icon-settings"></em>
+                            <em class="icon-grid"></em>
                             <span data-localize="sidebar.nav.CHAMBERS">Chambers</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Chambers">
@@ -199,7 +199,7 @@
                         <li class="">
                             <a href=" #Opinions" title="Opinions/Features"
                             data-toggle="collapse">
-                            <em class="icon-settings"></em>
+                            <em class="icon-speech"></em>
                             <span data-localize="sidebar.nav.OPINIONS">Opinions/Features</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Opinions">
@@ -226,7 +226,7 @@
                         <li class="">
                             <a href=" #Happilex" title="Happilex"
                             data-toggle="collapse">
-                            <em class="icon-settings"></em>
+                            <em class="icon-social-github"></em>
                             <span data-localize="sidebar.nav.HAPPILEX">Happilex</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Happilex">
@@ -247,7 +247,7 @@
 
                         <li class=" ">
                             <a href="#store" title="Store" data-toggle="collapse">
-                                <em class="icon-settings"></em>
+                                <em class="icon-present"></em>
                                 <span data-localize="sidebar.nav.STORE">Store</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="store">
@@ -297,7 +297,7 @@
 
                         <li class=" ">
                             <a href="#advertisement" title="Advertisement" data-toggle="collapse">
-                                <em class="icon-settings"></em>
+                                <em class="icon-tag"></em>
                                 <span data-localize="sidebar.nav.ADVERTISEMENT">Advertisement</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="advertisement">
