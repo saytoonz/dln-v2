@@ -49,15 +49,22 @@
                                     <div>
                                         <br>
                                         <div class="input-group">
+                                            @if (in_array(40,explode(',',\Auth::user()->permissions)))
                                             <select class="custom-select" name="bulk-action">
                                                 <option value="0" selected>Bulk action</option>
                                                 <option value="1">Delete</option>
                                             </select>
+                                            @endif
                                             <div class="input-group-append">
+                                                @if (in_array(40,explode(',',\Auth::user()->permissions)))
                                                 <button class="btn btn-secondary" type="submit">Apply</button>
                                                 &nbsp;
+                                                @endif
+
+                                            @if (in_array(39,explode(',',\Auth::user()->permissions)))
                                                 <a href="{{ url('add-happilex') }}" class="btn-secondary btn"> Add Happilex</a>
 
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -69,10 +76,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (in_array(37,explode(',',\Auth::user()->permissions)))
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+
+                                            @if (in_array(40,explode(',',\Auth::user()->permissions)))
                                             <th data-check-all>
                                                 <div class="checkbox c-checkbox" data-toggle="tooltip"
                                                     data-title="Check All">
@@ -80,6 +90,7 @@
                                                             class="fa fa-check"></span></label>
                                                 </div>
                                             </th>
+                                            @endif
                                             <th>Heading</th>
                                             <th>Image</th>
                                             <th>Views</th>
@@ -91,8 +102,9 @@
                                         @if (count($happilexes) > 0)
                                             @foreach ($happilexes as $happilex)
                                                 <tr>
-                                                    <td>
 
+                                            @if (in_array(40,explode(',',\Auth::user()->permissions)))
+                                                    <td>
                                                         <div class="checkbox c-checkbox">
                                                             <label>
                                                                 <input type="checkbox" name="select-data[]"
@@ -101,6 +113,7 @@
                                                             </label>
                                                         </div>
                                                     </td>
+                                                    @endif
                                                     <td><a
                                                             href="{{ url('edit-happilex') }}/{{ $happilex->id }}">{{ $happilex->title }}</a>
                                                     </td>
@@ -121,6 +134,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @endif
                         </div>
                     </form>
                     <div class="row">

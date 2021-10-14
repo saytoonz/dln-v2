@@ -317,15 +317,15 @@
                         </li>
                         @endif
 
-                        @if (in_array(43,explode(',',\Auth::user()->permissions)) || in_array(37,explode(',',\Auth::user()->permissions)))
+                        @if (in_array(43,explode(',',\Auth::user()->permissions)) || in_array(44,explode(',',\Auth::user()->permissions)))
                         <li class=" ">
                             <a href="#store" title="Store" data-toggle="collapse">
                                 <em class="icon-present"></em>
                                 <span data-localize="sidebar.nav.STORE">Store</span>
                             </a>
-                            @if (in_array(37,explode(',',\Auth::user()->permissions)))
                             <ul class="sidebar-nav sidebar-subnav collapse" id="store">
                                 <li class="sidebar-subnav-header">Store</li>
+                            @if (in_array(45,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('add-store-product') }}" title="Add Product">
                                         <span>Add Product</span>

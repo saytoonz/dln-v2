@@ -114,6 +114,8 @@
                     </div>
                 </form>
                 <br>
+
+                @if (in_array(41,explode(',',\Auth::user()->permissions)))
                 <div class="card card-default">
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -121,7 +123,10 @@
                                 <tr>
                                     <th><strong>Title</strong></th>
                                     <th><strong>Slug</strong></th>
+
+                                    @if (in_array(42,explode(',',\Auth::user()->permissions)))
                                     <th class="text-right" style="width:130px"><strong>Actions</strong></th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,12 +134,15 @@
                                     <tr id="happilex_cats{{ $category->id }}">
                                         <td>{{ $category->title }}</td>
                                         <td>{{ $category->slug }}</td>
+
+                                        @if (in_array(42,explode(',',\Auth::user()->permissions)))
                                         <td class="text-right">
                                             <button class="btn btn-sm btn-danger" type="button"
                                                 onclick="deleteAlert({{ $category->id }}, 'happilex_cats')">
                                                 <em class="fas fa-trash-alt"></em>
                                             </button>
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
 
@@ -142,6 +150,7 @@
                         </table>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
 
