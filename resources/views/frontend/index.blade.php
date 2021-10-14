@@ -248,7 +248,7 @@
 
                                 @foreach ($videos as $key => $video)
                                     <div class="video-items text-center">
-                                        <iframe src="{{ $video->url }}" frameborder="0"
+                                        <iframe src="https://www.youtube.com/embed/EvOABOa3IrU" frameborder="0"
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowfullscreen></iframe>
                                     </div>
@@ -261,10 +261,10 @@
                             <div class="col-lg-6">
                                 <div class="video-caption">
                                     <div class="top-caption">
-                                        <span class="color1">Politics</span>
+                                        <span class="color1">Videos</span>
                                     </div>
                                     <div class="bottom-caption">
-                                        <h2>Welcome To The Best Model Winner Contest At Look of the year</h2>
+                                        <h2></h2>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum
                                             dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
                                             eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit

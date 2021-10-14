@@ -65,9 +65,7 @@ Route::post('join-news-letter', [CRUDController::class, 'insertData']);
 
 
 
-Route::get('admin', function () {
-    return view('backend.index');
-});
+Route::get('dln-admin', [AdminController::class, 'admin']);
 
 //Site tabs /Categories
 Route::get('site-tabs', [AdminController::class, 'viewTabs']);
@@ -91,6 +89,10 @@ Route::post('post-news', [CRUDController::class, 'insertData']);
 Route::get('view-news', [AdminController::class, 'viewNews']);
 Route::get('edit-news/{id}', [AdminController::class, 'editNews']);
 Route::post('update-news/{id}', [CRUDController::class, 'updateData']);
+
+//Media
+Route::get('youtube-videos', [AdminController::class, 'youtube']);
+Route::get('audio-podcasts', [AdminController::class, 'audioPodCasts']);
 
 //Shared  APIs
 Route::post('multiple-delete', [AdminController ::class, 'multipleDelete']);
@@ -162,3 +164,9 @@ Route::get('view-store-products', [AdminController::class, 'viewProducts']);
 Route::post('add-store-category', [CRUDController::class, 'insertData']);
 Route::get('edit-product/{id}', [AdminController::class, 'editProduct']);
 Route::post('update-product/{id}', [CRUDController::class, 'updateData']);
+Route::get('view-users', [AdminController::class, 'systemUsers']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('logout', [App\Http\Controllers\HomeController::class, 'logout']);

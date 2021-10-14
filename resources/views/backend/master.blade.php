@@ -4,8 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="icon" type="image/x-icon" href="{{ url('img/favicon.jpg') }}">
-    <title>DLN | ADMIN</title>x
+
+    <title>DLN | ADMIN</title>
     <link rel="stylesheet" href="{{ url('vendor/@fortawesome/fontawesome-free/css/brands.css') }}">
     <link rel="stylesheet" href="{{ url('vendor/@fortawesome/fontawesome-free/css/regular.css') }}">
     <link rel="stylesheet" href="{{ url('vendor/@fortawesome/fontawesome-free/css/solid.css') }}">
@@ -70,8 +74,8 @@
                                 class="icon-user"></em></a>
                     </li><!-- END User avatar toggle-->
                     <!-- START lock screen-->
-                    <li class="nav-item d-none d-md-block"><a class="nav-link" href="lock.html"
-                            title="Lock screen"><em class="icon-lock"></em></a></li><!-- END lock screen-->
+                    <li class="nav-item d-none d-md-block"><a class="nav-link" href="{{url('logout')}}"
+                            title="Logout"><em class="icon-logout"></em></a></li><!-- END lock screen-->
                 </ul><!-- END Left navbar-->
                 <!-- START Right Navbar-->
                 <ul class="navbar-nav flex-row">
@@ -90,7 +94,7 @@
                     <ul class="sidebar-nav">
                         <!-- START user info-->
                         <li class="has-user-block">
-                            <div class="collapse show" id="user-block">
+                            <div class="collapse hide" id="user-block">
                                 <div class="item user-block">
                                     <!-- User picture-->
                                     <div class="user-block-picture">
@@ -98,11 +102,10 @@
                                             <img class="img-thumbnail rounded-circle"
                                                 src="{{ url('img/user/02.jpg') }}" alt="Avatar" width="60"
                                                 height="60">
-                                            <div class="circle bg-success circle-lg"></div>
                                         </div>
                                     </div><!-- Name and Job-->
-                                    <div class="user-block-info"><span class="user-block-name">Hello, Mike</span><span
-                                            class="user-block-role">Designer</span></div>
+                                    <div class="user-block-info"><span class="user-block-name">{{Auth::user()->name}}</span><span
+                                            class="user-block-role">{{Auth::user()->email}}</span></div>
                                 </div>
                             </div>
                         </li><!-- END user info-->
@@ -110,7 +113,7 @@
                         <li class="nav-heading"><span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                         </li>
                         <li class="">
-                            <a href=" {{ url('admin') }}" title="Dashboard">
+                            <a href=" {{ url('dln-admin') }}" title="Dashboard">
                             <em class="icon-speedometer"></em>
                             <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
                             </a>
@@ -138,6 +141,33 @@
                                 </li>
                             </ul>
                         </li>
+
+
+
+
+
+                        <li class="">
+                            <a href=" #Media" title="Media"
+                            data-toggle="collapse">
+                            <em class="icon-picture"></em>
+                            <span data-localize="sidebar.nav.MEDIA">Media</span>
+                            </a>
+                            <ul class="sidebar-nav sidebar-subnav collapse" id="Media">
+                                <li class="sidebar-subnav-header"></li>
+                                <li class=" ">
+                                    <a href="{{ url('youtube-videos') }}" title="Legal Work">
+                                        <span>YouTube Videos</span>
+                                    </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="{{ url('audio-podcasts') }}" title="Law Firms">
+                                        <span>Audio/Pod Casts</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
 
 
 
@@ -314,6 +344,31 @@
                                 </li>
                             </ul>
                         </li>
+
+
+                        <li class="nav-heading">
+                            <span data-localize="sidebar.heading.HEADER">User Management</span>
+                        </li>
+                        <li class=" ">
+                            <a href="#Users" title="Users" data-toggle="collapse">
+                                <em class="icon-people"></em>
+                                <span data-localize="sidebar.nav.SITESETTINGS">Users</span>
+                            </a>
+                            <ul class="sidebar-nav sidebar-subnav collapse" id="Users">
+                                <li class="sidebar-subnav-header">System User</li>
+                                <li class=" ">
+                                    <a href="{{ url('register') }}" title="Site Tabs">
+                                        <span>Add User</span>
+                                    </a>
+                                </li>
+                                <li class=" ">
+                                    <a href="{{ url('view-users') }}" title="Pages">
+                                        <span>View User</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
 
                     </ul><!-- END sidebar nav-->
                 </nav>

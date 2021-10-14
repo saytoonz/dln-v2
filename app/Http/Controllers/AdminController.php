@@ -10,6 +10,18 @@ use Session;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
+    public function admin()
+    {
+        return view('backend.index');
+    }
+
+
     public function viewTabs()
     {
         $data = DB::table('categories')->get();
@@ -424,5 +436,16 @@ class AdminController extends Controller
     public function addPage(){
         return view('backend.pages.add-page');
     }
+
+
+    public function youtube(){
+        $data = DB::table('videos')->orderByDesc('id')->paginate();
+        return view('backend.media-news.youtube', ['data' =>$data]);
+    }
+    public function audioPodCasts(){
+        $data = DB::table('audios')->orderByDesc('id')->paginate();
+        return view('backend.media-news.audio-podcast', ['data' =>$data]);
+    }
+
 
 }
