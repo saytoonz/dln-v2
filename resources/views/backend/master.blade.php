@@ -398,6 +398,27 @@
                         @endif
 
 
+                        @if (in_array(52,explode(',',\Auth::user()->permissions)))
+                        <li class="nav-heading">
+                            <span data-localize="sidebar.heading.HEADER">News Letters</span>
+                        </li>
+                        <li class=" ">
+                            <a href="#NewsLetters" title="NewsLetters" data-toggle="collapse">
+                                <em class="icon-people"></em>
+                                <span data-localize="sidebar.nav.NEWSLETTERS">News Letters</span>
+                            </a>
+
+                            <ul class="sidebar-nav sidebar-subnav collapse" id="NewsLetters">
+                                <li class="sidebar-subnav-header">News Letters</li>
+                                <li class=" ">
+                                    <a href="{{ url('news-letters-subscribers') }}" title="Pages">
+                                        <span>Subscribers</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+
                         @if (in_array(50,explode(',',\Auth::user()->permissions)))
                         <li class="nav-heading">
                             <span data-localize="sidebar.heading.HEADER">User Management</span>
@@ -407,6 +428,7 @@
                                 <em class="icon-people"></em>
                                 <span data-localize="sidebar.nav.SITESETTINGS">Users</span>
                             </a>
+
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Users">
                                 <li class="sidebar-subnav-header">System User</li>
                                 <li class=" ">

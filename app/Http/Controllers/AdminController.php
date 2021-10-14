@@ -594,4 +594,10 @@ class AdminController extends Controller
         $pems = DB::table('permissions')->get();
         return view('backend.system-users.edit-user', ['data' => $data, 'pems' => $pems]);
     }
+
+    public function newsLetterSubscribers()
+    {
+        $data = DB::table('news_letters')->paginate();
+        return view('backend.news-letter.news-letter-subscribers', ['data'=>$data]);
+    }
 }

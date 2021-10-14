@@ -170,6 +170,9 @@ Route::get('view-users', [AdminController::class, 'systemUsers']);
 Route::get('edit-user/{id}', [AdminController::class, 'editSystemUsers']);
 Route::post('update-user/{id}', [CRUDController::class, 'updateData']);
 
+//News Letters
+Route::get('news-letters-subscribers', [AdminController::class, 'newsLetterSubscribers']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
