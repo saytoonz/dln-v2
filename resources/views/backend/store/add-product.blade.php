@@ -82,6 +82,7 @@
 
             <!-- sidebar-->
 
+            @if (in_array(47,explode(',',\Auth::user()->permissions)))
             <div class="col-xl-4">
                 @if (Session::has('message-2'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -148,6 +149,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
 
         </div>
