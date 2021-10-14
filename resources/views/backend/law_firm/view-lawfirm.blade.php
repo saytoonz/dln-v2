@@ -32,8 +32,7 @@
                     <div class="ml-auto">
                         <div class="col-12 d-flex justify-content-end pt-4">
                             <br>
-                            <input type="text" class="form-control" name="daterange"
-                                value="01/01/2018 - 01/15/2018" />
+                            <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
                             <button class="btn btn-primary">
                                 Filter
                             </button>
@@ -49,15 +48,24 @@
                                     <div>
                                         <br>
                                         <div class="input-group">
+
+                                            @if (in_array(31,explode(',',\Auth::user()->permissions)))
                                             <select class="custom-select" name="bulk-action">
                                                 <option value="0" selected>Bulk action</option>
                                                 <option value="1">Delete</option>
                                             </select>
                                             <div class="input-group-append">
+                                                @endif
+                                                @if (in_array(31,explode(',',\Auth::user()->permissions)))
                                                 <button class="btn btn-secondary" type="submit">Apply</button>
                                                 &nbsp;
-                                                <a href="{{ asset('add-law-firms') }}" class="btn-secondary btn">Add Law Firm</a>
+                                                @endif
+                                                @if (in_array(29,explode(',',\Auth::user()->permissions)))
 
+                                                <a href="{{ asset('add-law-firms') }}" class="btn-secondary btn">Add Law
+                                                    Firm</a>
+
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -69,10 +77,14 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @if (in_array(28,explode(',',\Auth::user()->permissions)))
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+
+                                            @if (in_array(31,explode(',',\Auth::user()->permissions)))
                                             <th data-check-all>
                                                 <div class="checkbox c-checkbox" data-toggle="tooltip"
                                                     data-title="Check All">
@@ -80,6 +92,7 @@
                                                             class="fa fa-check"></span></label>
                                                 </div>
                                             </th>
+                                            @endif
                                             <th>Firm Name</th>
                                             <th>Lawyer</th>
                                             <th>About Firm</th>
@@ -91,6 +104,8 @@
                                         @if (count($firms) > 0)
                                             @foreach ($firms as $firm)
                                                 <tr>
+
+                                                    @if (in_array(31,explode(',',\Auth::user()->permissions)))
                                                     <td>
 
                                                         <div class="checkbox c-checkbox">
@@ -101,26 +116,28 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td><a
-                                                            href="{{ url('edit-law-firm') }}/{{ $firm->id }}">{{ $firm->law_firm }}</a>
-                                                    </td>
-                                                    <td>{{ $firm->lawyer }}</td>
-                                                    <td> {!! Str::substr($firm->about, 0, 200) !!}...</td>
-                                                    <td>{{ $firm->position }}</td>
-                                                    <td> {{ $firm->slug}}</td>
-                                                </tr>
-
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan='9' align="center">
-                                                    No news found.
-                                                </td>
+                                            @endif
+                                            <td><a
+                                                    href="{{ url('edit-law-firm') }}/{{ $firm->id }}">{{ $firm->law_firm }}</a>
+                                            </td>
+                                            <td>{{ $firm->lawyer }}</td>
+                                            <td> {!! Str::substr($firm->about, 0, 200) !!}...</td>
+                                            <td>{{ $firm->position }}</td>
+                                            <td> {{ $firm->slug }}</td>
                                             </tr>
+
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan='9' align="center">
+                                                No news found.
+                                            </td>
+                                        </tr>
                                         @endif
                                     </tbody>
                                 </table>
                             </div>
+                            @endif
                         </div>
                     </form>
                     <div class="row">

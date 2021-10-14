@@ -32,8 +32,7 @@
                     <div class="ml-auto">
                         <div class="col-12 d-flex justify-content-end pt-4">
                             <br>
-                            <input type="text" class="form-control" name="daterange"
-                                value="01/01/2018 - 01/15/2018" />
+                            <input type="text" class="form-control" name="daterange" value="01/01/2018 - 01/15/2018" />
                             <button class="btn btn-primary">
                                 Filter
                             </button>
@@ -49,16 +48,24 @@
                                     <div>
                                         <br>
                                         <div class="input-group">
+
+                                            @if (in_array(26,explode(',',\Auth::user()->permissions)))
                                             <select class="custom-select" name="bulk-action">
                                                 <option value="0" selected>Bulk action</option>
                                                 <option value="1">Delete</option>
                                             </select>
+                                            @endif
                                             <div class="input-group-append">
+                                                @if (in_array(26,explode(',',\Auth::user()->permissions)))
                                                 <button class="btn btn-secondary" type="submit">Apply</button>
+                                                @endif
+                                                @if (in_array(24,explode(',',\Auth::user()->permissions)))
                                                 &nbsp;
-                                                <a href="{{ asset('add-legal_work') }}" class="btn-secondary btn"> Add New</a>
-
+                                                <a href="{{ asset('add-legal_work') }}" class="btn-secondary btn"> Add
+                                                    New</a>
+                                                @endif
                                             </div>
+
                                         </div>
                                     </div>
                                     <div class="ml-auto">
@@ -69,10 +76,14 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @if (in_array(25,explode(',',\Auth::user()->permissions)))
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+
+                                            @if (in_array(26,explode(',',\Auth::user()->permissions)))
                                             <th data-check-all>
                                                 <div class="checkbox c-checkbox" data-toggle="tooltip"
                                                     data-title="Check All">
@@ -80,6 +91,8 @@
                                                             class="fa fa-check"></span></label>
                                                 </div>
                                             </th>
+                                            @endif
+
                                             <th>Post title</th>
                                             <th>Author</th>
                                             <th>Categories</th>
@@ -96,6 +109,8 @@
                                         @if (count($posts) > 0)
                                             @foreach ($posts as $post)
                                                 <tr>
+
+                                                    @if (in_array(26,explode(',',\Auth::user()->permissions)))
                                                     <td>
 
                                                         <div class="checkbox c-checkbox">
@@ -106,30 +121,34 @@
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td><a
-                                                            href="{{ url('edit-legal_work') }}/{{ $post->id }}">{{ $post->title }}</a>
-                                                    </td>
-                                                    <td>{{ $post->author }}</td>                                                    <td>{{ $post->categories_id }}</td>
-                                                    <td> {{ $post->subcategories_id }}</td>
-                                                    <td>{{ $post->tags }}</td>
-                                                    <td>{{ $post->views }}</td>
-                                                    <td>{{ $post->likes }}</td>
-                                                    <td>{{ $post->dislikes }}</td>
-                                                    <td>{{ $post->updated_at ?? $post->created_at }}</td>
-                                                    <td>{{ $post->status }}</td>
-                                                </tr>
-
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan='9' align="center">
-                                                    No news found.
-                                                </td>
+                                            @endif
+                                            <td><a
+                                                    href="{{ url('edit-legal_work') }}/{{ $post->id }}">{{ $post->title }}</a>
+                                            </td>
+                                            <td>{{ $post->author }}</td>
+                                            <td>{{ $post->categories_id }}</td>
+                                            <td> {{ $post->subcategories_id }}</td>
+                                            <td>{{ $post->tags }}</td>
+                                            <td>{{ $post->views }}</td>
+                                            <td>{{ $post->likes }}</td>
+                                            <td>{{ $post->dislikes }}</td>
+                                            <td>{{ $post->updated_at ?? $post->created_at }}</td>
+                                            <td>{{ $post->status }}</td>
                                             </tr>
+
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan='9' align="center">
+                                                No news found.
+                                            </td>
+                                        </tr>
                                         @endif
                                     </tbody>
                                 </table>
                             </div>
+                            @endif
+
                         </div>
                     </form>
                     <div class="row">
