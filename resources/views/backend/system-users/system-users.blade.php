@@ -72,7 +72,7 @@
                                             <th>Name</th>
                                             <th>Image</th>
                                             <th>Email</th>
-                                            <th>Roles</th>
+                                            <th>Permissions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -95,9 +95,9 @@
                                                     <td><img src="{{url('users')}}/{{ $user->image }}" alt="" width="100px" style="border-radius: 20px;"></td>
                                                     <td>{{ $user->email }}</td>
                                                     <td>
-                                                        @foreach ($user->roles as $key=>$item)
+                                                        @foreach ($user->permissions as $key=>$item)
                                                             {{$item->title}}
-                                                            @if ($key < count($user->roles) -1)
+                                                            @if ($key < count($user->permissions) -1)
                                                                 ,
                                                             @endif
                                                         @endforeach

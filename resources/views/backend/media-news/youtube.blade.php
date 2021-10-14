@@ -9,7 +9,9 @@
             <div class="content-heading">
                 <div>YouTube Videos</div>
             </div>
-            <div class="row todo">
+            <div class="row justify-content-center">
+
+                @if (in_array(5,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-3">
                     @if (Session::has('message'))
                         <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
@@ -45,6 +47,9 @@
                         </form>
                     </div>
                 </div>
+                @endif
+
+                @if (in_array(12,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-9 todo-item-list">
 
                     @if (Session::has('flash-error-message'))
@@ -70,6 +75,7 @@
 
                         <div class="card-footer">
                             <div class="d-flex">
+                                @if (in_array(6,explode(',',\Auth::user()->permissions)))
                                 <div>
                                     <br>
                                     <div class="input-group">
@@ -82,6 +88,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="ml-auto">
                                     <div class="col-12 d-flex justify-content-end pt-4" class="li: { list-style: none; }">
                                         {{ $data->links('pagination::bootstrap-4') }}
@@ -93,11 +100,13 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
+                                        @if (in_array(6,explode(',',\Auth::user()->permissions)))
                                         <th data-check-all>
                                             <div class="checkbox c-checkbox" data-toggle="tooltip" data-title="Check All">
                                                 <label><input type="checkbox"><span class="fa fa-check"></span></label>
                                             </div>
                                         </th>
+                                        @endif
                                         <th>Title</th>
                                         <th>Url</th>
                                         <th>Short Desc</th>
@@ -109,6 +118,7 @@
                                     @if (count($data) > 0)
                                         @foreach ($data as $video)
                                             <tr>
+                                                @if (in_array(6,explode(',',\Auth::user()->permissions)))
                                                 <td>
 
                                                     <div class="checkbox c-checkbox">
@@ -119,6 +129,7 @@
                                                         </label>
                                                     </div>
                                                 </td>
+                                                @endif
                                                 <td>{{ $video->title }}</td>
                                                 <td><a href="{{$video->url}}" target="_blank">{{ $video->url }}</a></td>
                                                 <td>{{$video->short_desc}}</td>
@@ -146,6 +157,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section><!-- Page footer-->

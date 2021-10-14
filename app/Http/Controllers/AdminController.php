@@ -18,18 +18,27 @@ class AdminController extends Controller
 
     public function admin()
     {
+        if(!in_array(51,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         return view('backend.index');
     }
 
 
     public function viewTabs()
     {
+        if(!in_array(34,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('categories')->get();
         return view('backend.settings.create-tab', ['data' => $data]);
     }
 
     public function editCategory($id)
     {
+        if(!in_array(48,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $singleData = DB::table('categories')->where('id', $id)->first();
         $data = DB::table('categories')->get();
         if ($singleData == NuLL) {
@@ -66,6 +75,9 @@ class AdminController extends Controller
 
     public function settings()
     {
+        if(!in_array(48,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('settings')->first();
         if ($data) {
             $data->social  = explode(',', $data->social);
@@ -76,6 +88,9 @@ class AdminController extends Controller
 
     public function sitePages()
     {
+        if(!in_array(48,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $pages = DB::table('pages')->get();
         return view('backend.pages.add-page', ['pages' => $pages]);
     }
@@ -89,6 +104,9 @@ class AdminController extends Controller
 
     public function addOpinion()
     {
+        if(!in_array(34,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $categories = DB::table('opinion_cats')->get();
         return view('backend.opinion-features.add-opinions', ['categories' => $categories]);
     }
@@ -96,6 +114,9 @@ class AdminController extends Controller
 
     public function viewOpinions()
     {
+        if(!in_array(33,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $posts = DB::table('opinions')->orderByDesc('id')->paginate();
         foreach ($posts as  $post) {
             $post->category = DB::table('opinion_cats')->where('id', $post->cat_id)->first();
@@ -109,6 +130,9 @@ class AdminController extends Controller
 
     public function editOpinions($id)
     {
+        if(!in_array(35,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $categories = DB::table('opinion_cats')->get();
         $post = DB::table('opinions')->where('id', $id)->first();
         $post->category =  DB::table('opinion_cats')->where('id', $post->cat_id)->first();
@@ -125,6 +149,9 @@ class AdminController extends Controller
 
     public function addNews()
     {
+        if(!in_array(1,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $categories = DB::table('categories')->get();
         $subcategories = DB::table('sub_categories')->where('slug', 'LIKE', 'general-news/%')->get();
         return view('backend.news.add-news', ['categories' => $categories, 'subcategories' => $subcategories]);
@@ -134,6 +161,9 @@ class AdminController extends Controller
 
     public function viewNews()
     {
+        if(!in_array(2,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $news = DB::table('news')->orderByDesc('id')->paginate();
         foreach ($news as  $post) {
             $categories = explode(',', $post->categories_id);
@@ -165,6 +195,9 @@ class AdminController extends Controller
 
     public function editNews($id)
     {
+        if(!in_array(3,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $subcategories = DB::table('sub_categories')->where('slug', 'LIKE', 'general-news/%')->get();
         $comments = DB::table('comments')->where('news_id', $id)->paginate();
         $categories = DB::table('categories')->get();
@@ -188,6 +221,9 @@ class AdminController extends Controller
 
     public function courtDairy()
     {
+        if(!in_array(14,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $courtDairies = DB::table('court_dairy')->orderBy('dairy_date', 'DESC')->paginate();
         return view('backend.supreme-court.court-dairy', ['courtDairies' => $courtDairies]);
     }
@@ -195,6 +231,9 @@ class AdminController extends Controller
 
     public function justices()
     {
+        if(!in_array(15,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $justices = DB::table('justices')->orderBy('id', 'DESC')->paginate();
         return view('backend.supreme-court.court-justices', ['justices' => $justices]);
     }
@@ -203,6 +242,9 @@ class AdminController extends Controller
 
     public function courtResources()
     {
+        if(!in_array(20,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $resources = DB::table('resources')->orderBy('id', 'DESC')->paginate(20);
         $cats = DB::table('resource_cats')->orderBy('title')->get();
         foreach ($resources as  $res) {
@@ -217,6 +259,9 @@ class AdminController extends Controller
 
     public function history()
     {
+        if(!in_array(19,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $history = DB::table('history')->get()->last();
         return view('backend.supreme-court.court-history', ['history' => $history]);
     }
@@ -248,15 +293,24 @@ class AdminController extends Controller
 
     public function addAdv()
     {
+        if(!in_array(49,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         return view('backend.advertisement.add-adv');
     }
     public function editAdv($id)
     {
+        if(!in_array(49,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('advertisements')->where('id', $id)->first();
         return view('backend.advertisement.edit-adv', ['data' => $data]);
     }
     public function allAdv()
     {
+        if(!in_array(49,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('advertisements')->orderByDesc('id')->paginate();
         return view('backend.advertisement.all-adv', ['data' => $data]);
     }
@@ -265,11 +319,17 @@ class AdminController extends Controller
 
     public function addHappilex()
     {
+        if(!in_array(39,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $categories = DB::table('happilex_cats')->get();
         return view('backend.happilex.add-happilex', ['categories' => $categories]);
     }
     public function viewHappilex()
     {
+        if(!in_array(37,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $happilexes = DB::table('happilexes')->orderByDesc('id')->paginate();
         foreach ($happilexes as $value) {
             $value->category = DB::table('happilex_cats')->where('id', $value->cat_id)->first();
@@ -277,8 +337,12 @@ class AdminController extends Controller
         $allPosts = DB::table('happilexes')->count();
         return view('backend.happilex.view-happilex', ['happilexes' => $happilexes, 'allPosts' => $allPosts]);
     }
+
     public function editHappilex($id)
     {
+        if(!in_array(38,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $comments = DB::table('happilex_comments')->where('happilex_id', $id)->paginate();
         $categories = DB::table('happilex_cats')->get();
         $happilex = DB::table('happilexes')->where('id', $id)->first();
@@ -298,11 +362,18 @@ class AdminController extends Controller
 
     public function viewOpinionCat()
     {
+        if(!in_array(33,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('opinion_cats')->get();
         return view('backend.opinion-features.cats.create-cat', ['data' => $data]);
     }
+
     public function editOpinionCat($id)
     {
+        if(!in_array(35,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $singleData = DB::table('opinion_cats')->where('id', $id)->first();
         $data = DB::table('opinion_cats')->get();
         if ($singleData == NuLL) {
@@ -315,6 +386,9 @@ class AdminController extends Controller
 
     public function lawFirms()
     {
+        if(!in_array(28,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('law_firms')->orderByDesc('id')->paginate();
         $allPosts = DB::table('law_firms')->count();
 
@@ -323,10 +397,17 @@ class AdminController extends Controller
 
     public function addLawFirms()
     {
+        if(!in_array(29,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         return view('backend.law_firm.add-lawfirm');
     }
+
     public function editLawFirms($id)
     {
+        if(!in_array(30,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('law_firms')->where('id', $id)->first();
         return view('backend.law_firm.edit-law-firm', ['data' => $data]);
     }
@@ -337,6 +418,9 @@ class AdminController extends Controller
 
     public function viewLegal()
     {
+        if(!in_array(25,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $news = DB::table('legal_works')->orderByDesc('id')->paginate();
         foreach ($news as  $post) {
             $categories = explode(',', $post->categories_id);
@@ -369,6 +453,9 @@ class AdminController extends Controller
 
     public function addLegal()
     {
+        if(!in_array(24,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $categories = DB::table('categories')->get();
         $subcategories = DB::table('sub_categories')->get();
         return view('backend.legal_work.add-legal_work', ['categories' => $categories, 'subcategories' => $subcategories]);
@@ -377,6 +464,9 @@ class AdminController extends Controller
 
     public function editLegal($id)
     {
+        if(!in_array(27,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
 
         $subcategories = DB::table('sub_categories')->get();
         $comments = DB::table('legal_work_comments')->where('news_id', $id)->paginate();
@@ -400,11 +490,17 @@ class AdminController extends Controller
 
     public function addProduct()
     {
+        if(!in_array(45,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $categories = DB::table('store_categories')->get();
         return view('backend.store.add-product', ['categories' => $categories]);
     }
     public function viewProducts()
     {
+        if(!in_array(43,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $products = DB::table('store_products')->orderByDesc('id')->paginate();
         foreach ($products as $value) {
             $value->category = DB::table('store_categories')->where('id', $value->cat_id)->value('title');
@@ -421,6 +517,9 @@ class AdminController extends Controller
 
     public function editProduct($id)
     {
+        if(!in_array(44,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $categories = DB::table('store_categories')->get();
         $product = DB::table('store_products')->where('id', $id)->first();
         $product->category = DB::table('happilex_cats')->where('id', $product->cat_id)->first();
@@ -436,17 +535,26 @@ class AdminController extends Controller
 
     public function addPage()
     {
+        if(!in_array(48,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         return view('backend.pages.add-page');
     }
 
 
     public function youtube()
     {
+        if(!in_array(12,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('videos')->orderByDesc('id')->paginate();
         return view('backend.media-news.youtube', ['data' => $data]);
     }
     public function audioPodCasts()
     {
+        if(!in_array(13,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('audios')->orderByDesc('id')->paginate();
         return view('backend.media-news.audio-podcast', ['data' => $data]);
     }
@@ -454,30 +562,36 @@ class AdminController extends Controller
 
     public function systemUsers()
     {
+        if(!in_array(50,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
+
         $data = DB::table('users')->orderByDesc('id')->where('id', '!=', 1)->get();
         foreach ($data as  $user) {
-            if ($user->role) {
-                $user->roleIds  = explode(',', $user->role);
-                foreach ($user->roleIds as $roleId) {
-                    $theRole = DB::table('roles')->where('id', $roleId)->first();
-                    $roles[] = $theRole;
+            if ($user->permissions) {
+                $user->permissionsIds  = explode(',', $user->permissions);
+                foreach ($user->permissionsIds as $permissionsId) {
+                    $theRole = DB::table('permissions')->where('id', $permissionsId)->first();
+                    $permissions[] = $theRole;
                 }
             } else {
-                $roles = [];
+                $permissions = [];
             }
-            $user->roles = $roles;
+            $user->permissions = $permissions;
         }
         return view('backend.system-users.system-users', ['data' => $data]);
     }
 
     public function editSystemUsers($id)
     {
-
+        if(!in_array(50,explode(',',\Auth::user()->permissions))){
+            return redirect()->back();
+        }
         $data = DB::table('users')->where('id', $id)->first();
         if($id == 1 || $data == null){
             return redirect()->back();
         }
-        $roles = DB::table('roles')->get();
-        return view('backend.system-users.edit-user', ['data' => $data, 'roles' => $roles]);
+        $pems = DB::table('permissions')->get();
+        return view('backend.system-users.edit-user', ['data' => $data, 'pems' => $pems]);
     }
 }

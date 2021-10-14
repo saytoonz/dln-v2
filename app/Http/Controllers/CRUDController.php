@@ -76,8 +76,8 @@ class CRUDController extends Controller
             $data['reviewers'] = implode(',', $request->reviewers);
         }
 
-        if ($request->has('role')) {
-            $data['role'] = implode(',', $request->role);
+        if ($request->has('permissions')) {
+            $data['permissions'] = implode(',', $request->permissions);
         }
 
 

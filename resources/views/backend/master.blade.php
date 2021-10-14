@@ -74,7 +74,7 @@
                                 class="icon-user"></em></a>
                     </li><!-- END User avatar toggle-->
                     <!-- START lock screen-->
-                    <li class="nav-item d-none d-md-block"><a class="nav-link" href="{{url('logout')}}"
+                    <li class="nav-item d-none d-md-block"><a class="nav-link" href="{{ url('logout') }}"
                             title="Logout"><em class="icon-logout"></em></a></li><!-- END lock screen-->
                 </ul><!-- END Left navbar-->
                 <!-- START Right Navbar-->
@@ -104,182 +104,226 @@
                                                 height="60">
                                         </div>
                                     </div><!-- Name and Job-->
-                                    <div class="user-block-info"><span class="user-block-name">{{Auth::user()->name}}</span><span
-                                            class="user-block-role">{{Auth::user()->email}}</span></div>
+                                    <div class="user-block-info"><span
+                                            class="user-block-name">{{ Auth::user()->name }}</span><span
+                                            class="user-block-role">{{ Auth::user()->email }}</span></div>
                                 </div>
                             </div>
                         </li><!-- END user info-->
                         <!-- Iterates over all sidebar items-->
                         <li class="nav-heading"><span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                         </li>
+                        @if (in_array(51,explode(',',\Auth::user()->permissions)))
                         <li class="">
                             <a href=" {{ url('dln-admin') }}" title="Dashboard">
-                            <em class="icon-speedometer"></em>
-                            <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
+                                <em class="icon-speedometer"></em>
+                                <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
                             </a>
                         </li>
+                        @endif
 
                         <li class="nav-heading">
                             <span data-localize="sidebar.heading.HEADER">POST</span>
                         </li>
+                        @if (in_array(2,explode(',',\Auth::user()->permissions)))
                         <li class="">
                             <a href=" #news" title="News" data-toggle="collapse">
-                            <em class="icon-note"></em>
-                            <span data-localize="sidebar.nav.NEWS">News</span>
+                                <em class="icon-note"></em>
+                                <span data-localize="sidebar.nav.NEWS">News</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="news">
                                 <li class="sidebar-subnav-header"></li>
+                                @if (in_array(1,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('add-news') }}" title="Add News">
                                         <span>Add News</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (in_array(2,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('view-news') }}" title="View News">
                                         <span>View News</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
 
 
 
 
-
+                        @if (in_array(12,explode(',',\Auth::user()->permissions)) ||
+                        in_array(13,explode(',',\Auth::user()->permissions)))
                         <li class="">
-                            <a href=" #Media" title="Media"
-                            data-toggle="collapse">
-                            <em class="icon-picture"></em>
-                            <span data-localize="sidebar.nav.MEDIA">Media</span>
+                            <a href=" #Media" title="Media" data-toggle="collapse">
+                                <em class="icon-picture"></em>
+                                <span data-localize="sidebar.nav.MEDIA">Media</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Media">
                                 <li class="sidebar-subnav-header"></li>
+                                @if (in_array(12,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('youtube-videos') }}" title="Legal Work">
                                         <span>YouTube Videos</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (in_array(13,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('audio-podcasts') }}" title="Law Firms">
                                         <span>Audio/Pod Casts</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
 
 
 
 
-
+                        @if (in_array(14,explode(',',\Auth::user()->permissions)) ||
+                        in_array(15,explode(',',\Auth::user()->permissions)) ||
+                        in_array(19,explode(',',\Auth::user()->permissions)) ||
+                        in_array(20,explode(',',\Auth::user()->permissions)))
                         <li class="">
-                            <a href=" #supCourt" title="Supreme"
-                            data-toggle="collapse">
-                            <em class="icon-vector"></em>
-                            <span data-localize="sidebar.nav.SUPREMECOURT">Supreme Court</span>
+                            <a href=" #supCourt" title="Supreme" data-toggle="collapse">
+                                <em class="icon-vector"></em>
+                                <span data-localize="sidebar.nav.SUPREMECOURT">Supreme Court</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="supCourt">
                                 <li class="sidebar-subnav-header"></li>
+                                @if (in_array(14,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('court-dairy') }}" title="Court Diary">
                                         <span>Court Diary</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (in_array(15,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('court-justices') }}" title="Justices">
                                         <span>Justices</span>
                                     </a>
                                 </li>
-
+                                @endif
+                                @if (in_array(19,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('court-history') }}" title="History">
                                         <span>History</span>
                                     </a>
                                 </li>
-
+                                @endif
+                                @if (in_array(20,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('court-resources') }}" title="Resources">
                                         <span>Resources</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
 
+                        @if (in_array(25,explode(',',\Auth::user()->permissions)) ||
+                        in_array(28,explode(',',\Auth::user()->permissions)))
                         <li class="">
-                            <a href=" #Chambers" title="Chambers"
-                            data-toggle="collapse">
-                            <em class="icon-grid"></em>
-                            <span data-localize="sidebar.nav.CHAMBERS">Chambers</span>
+                            <a href=" #Chambers" title="Chambers" data-toggle="collapse">
+                                <em class="icon-grid"></em>
+                                <span data-localize="sidebar.nav.CHAMBERS">Chambers</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Chambers">
                                 <li class="sidebar-subnav-header"></li>
+                                @if (in_array(25,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('view-legal_work') }}" title="Legal Work">
                                         <span>Legal Work</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (in_array(28,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('law-firms') }}" title="Law Firms">
                                         <span>Law Firms</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
 
-
+                        @if (in_array(33,explode(',',\Auth::user()->permissions)))
                         <li class="">
-                            <a href=" #Opinions" title="Opinions/Features"
-                            data-toggle="collapse">
-                            <em class="icon-speech"></em>
-                            <span data-localize="sidebar.nav.OPINIONS">Opinions/Features</span>
+                            <a href=" #Opinions" title="Opinions/Features" data-toggle="collapse">
+                                <em class="icon-speech"></em>
+                                <span data-localize="sidebar.nav.OPINIONS">Opinions/Features</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Opinions">
                                 <li class="sidebar-subnav-header"></li>
+
+                                @if (in_array(32,explode(',',\Auth::user()->permissions)))
                                 <li>
                                     <a href="{{ url('opinions-cats') }}" title="Opinion Categories">
                                         <span>Opinion Categories</span>
                                     </a>
                                 </li>
+                                @endif
+
+                                @if (in_array(34,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('add-opinions-features') }}" title="Add Opinion/Feature">
                                         <span>Add Opinion/Feature</span>
                                     </a>
                                 </li>
+                                @endif
+
+                                @if (in_array(33,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('view-opinions-features') }}" title="View Opinion/Feature">
                                         <span>View Opinion/Feature</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
 
 
+                        @if (in_array(37,explode(',',\Auth::user()->permissions)))
                         <li class="">
-                            <a href=" #Happilex" title="Happilex"
-                            data-toggle="collapse">
-                            <em class="icon-social-github"></em>
-                            <span data-localize="sidebar.nav.HAPPILEX">Happilex</span>
+                            <a href=" #Happilex" title="Happilex" data-toggle="collapse">
+                                <em class="icon-social-github"></em>
+                                <span data-localize="sidebar.nav.HAPPILEX">Happilex</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="Happilex">
                                 <li class="sidebar-subnav-header"></li>
+                                @if (in_array(39,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('add-happilex') }}" title="Add Happilex">
                                         <span>Add Happilex</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (in_array(37,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('view-happilex') }}" title="View Happilex">
                                         <span>View Happilex</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
 
-
+                        @if (in_array(43,explode(',',\Auth::user()->permissions)) || in_array(37,explode(',',\Auth::user()->permissions)))
                         <li class=" ">
                             <a href="#store" title="Store" data-toggle="collapse">
                                 <em class="icon-present"></em>
                                 <span data-localize="sidebar.nav.STORE">Store</span>
                             </a>
+                            @if (in_array(37,explode(',',\Auth::user()->permissions)))
                             <ul class="sidebar-nav sidebar-subnav collapse" id="store">
                                 <li class="sidebar-subnav-header">Store</li>
                                 <li class=" ">
@@ -287,15 +331,20 @@
                                         <span>Add Product</span>
                                     </a>
                                 </li>
+                                @endif
+                                @if (in_array(43,explode(',',\Auth::user()->permissions)))
                                 <li class=" ">
                                     <a href="{{ url('view-store-products') }}" title="View Store Products">
                                         <span>View Products</span>
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
+                        @endif
 
 
+                        @if (in_array(48,explode(',',\Auth::user()->permissions)))
                         <li class="nav-heading">
                             <span data-localize="sidebar.heading.HEADER">Site Settings</span>
                         </li>
@@ -323,8 +372,10 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
 
+                        @if (in_array(49,explode(',',\Auth::user()->permissions)))
                         <li class=" ">
                             <a href="#advertisement" title="Advertisement" data-toggle="collapse">
                                 <em class="icon-tag"></em>
@@ -344,8 +395,10 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
 
+                        @if (in_array(50,explode(',',\Auth::user()->permissions)))
                         <li class="nav-heading">
                             <span data-localize="sidebar.heading.HEADER">User Management</span>
                         </li>
@@ -368,6 +421,7 @@
                                 </li>
                             </ul>
                         </li>
+                        @endif
 
 
                     </ul><!-- END sidebar nav-->
@@ -384,57 +438,61 @@
                         <div class="tab-pane fade active show" q role="tabpanel">
                             <div class="p-2">
 
-                            <div class="p-2">
-                                <h4 class="text-muted text-thin">Layout</h4>
-                                <div class="clearfix">
-                                    <p class="float-left">Fixed</p>
-                                    <div class="float-right"><label class="switch"><input id="chk-fixed"
-                                                type="checkbox" data-toggle-state="layout-fixed"><span></span></label>
+                                <div class="p-2">
+                                    <h4 class="text-muted text-thin">Layout</h4>
+                                    <div class="clearfix">
+                                        <p class="float-left">Fixed</p>
+                                        <div class="float-right"><label class="switch"><input
+                                                    id="chk-fixed" type="checkbox"
+                                                    data-toggle-state="layout-fixed"><span></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix">
+                                        <p class="float-left">Boxed</p>
+                                        <div class="float-right"><label class="switch"><input
+                                                    id="chk-boxed" type="checkbox"
+                                                    data-toggle-state="layout-boxed"><span></span></label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="clearfix">
-                                    <p class="float-left">Boxed</p>
-                                    <div class="float-right"><label class="switch"><input id="chk-boxed"
-                                                type="checkbox" data-toggle-state="layout-boxed"><span></span></label>
+                                <div class="p-2">
+                                    <h4 class="text-muted text-thin">Aside</h4>
+                                    <div class="clearfix">
+                                        <p class="float-left">Collapsed</p>
+                                        <div class="float-right"><label class="switch"><input
+                                                    id="chk-collapsed" type="checkbox"
+                                                    data-toggle-state="aside-collapsed"><span></span></label></div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="p-2">
-                                <h4 class="text-muted text-thin">Aside</h4>
-                                <div class="clearfix">
-                                    <p class="float-left">Collapsed</p>
-                                    <div class="float-right"><label class="switch"><input
-                                                id="chk-collapsed" type="checkbox"
-                                                data-toggle-state="aside-collapsed"><span></span></label></div>
-                                </div>
-                                <div class="clearfix">
-                                    <p class="float-left">Collapsed Text</p>
-                                    <div class="float-right"><label class="switch"><input
-                                                id="chk-collapsed-text" type="checkbox"
-                                                data-toggle-state="aside-collapsed-text"><span></span></label></div>
-                                </div>
-                                <div class="clearfix">
-                                    <p class="float-left">Float</p>
-                                    <div class="float-right"><label class="switch"><input id="chk-float"
-                                                type="checkbox" data-toggle-state="aside-float"><span></span></label>
+                                    <div class="clearfix">
+                                        <p class="float-left">Collapsed Text</p>
+                                        <div class="float-right"><label class="switch"><input
+                                                    id="chk-collapsed-text" type="checkbox"
+                                                    data-toggle-state="aside-collapsed-text"><span></span></label></div>
                                     </div>
-                                </div>
-                                <div class="clearfix">
-                                    <p class="float-left">Hover</p>
-                                    <div class="float-right"><label class="switch"><input id="chk-hover"
-                                                type="checkbox" data-toggle-state="aside-hover"><span></span></label>
+                                    <div class="clearfix">
+                                        <p class="float-left">Float</p>
+                                        <div class="float-right"><label class="switch"><input
+                                                    id="chk-float" type="checkbox"
+                                                    data-toggle-state="aside-float"><span></span></label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="clearfix">
-                                    <p class="float-left">Show Scrollbar</p>
-                                    <div class="float-right"><label class="switch"><input id="chk-scroll"
-                                                type="checkbox" data-toggle-state="show-scrollbar"
-                                                data-target=".sidebar"><span></span></label></div>
+                                    <div class="clearfix">
+                                        <p class="float-left">Hover</p>
+                                        <div class="float-right"><label class="switch"><input
+                                                    id="chk-hover" type="checkbox"
+                                                    data-toggle-state="aside-hover"><span></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix">
+                                        <p class="float-left">Show Scrollbar</p>
+                                        <div class="float-right"><label class="switch"><input
+                                                    id="chk-scroll" type="checkbox" data-toggle-state="show-scrollbar"
+                                                    data-target=".sidebar"><span></span></label></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </nav><!-- END Off Sidebar (right)-->
         </aside><!-- Main section-->
 
