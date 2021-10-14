@@ -9,7 +9,9 @@
             <div class="content-heading">
                 <div>Resources</div>
             </div>
-            <div class="row todo">
+            <div class="row todo justify-content-center">
+                @if (in_array(21,explode(',',\Auth::user()->permissions)) ||
+                in_array(22,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-3">
                     @if (Session::has('message'))
                         <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
@@ -18,6 +20,8 @@
                             {{ Session('message') }}
                         </div>
                     @endif
+
+                    @if (in_array(21,explode(',',\Auth::user()->permissions)))
                     <div class="pr-3" style="background: #fff; padding: 5px 15px 5px 15px;">
                         <form method="post" action="{{ url('add-resource') }}" enctype="multipart/form-data"
                             class="mb-4">
@@ -69,10 +73,13 @@
                             </button>
                         </form>
                     </div>
+                    @endif
                     <br>
                     <br>
                     <br>
 
+
+                    @if (in_array(22,explode(',',\Auth::user()->permissions)))
                     <div class="pr-3" style="background: #fff; padding: 5px 5px 5px 15px;">
 
                         @if (Session::has('message-2'))
@@ -113,7 +120,11 @@
                             </button>
                         </form>
                     </div>
+                    @endif
                 </div>
+                @endif
+
+                @if (in_array(20,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-9 todo-item-list">
 
                     @if (Session::has('flash-error-message'))
@@ -139,6 +150,8 @@
 
                         <div class="card-footer">
                             <div class="d-flex">
+
+                                @if (in_array(23,explode(',',\Auth::user()->permissions)))
                                 <div>
                                     <br>
                                     <div class="input-group">
@@ -151,6 +164,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="ml-auto">
                                     <div class="col-12 d-flex justify-content-end pt-4" class="li: { list-style: none; }">
                                         {{ $resources->links('pagination::bootstrap-4') }}
@@ -161,12 +175,15 @@
                         <div class="table-responsive" style="background: #fff;">
                             <table class="table table-hover">
                                 <thead>
+
                                     <tr>
+                                        @if (in_array(23,explode(',',\Auth::user()->permissions)))
                                         <th data-check-all>
                                             <div class="checkbox c-checkbox" data-toggle="tooltip" data-title="Check All">
                                                 <label><input type="checkbox"><span class="fa fa-check"></span></label>
                                             </div>
                                         </th>
+                                        @endif
                                         <th>Title</th>
                                         <th>Category</th>
                                         <th>File</th>
@@ -177,7 +194,9 @@
                                 <tbody>
                                     @if (count($resources) > 0)
                                         @foreach ($resources as $resource)
+
                                             <tr>
+                                                @if (in_array(23,explode(',',\Auth::user()->permissions)))
                                                 <td>
 
                                                     <div class="checkbox c-checkbox">
@@ -188,21 +207,22 @@
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td>{{ $resource->title }}</td>
-                                                <td>{{ $resource->category_name }}</td>
-                                                <td><a href="{{ url('resources') }}/{{ $resource->image }}"
-                                                        target="_blank">{{ $resource->image }}</a></td>
-                                                <td>{{ $resource->slug }}</td>
-                                                <td>{{ $resource->created_at }}</td>
-                                            </tr>
-
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan='9' align="center">
-                                                No data found.
-                                            </td>
+                                        @endif
+                                        <td>{{ $resource->title }}</td>
+                                        <td>{{ $resource->category_name }}</td>
+                                        <td><a href="{{ url('resources') }}/{{ $resource->image }}"
+                                                target="_blank">{{ $resource->image }}</a></td>
+                                        <td>{{ $resource->slug }}</td>
+                                        <td>{{ $resource->created_at }}</td>
                                         </tr>
+
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan='9' align="center">
+                                            No data found.
+                                        </td>
+                                    </tr>
                                     @endif
                                 </tbody>
                             </table>
@@ -216,6 +236,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section><!-- Page footer-->
