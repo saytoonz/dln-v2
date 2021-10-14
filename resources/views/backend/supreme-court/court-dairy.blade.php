@@ -12,7 +12,9 @@
                     Clear All Items
                 </button> --}}
             </div>
-            <div class="row todo">
+            <div class="row todo justify-content-center">
+
+                @if (in_array(9,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-3">
                     @if (Session::has('message'))
                         <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
@@ -43,6 +45,8 @@
                         </form>
                     </div>
                 </div>
+                @endif
+                @if (in_array(14,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-9 todo-item-list">
                     <div id="accordion" role="tablist" aria-multiselectable="false">
 
@@ -53,44 +57,46 @@
                                         <p class="text-bold mb-0">
                                             <span class="clickable collapsed" data-toggle="collapse"
                                                 data-parent="#accordion" data-target="#collapseTwo-{{ $dairy->id }}">
-
+                                                @if (in_array(11,explode(',',\Auth::user()->permissions)))
                                                 <span class="close"
                                                     onclick="deleteAlert({{ $dairy->id }}, 'court_dairy')">&times;</span>
-
-                                                <span
-                                                    class="todo-title">{{ date('d M, Y', strtotime($dairy->dairy_date)) }}
-                                                    - {{ $dairy->title }}</span>
-                                                <span class="todo-edit fas fa-pencil-alt"></span>
-                                            </span>
-                                        </p>
-                                    </div>
-                                    <div class="collapse" id="collapseTwo-{{ $dairy->id }}">
-                                        <div class="card-body">
-                                            <p><span class="text-muted">{{ $dairy->description }}</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="card mb-0 todo-item">
-
-                                <p align="center"><br>There is no diary created<br></p>
-
-                            </div>
-
+                            @endif
+                            <span class="todo-title">{{ date('d M, Y', strtotime($dairy->dairy_date)) }} -
+                                {{ $dairy->title }}</span>
+                            @if (in_array(10,explode(',',\Auth::user()->permissions)))
+                            <span class="todo-edit fas fa-pencil-alt"></span>
                         @endif
-
-
-
-
+                        </span>
+                        </p>
                     </div>
-                    <div class="row">
-                        <div class="col-12 d-flex justify-content-end pt-4" class="li: { list-style: none; }">
-                            {{ $courtDairies->links('pagination::bootstrap-4') }}
+                    <div class="collapse" id="collapseTwo-{{ $dairy->id }}">
+                        <div class="card-body">
+                            <p><span class="text-muted">{{ $dairy->description }}</span></p>
                         </div>
                     </div>
                 </div>
+                @endforeach
+            @else
+                <div class="card mb-0 todo-item">
+
+                    <p align="center"><br>There is no diary created<br></p>
+
+                </div>
+
+                @endif
+
+
+
+
             </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end pt-4" class="li: { list-style: none; }">
+                    {{ $courtDairies->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+        </div>
+        @endif
+        </div>
         </div>
     </section><!-- Page footer-->
 

@@ -46,6 +46,7 @@
                         <div class="card">
                             <div class="card-footer">
                                 <div class="d-flex">
+                                    @if (in_array(4,explode(',',\Auth::user()->permissions)))
                                     <div>
                                         <br>
                                         <div class="input-group">
@@ -61,6 +62,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="ml-auto">
                                         <div class="col-12 d-flex justify-content-end pt-4"
                                             class="li: { list-style: none; }">
@@ -73,6 +75,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+                                            @if (in_array(4,explode(',',\Auth::user()->permissions)))
                                             <th data-check-all>
                                                 <div class="checkbox c-checkbox" data-toggle="tooltip"
                                                     data-title="Check All">
@@ -80,6 +83,7 @@
                                                             class="fa fa-check"></span></label>
                                                 </div>
                                             </th>
+                                            @endif
                                             <th>Post title</th>
                                             <th>Author</th>
                                             <th>Categories</th>
@@ -96,6 +100,7 @@
                                         @if (count($posts) > 0)
                                             @foreach ($posts as $post)
                                                 <tr>
+                                                    @if (in_array(4,explode(',',\Auth::user()->permissions)))
                                                     <td>
 
                                                         <div class="checkbox c-checkbox">
@@ -106,6 +111,7 @@
                                                             </label>
                                                         </div>
                                                     </td>
+                                                    @endif
                                                     <td><a
                                                             href="{{ url('edit-news') }}/{{ $post->id }}">{{ $post->title }}</a>
                                                     </td>

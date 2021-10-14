@@ -9,7 +9,9 @@
             <div class="content-heading">
                 <div>Justices</div>
             </div>
-            <div class="row todo">
+            <div class="row todo justify-content-center">
+
+                @if (in_array(16,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-3">
                     @if (Session::has('message'))
                         <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
@@ -49,6 +51,9 @@
                         </form>
                     </div>
                 </div>
+                @endif
+
+                @if (in_array(15,explode(',',\Auth::user()->permissions)))
                 <div class="col-lg-9 todo-item-list">
                     <div id="accordion" role="tablist" aria-multiselectable="false">
 
@@ -60,54 +65,59 @@
                                             <span class="clickable collapsed" data-toggle="collapse"
                                                 data-parent="#accordion" data-target="#collapseTwo-{{ $justice->id }}">
 
+                                                @if (in_array(18,explode(',',\Auth::user()->permissions)))
                                                 <span class="close"
                                                     onclick="deleteAlert({{ $justice->id }}, 'justices')">&times;</span>
+                            @endif
 
-                                                <span class="todo-title">{{ $justice->name }}</span>
-                                                <span class="todo-edit fas fa-pencil-alt"></span>
-                                            </span>
+                            <span class="todo-title">{{ $justice->name }}</span>
+
+                            @if (in_array(17,explode(',',\Auth::user()->permissions)))
+                            <span class="todo-edit fas fa-pencil-alt"></span>
+                        @endif
+                        </span>
+                        </p>
+                    </div>
+                    <div class="collapse" id="collapseTwo-{{ $justice->id }}">
+                        <div class="card-body">
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <img class="card-img-top img-fluid"
+                                        src="{{ url('justices') }}/{{ $justice->image }}" alt="Justice image cap">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ $justice->name }}</h4>
+                                        <p class="card-text">{{ $justice->description }}</p>
+                                        <p class="card-text"><span class="text-sm text-muted">Added on
+                                                {{ date('d M, Y, h:m', strtotime($justice->created_at)) }}</span>
                                         </p>
                                     </div>
-                                    <div class="collapse" id="collapseTwo-{{ $justice->id }}">
-                                        <div class="card-body">
-                                            <div class="col-md-6">
-                                                <div class="card mb-4">
-                                                    <img class="card-img-top img-fluid"
-                                                        src="{{ url('justices') }}/{{ $justice->image }}"
-                                                        alt="Justice image cap">
-                                                    <div class="card-body">
-                                                        <h4 class="card-title">{{ $justice->name }}</h4>
-                                                        <p class="card-text">{{ $justice->description }}</p>
-                                                        <p class="card-text"><span class="text-sm text-muted">Added on
-                                                                {{ date('d M, Y, h:m', strtotime($justice->created_at)) }}</span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            @endforeach
-                        @else
-                            <div class="card mb-0 todo-item">
-
-                                <p align="center"><br>No justice added <br></p>
-
                             </div>
-
-                        @endif
-
-
-
-
-                    </div>
-                    <div class="row">
-                        <div class="col-12 d-flex justify-content-end pt-4" class="li: { list-style: none; }">
-                            {{ $justices->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>
+                @endforeach
+            @else
+                <div class="card mb-0 todo-item">
+
+                    <p align="center"><br>No justice added <br></p>
+
+                </div>
+
+                @endif
+
+
+
+
             </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end pt-4" class="li: { list-style: none; }">
+                    {{ $justices->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+        </div>
+        @endif
+        </div>
         </div>
     </section><!-- Page footer-->
 
