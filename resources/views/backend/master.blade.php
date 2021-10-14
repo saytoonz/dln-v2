@@ -180,8 +180,8 @@
                             <ul class="sidebar-nav sidebar-subnav collapse" id="supCourt">
                                 <li class="sidebar-subnav-header"></li>
                                 <li class=" ">
-                                    <a href="{{ url('court-dairy') }}" title="Court Dairy">
-                                        <span>Court Dairy</span>
+                                    <a href="{{ url('court-dairy') }}" title="Court Diary">
+                                        <span>Court Diary</span>
                                     </a>
                                 </li>
                                 <li class=" ">

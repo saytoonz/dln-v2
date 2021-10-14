@@ -164,7 +164,11 @@ Route::get('view-store-products', [AdminController::class, 'viewProducts']);
 Route::post('add-store-category', [CRUDController::class, 'insertData']);
 Route::get('edit-product/{id}', [AdminController::class, 'editProduct']);
 Route::post('update-product/{id}', [CRUDController::class, 'updateData']);
+
+//System Users
 Route::get('view-users', [AdminController::class, 'systemUsers']);
+Route::get('edit-user/{id}', [AdminController::class, 'editSystemUsers']);
+Route::post('update-user/{id}', [CRUDController::class, 'updateData']);
 
 Auth::routes();
 

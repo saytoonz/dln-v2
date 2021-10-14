@@ -77,12 +77,13 @@ class AdminController extends Controller
     public function sitePages()
     {
         $pages = DB::table('pages')->get();
-        return view('backend.pages.add-page', ['pages'=>$pages]);
+        return view('backend.pages.add-page', ['pages' => $pages]);
     }
 
-    public function editSitePages($id){
+    public function editSitePages($id)
+    {
         $data = DB::table('pages')->where('id', $id)->first();
-        return view('backend.pages.edit-page', ['data'=>$data]);
+        return view('backend.pages.edit-page', ['data' => $data]);
     }
 
 
@@ -125,7 +126,7 @@ class AdminController extends Controller
     public function addNews()
     {
         $categories = DB::table('categories')->get();
-        $subcategories = DB::table('sub_categories')->where('slug','LIKE', 'general-news/%')->get();
+        $subcategories = DB::table('sub_categories')->where('slug', 'LIKE', 'general-news/%')->get();
         return view('backend.news.add-news', ['categories' => $categories, 'subcategories' => $subcategories]);
     }
 
@@ -164,7 +165,7 @@ class AdminController extends Controller
 
     public function editNews($id)
     {
-        $subcategories = DB::table('sub_categories')->where('slug','LIKE', 'general-news/%')->get();
+        $subcategories = DB::table('sub_categories')->where('slug', 'LIKE', 'general-news/%')->get();
         $comments = DB::table('comments')->where('news_id', $id)->paginate();
         $categories = DB::table('categories')->get();
         $news = DB::table('news')->where('id', $id)->first();
@@ -424,7 +425,7 @@ class AdminController extends Controller
         $product = DB::table('store_products')->where('id', $id)->first();
         $product->category = DB::table('happilex_cats')->where('id', $product->cat_id)->first();
         return view(
-            'backend.store.edit-product' ,
+            'backend.store.edit-product',
             [
                 'data' => $product,
                 'categories' => $categories
@@ -433,19 +434,50 @@ class AdminController extends Controller
     }
 
 
-    public function addPage(){
+    public function addPage()
+    {
         return view('backend.pages.add-page');
     }
 
 
-    public function youtube(){
+    public function youtube()
+    {
         $data = DB::table('videos')->orderByDesc('id')->paginate();
-        return view('backend.media-news.youtube', ['data' =>$data]);
+        return view('backend.media-news.youtube', ['data' => $data]);
     }
-    public function audioPodCasts(){
+    public function audioPodCasts()
+    {
         $data = DB::table('audios')->orderByDesc('id')->paginate();
-        return view('backend.media-news.audio-podcast', ['data' =>$data]);
+        return view('backend.media-news.audio-podcast', ['data' => $data]);
     }
 
 
+    public function systemUsers()
+    {
+        $data = DB::table('users')->orderByDesc('id')->where('id', '!=', 1)->get();
+        foreach ($data as  $user) {
+            if ($user->role) {
+                $user->roleIds  = explode(',', $user->role);
+                foreach ($user->roleIds as $roleId) {
+                    $theRole = DB::table('roles')->where('id', $roleId)->first();
+                    $roles[] = $theRole;
+                }
+            } else {
+                $roles = [];
+            }
+            $user->roles = $roles;
+        }
+        return view('backend.system-users.system-users', ['data' => $data]);
+    }
+
+    public function editSystemUsers($id)
+    {
+
+        $data = DB::table('users')->where('id', $id)->first();
+        if($id == 1 || $data == null){
+            return redirect()->back();
+        }
+        $roles = DB::table('roles')->get();
+        return view('backend.system-users.edit-user', ['data' => $data, 'roles' => $roles]);
+    }
 }

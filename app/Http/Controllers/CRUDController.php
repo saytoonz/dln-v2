@@ -71,8 +71,13 @@ class CRUDController extends Controller
         if ($request->has('subcategories_id')) {
             $data['subcategories_id'] = implode(',', $request->subcategories_id);
         }
+
         if ($request->has('reviewers')) {
             $data['reviewers'] = implode(',', $request->reviewers);
+        }
+
+        if ($request->has('role')) {
+            $data['role'] = implode(',', $request->role);
         }
 
 

@@ -1,6 +1,6 @@
 @extends('frontend.master')
 @section('title')
-    <title>Court Dairy | DLN</title>
+    <title>Court Diary | DLN</title>
 @endsection
 @section('content')
 

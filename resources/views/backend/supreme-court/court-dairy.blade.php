@@ -7,7 +7,7 @@
         <!-- Page content-->
         <div class="content-wrapper">
             <div class="content-heading">
-                <div>Court Dairy<small>Keeping track of events</small></div>
+                <div>Court Diary<small>Keeping track of events</small></div>
                 {{-- <button class="ml-auto btn btn-danger">
                     Clear All Items
                 </button> --}}
@@ -38,7 +38,7 @@
                                     rows="8" required></textarea>
                             </div>
                             <button class="btn btn-primary btn-block" type="submit">
-                                Add Dairy
+                                Add Diary
                             </button>
                         </form>
                     </div>
@@ -74,7 +74,7 @@
                         @else
                             <div class="card mb-0 todo-item">
 
-                                <p align="center"><br>There is no dairy create <br></p>
+                                <p align="center"><br>There is no diary created<br></p>
 
                             </div>
 
