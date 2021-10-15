@@ -32,29 +32,38 @@ class AdminController extends Controller
             });
 
 
-            $totalDiary = DB::table('court_dairy')->count();
-            $courtDiaryThisMonth = DB::table('court_dairy')->whereMonth('created_at', date('m'))->count();
-            $courtDiaryThisYear = DB::table('court_dairy')->whereYear('created_at', date('Y'))
+        $totalDiary = DB::table('court_dairy')->count();
+        $courtDiaryThisMonth = DB::table('court_dairy')->whereMonth('created_at', date('m'))->count();
+        $courtDiaryThisYear = DB::table('court_dairy')->whereYear('created_at', date('Y'))
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('M');
+            });
+
+        $totalResources = DB::table('resources')->count();
+        $courtResourcesThisMonth = DB::table('resources')->whereMonth('created_at', date('m'))->count();
+        $courtResourcesThisYear = DB::table('resources')->whereYear('created_at', date('Y'))
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('M');
+            });
+
+            $totalFirms = DB::table('law_firms')->count();
+            $firmsThisMonth = DB::table('law_firms')->whereMonth('created_at', date('m'))->count();
+            $firmsThisYear = DB::table('law_firms')->whereYear('created_at', date('Y'))
                 ->get()
                 ->groupBy(function ($val) {
                     return Carbon::parse($val->created_at)->format('M');
                 });
 
-                $totalResources = DB::table('resources')->count();
-                $courtResourcesThisMonth = DB::table('resources')->whereMonth('created_at', date('m'))->count();
-                $courtResourcesThisYear = DB::table('resources')->whereYear('created_at', date('Y'))
-                    ->get()
-                    ->groupBy(function ($val) {
-                        return Carbon::parse($val->created_at)->format('M');
-                    });
 
-                    $totalFirms = DB::table('law_firms')->count();
-                $firmsThisMonth = DB::table('law_firms')->whereMonth('created_at', date('m'))->count();
-                $firmsThisYear = DB::table('law_firms')->whereYear('created_at', date('Y'))
-                    ->get()
-                    ->groupBy(function ($val) {
-                        return Carbon::parse($val->created_at)->format('M');
-                    });
+        $totalLegalWorks = DB::table('legal_works')->count();
+        $legalWorksThisMonth = DB::table('legal_works')->whereMonth('created_at', date('m'))->count();
+        $legalWorksThisYear = DB::table('legal_works')->whereYear('created_at', date('Y'))
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('M');
+            });
         return view(
             'backend.index',
             [
@@ -74,6 +83,10 @@ class AdminController extends Controller
                 'totalFirms' => $totalFirms,
                 'firmsThisMonth' => $firmsThisMonth,
                 'firmsThisYear' => $firmsThisYear,
+
+                'totalLegalWorks' => $totalLegalWorks,
+                'legalWorksThisMonth' => $legalWorksThisMonth,
+                'legalWorksThisYear' => $legalWorksThisYear,
             ]
         );
     }

@@ -103,55 +103,24 @@
                             <div class="list-group-item">
                                 <div class="d-flex align-items-center py-3">
                                     <div class="w-50 px-3">
-                                        <p class="m-0 lead">{{$totalResources}}</p>
-                                        <p class="m-0 text-sm">Total Resources</p>
+                                        <p class="m-0 lead">{{$totalLegalWorks}}</p>
+                                        <p class="m-0 text-sm">Total Legal Works</p>
                                     </div>
                                     <div class="w-50 px-3">
-                                        <p class="m-0 lead">{{$courtResourcesThisMonth}}</p>
+                                        <p class="m-0 lead">{{$legalWorksThisMonth}}</p>
                                         <p class="m-0 text-sm">This Month</p>
                                     </div>
 
                                     <div class="w-50 px-3 text-center">
                                         <div data-sparkline="" data-bar-color="#23b7e5" data-height="60"
                                             data-bar-width="10" data-bar-spacing="6" data-chart-range-min="0"
-                                            data-values="@foreach ($courtResourcesThisYear as $key=>$item)
+                                            data-values="@foreach ($legalWorksThisYear as $key=>$item)
                                             {{count($item)}},
                                             @endforeach"></div>
                                     </div>
                                 </div>
                             </div>
 
-
-
-
-
-
-                            <div class="list-group-item">
-                                <div class="d-flex align-items-center py-3">
-                                    <div class="w-50 px-3">
-                                        <p class="m-0 lead">67</p>
-                                        <p class="m-0 text-sm">New followers</p>
-                                    </div>
-                                    <div class="w-50 px-3 text-center">
-                                        <div class="d-flex align-items-center flex-wrap justify-content-center"><a
-                                                href="dashboard_v2.html#" data-toggle="tooltip" title="Katie"><img
-                                                    class="circle thumb24 mx-1" src="img/user/02.jpg"
-                                                    alt="Follower"></a><a href="dashboard_v2.html#"
-                                                data-toggle="tooltip" title="Cody"><img class="circle thumb24 mx-1"
-                                                    src="img/user/01.jpg" alt="Follower"></a><a
-                                                href="dashboard_v2.html#" data-toggle="tooltip" title="Tamara"><img
-                                                    class="circle thumb24 mx-1" src="img/user/03.jpg"
-                                                    alt="Follower"></a><a href="dashboard_v2.html#"
-                                                data-toggle="tooltip" title="Gene"><img class="circle thumb24 mx-1"
-                                                    src="img/user/04.jpg" alt="Follower"></a><a
-                                                href="dashboard_v2.html#" data-toggle="tooltip" title="Marsha"><img
-                                                    class="circle thumb24 mx-1" src="img/user/04.jpg"
-                                                    alt="Follower"></a><a href="dashboard_v2.html#"
-                                                data-toggle="tooltip" title="Robin"><img class="circle thumb24 mx-1"
-                                                    src="img/user/09.jpg" alt="Follower"></a></div>
-                                    </div>
-                                </div>
-                            </div>
                         </div><!-- END List group-->
                     </div>
                     <div class="col-xl-8">
@@ -173,6 +142,7 @@
                                 <div class="card-body">
                                     <div class="chart-bar-stackedv2 flot-chart"></div>
                                 </div>
+
                             </div>
                         </div><!-- END bar chart-->
                     </div>
