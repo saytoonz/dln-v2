@@ -585,7 +585,7 @@ class AdminController extends Controller
             return redirect()->back();
         }
         $categories = DB::table('categories')->get();
-        $subcategories = DB::table('sub_categories')->get();
+        $subcategories = DB::table('sub_categories')->where('slug', 'LIKE', 'general-news/%')->get();
         return view('backend.legal_work.add-legal_work', ['categories' => $categories, 'subcategories' => $subcategories]);
     }
 
@@ -596,7 +596,7 @@ class AdminController extends Controller
             return redirect()->back();
         }
 
-        $subcategories = DB::table('sub_categories')->get();
+        $subcategories = DB::table('sub_categories')->where('slug', 'LIKE', 'general-news/%')->get();
         $comments = DB::table('legal_work_comments')->where('news_id', $id)->paginate();
         $categories = DB::table('categories')->get();
         $news = DB::table('legal_works')->where('id', $id)->first();

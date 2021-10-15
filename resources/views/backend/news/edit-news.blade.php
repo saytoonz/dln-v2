@@ -178,7 +178,7 @@
 
                                 <p class="my-2">Tags</p>
                                 <input class="form-control" type="text" name="tags" data-role="tagsinput"  value="{{ $data->tags }}">
-
+{{--
                                 <p class="my-2">Reviewers</p>
                                 <select class="chosen-select form-control" name="reviewers[]" multiple>
                                     <option>adam@email.com</option>
@@ -189,7 +189,7 @@
                                     <option>natasha@email.com</option>
                                     <option>nicole@email.com</option>
                                     <option>adrian@email.com</option>
-                                </select>
+                                </select> --}}
                                 <p class="lead mt-3">SEO Metadata</p>
                                 <div class="form-group">
                                     <p>Title</p>
