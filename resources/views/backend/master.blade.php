@@ -100,7 +100,7 @@
                                     <div class="user-block-picture">
                                         <div class="user-block-status">
                                             <img class="img-thumbnail rounded-circle"
-                                                src="{{ url('img/user/02.jpg') }}" alt="Avatar" width="60"
+                                                src="{{ url('users') }}/{{ Auth::user()->image }}" alt="Avatar" width="60"
                                                 height="60">
                                         </div>
                                     </div><!-- Name and Job-->

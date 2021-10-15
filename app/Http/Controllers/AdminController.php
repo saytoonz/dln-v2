@@ -57,13 +57,61 @@ class AdminController extends Controller
                 });
 
 
-        $totalLegalWorks = DB::table('legal_works')->count();
-        $legalWorksThisMonth = DB::table('legal_works')->whereMonth('created_at', date('m'))->count();
-        $legalWorksThisYear = DB::table('legal_works')->whereYear('created_at', date('Y'))
+                $totalLegalWorks = DB::table('legal_works')->count();
+                $legalWorksThisMonth = DB::table('legal_works')->whereMonth('created_at', date('m'))->count();
+                $legalWorksThisYear = DB::table('legal_works')->whereYear('created_at', date('Y'))
+                    ->get()
+                    ->groupBy(function ($val) {
+                        return Carbon::parse($val->created_at)->format('M');
+                    });
+
+
+        $totalHappilex = DB::table('happilexes')->count();
+        $happilexThisMonth = DB::table('happilexes')->whereMonth('created_at', date('m'))->count();
+        $happilexThisYear = DB::table('happilexes')->whereYear('created_at', date('Y'))
             ->get()
             ->groupBy(function ($val) {
                 return Carbon::parse($val->created_at)->format('M');
             });
+
+        $browsers = DB::table('device_analytics')->select(DB::raw('DISTINCT browser, COUNT(*) AS counts'))->groupBy('browser')->orderBy('counts', 'desc')->get();
+        $deviceType = DB::table('device_analytics')->select(DB::raw('DISTINCT device_type, COUNT(*) AS counts'))->groupBy('device_type')->orderBy('counts', 'desc')->get();
+        $analytics = DB::table('analytics')->get()->last();
+
+        $totalHappilexView = DB::table('happilexes')->whereYear('created_at', date('Y'))
+        ->get()->sum('views');
+
+        $hapViews = [];
+        $opinionsViews = [];
+        $legalWorksViews = [];
+        $newsViews = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $date = \Carbon\Carbon::create(date('Y'), $month);
+            $date_end = $date->copy()->endOfMonth();
+
+            $ha = DB::table('happilexes')
+           -> where('created_at', '>=', $date)
+           ->where('created_at', '<=', $date_end)->sum('views');
+            array_push($hapViews, $ha);
+
+            $n = DB::table('news')
+           -> where('created_at', '>=', $date)
+           ->where('created_at', '<=', $date_end)->sum('views');
+           array_push($newsViews, $n);
+
+           $op = DB::table('opinions')
+           -> where('created_at', '>=', $date)
+           ->where('created_at', '<=', $date_end)->sum('views');
+           array_push($opinionsViews, $op);
+
+
+           $leg = DB::table('legal_works')
+           -> where('created_at', '>=', $date)
+           ->where('created_at', '<=', $date_end)->sum('views');
+           array_push($legalWorksViews, $leg);
+
+        }
         return view(
             'backend.index',
             [
@@ -87,6 +135,19 @@ class AdminController extends Controller
                 'totalLegalWorks' => $totalLegalWorks,
                 'legalWorksThisMonth' => $legalWorksThisMonth,
                 'legalWorksThisYear' => $legalWorksThisYear,
+
+                'totalHappilex' => $totalHappilex,
+                'happilexThisMonth' => $happilexThisMonth,
+                'happilexThisYear' => $happilexThisYear,
+
+                'browsers' => $browsers,
+                'deviceType' => $deviceType,
+                'analytics' => $analytics,
+
+                'hapViews'=>$hapViews,
+                'opinionsViews'=>$opinionsViews,
+                'newsViews'=>$newsViews,
+                'legalWorksViews'=>$legalWorksViews,
             ]
         );
     }
