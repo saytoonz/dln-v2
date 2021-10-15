@@ -5,17 +5,7 @@
             <!-- Page content-->
             <div class="content-wrapper">
                 <div class="content-heading">
-                    <div>Dashboard<small data-localize="dashboard.WELCOME"></small></div><!-- START Language list-->
-                    <div class="ml-auto">
-                        <div class="btn-group"><button
-                                class="btn btn-secondary dropdown-toggle dropdown-toggle-nocaret" type="button"
-                                data-toggle="dropdown">English</button>
-                            <div class="dropdown-menu dropdown-menu-right-forced animated fadeInUpShort" role="menu"><a
-                                    class="dropdown-item" href="dashboard_v2.html#" data-set-lang="en">English</a><a
-                                    class="dropdown-item" href="dashboard_v2.html#" data-set-lang="es">Spanish</a>
-                            </div>
-                        </div>
-                    </div><!-- END Language list-->
+                    <div>Dashboard<small data-localize="dashboard.WELCOME"></small></div>
                 </div>
                 <div class="row">
                     <div class="col-xl-4">
@@ -24,21 +14,32 @@
                             <div class="list-group-item">
                                 <div class="d-flex align-items-center py-3">
                                     <div class="w-50 px-3">
-                                        <p class="m-0 lead">1204</p>
-                                        <p class="m-0 text-sm">Commits this month</p>
+                                        <p class="m-0 lead">{{$totalNews}}</p>
+                                        <p class="m-0 text-sm">Total News</p>
                                     </div>
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$newsThisMonth}}</p>
+                                        <p class="m-0 text-sm">This Month</p>
+                                    </div>
+
                                     <div class="w-50 px-3 text-center">
                                         <div data-sparkline="" data-bar-color="#23b7e5" data-height="60"
                                             data-bar-width="10" data-bar-spacing="6" data-chart-range-min="0"
-                                            data-values="3,6,7,8,4,5"></div>
+                                            data-values="@foreach ($newsThisYear as $key=>$item)
+                                            {{count($item)}},
+                                            @endforeach"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="list-group-item">
                                 <div class="d-flex align-items-center py-3">
                                     <div class="w-50 px-3">
-                                        <p class="m-0 lead">$ 3,200.00</p>
-                                        <p class="m-0 text-sm">Available budget</p>
+                                        <p class="m-0 lead">{{$totalDiary}}</p>
+                                        <p class="m-0 text-sm">Total Court Dairies</p>
+                                    </div>
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$courtDiaryThisMonth}}</p>
+                                        <p class="m-0 text-sm">This Month</p>
                                     </div>
                                     <div class="w-50 px-3 text-center">
                                         <div data-sparkline="" data-type="line" data-height="60" data-width="80%"
@@ -46,10 +47,85 @@
                                             data-spot-color="#888" data-min-spot-color="#7266ba"
                                             data-max-spot-color="#7266ba" data-fill-color=""
                                             data-highlight-line-color="#fff" data-spot-radius="3"
-                                            data-values="7,3,4,7,5,9,4,4,7,5,9,6,4" data-resize="true"></div>
+                                            data-values="@foreach ($courtDiaryThisYear as $key=>$item)
+                                            {{count($item)}},
+                                            @endforeach" data-resize="true"></div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="list-group-item">
+                                <div class="d-flex align-items-center py-3">
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$totalResources}}</p>
+                                        <p class="m-0 text-sm">Total Resources</p>
+                                    </div>
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$courtResourcesThisMonth}}</p>
+                                        <p class="m-0 text-sm">This Month</p>
+                                    </div>
+
+                                    <div class="w-50 px-3 text-center">
+                                        <div data-sparkline="" data-bar-color="#23b7e5" data-height="60"
+                                            data-bar-width="10" data-bar-spacing="6" data-chart-range-min="0"
+                                            data-values="@foreach ($courtResourcesThisYear as $key=>$item)
+                                            {{count($item)}},
+                                            @endforeach"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="list-group-item">
+                                <div class="d-flex align-items-center py-3">
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$totalFirms}}</p>
+                                        <p class="m-0 text-sm">Total Law Firms</p>
+                                    </div>
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$firmsThisMonth}}</p>
+                                        <p class="m-0 text-sm">This Month</p>
+                                    </div>
+                                    <div class="w-50 px-3 text-center">
+                                        <div data-sparkline="" data-type="line" data-height="60" data-width="80%"
+                                            data-line-width="2" data-line-color="#7266ba" data-chart-range-min="0"
+                                            data-spot-color="#888" data-min-spot-color="#7266ba"
+                                            data-max-spot-color="#7266ba" data-fill-color=""
+                                            data-highlight-line-color="#fff" data-spot-radius="3"
+                                            data-values="@foreach ($firmsThisYear as $key=>$item)
+                                            {{count($item)}},
+                                            @endforeach" data-resize="true"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="list-group-item">
+                                <div class="d-flex align-items-center py-3">
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$totalResources}}</p>
+                                        <p class="m-0 text-sm">Total Resources</p>
+                                    </div>
+                                    <div class="w-50 px-3">
+                                        <p class="m-0 lead">{{$courtResourcesThisMonth}}</p>
+                                        <p class="m-0 text-sm">This Month</p>
+                                    </div>
+
+                                    <div class="w-50 px-3 text-center">
+                                        <div data-sparkline="" data-bar-color="#23b7e5" data-height="60"
+                                            data-bar-width="10" data-bar-spacing="6" data-chart-range-min="0"
+                                            data-values="@foreach ($courtResourcesThisYear as $key=>$item)
+                                            {{count($item)}},
+                                            @endforeach"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
                             <div class="list-group-item">
                                 <div class="d-flex align-items-center py-3">
                                     <div class="w-50 px-3">

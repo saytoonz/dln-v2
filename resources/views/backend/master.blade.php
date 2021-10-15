@@ -402,9 +402,9 @@
                         <li class="nav-heading">
                             <span data-localize="sidebar.heading.HEADER">News Letters</span>
                         </li>
-                        <li class=" ">
+                        <li class="">
                             <a href="#NewsLetters" title="NewsLetters" data-toggle="collapse">
-                                <em class="icon-people"></em>
+                                <em class="icon-layers"></em>
                                 <span data-localize="sidebar.nav.NEWSLETTERS">News Letters</span>
                             </a>
 
