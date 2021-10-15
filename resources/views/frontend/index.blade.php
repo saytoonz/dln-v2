@@ -152,7 +152,36 @@
                         @endif
 
 
+                        @if (count($audios))
+                        <div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <h3><a href="#">Audio/Podcasts</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                @foreach ($audios as $item)
+                                    <div class="col-4">
+                                        <div class="card text-center">
+                                            <div class="card-body">
+                                              <h5 class="card-title">{{$item->title}}</h5>
+                                              <p class="card-text">{{$item->short_desc}}</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <audio controls style="width: 100%">
+                                                    <source src="{{url('audios')}}/{{$item->image}}" type="audio/ogg" />
+                                                    <source src="{{url('audios')}}/{{$item->image}}" type="audio/mpeg" />
+                                                </audio>
+                                            </div>
+                                          </div>
 
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <div class="col-lg-4">
                         <div class="col-md-12">
@@ -248,7 +277,7 @@
 
                                 @foreach ($videos as $key => $video)
                                     <div class="video-items text-center">
-                                        <iframe src="https://www.youtube.com/embed/EvOABOa3IrU" frameborder="0"
+                                        <iframe src="{{ $video->url }}" frameborder="0"
                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                             allowfullscreen></iframe>
                                     </div>
@@ -265,10 +294,10 @@
                                     </div>
                                     <div class="bottom-caption">
                                         <h2></h2>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum
+                                        <p>{{--Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod ipsum
                                             dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do
                                             eiusmod ipsum dolor sit. Lorem ipsum dolor sit amet consectetur adipisicing elit
-                                            sed do eiusmod ipsum dolor sit lorem ipsum dolor sit.</p>
+                                            sed do eiusmod ipsum dolor sit lorem ipsum dolor sit.--}}</p>
                                     </div>
                                 </div>
                             </div>

@@ -157,7 +157,7 @@
                                 <p class="my-2">Author</p>
                                 <input class="form-control" type="text" name="author"  value="{{ $data->author }}">
 
-                                <h4 class="my-2">Categories</h4>
+                                {{-- <h4 class="my-2">Categories</h4>
                                 @foreach ($categories as $category)
                                     <p>
                                         <label for="{{ $category->id }}">
@@ -165,8 +165,8 @@
                                                 @if (in_array($category->id, $newsCat)) checked @endif> {{ $category->title }}
                                         </label>
                                     </p>
-                                @endforeach
-                                <h4 class="my-2">Sub-Categories</h4>
+                                @endforeach --}}
+                                <h4 class="my-2">Categories</h4>
                                 @foreach ($subcategories as $subCat)
                                     <p>
                                         <label for="{{ $subCat->id }}">

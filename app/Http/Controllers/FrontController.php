@@ -181,6 +181,9 @@ class FrontController extends Controller
 
         $happilex = DB::table('happilexes')->orderByDesc('id')->limit(4)->get();
 
+
+        $audios = DB::table('audios')->orderByDesc('id')->limit(5)->get();
+
         return view('frontend.index', [
             'featured' => $featured,
             'court' => $court,
@@ -192,6 +195,7 @@ class FrontController extends Controller
             'others' => $others,
             'justices' => $justices,
             'happilex' => $happilex,
+            'audios'=>$audios
         ]);
     }
 

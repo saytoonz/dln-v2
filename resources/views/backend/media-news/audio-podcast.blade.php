@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Resouce File</label>
+                                <label>Audio File</label>
                                 <p>
                                     <input name="image" required class="form-control filestyle" type="file" accept="audio/*"
                                         data-classbutton="btn btn-secondary" data-classinput="form-control inline"

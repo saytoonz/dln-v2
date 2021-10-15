@@ -79,13 +79,13 @@
                                 <input class="form-control" type="text" name="author">
 
 
-                                <p class="my-2">Categories</p>
+                                {{-- <p class="my-2">Categories</p>
                                 <select class="chosen-select form-control" required name="categories_id[]" multiple>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->title }}</option>
                                     @endforeach
-                                </select>
-                                <p class="my-2">Sub-Categories</p>
+                                </select> --}}
+                                <p class="my-2">Categories</p>
                                 <select class="chosen-select form-control" required name="subcategories_id[]" multiple>
                                     @foreach ($subcategories as $category)
                                         <option value="{{ $category->id }}">{{ $category->title }}</option>
