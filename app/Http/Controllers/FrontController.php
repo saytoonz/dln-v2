@@ -9,38 +9,10 @@ use Jenssegers\Agent\Agent;
 class FrontController extends Controller
 {
 
+
+
     public function __construct()
     {
-
-        $data = \Location::get(request()->ip());
-        $agent = new Agent();
-        $device_type = "Unknown";
-        if($agent->isDesktop()){
-            $device_type = "Desktop";
-        }else if( $agent->isMobile()){
-            $device_type = "Mobile";
-        }else if( $agent->isPhone()){
-            $device_type = "Phone";
-        }else if( $agent->isTablet()){
-            $device_type = "Tablet";
-        }
-
-        try {
-            DB::table('device_analytics')->insert(
-                [
-                    'platform' => $agent->platform(),
-                    'device' => $agent->device(),
-                    'browser' =>$agent->browser(),
-                    'ip_address' => request()->ip(),
-                    'device_type' =>  $device_type,
-                    'country_name' =>  $data ?  $data->countryName: 'Ghana',
-                    'created_at' =>  date('Y-m-d h:i:s')
-                ]
-            );
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-
 
         $categories = DB::table('categories')->where("status", 'Active')->get();
         $setting = DB::table('settings')->first();
@@ -50,9 +22,9 @@ class FrontController extends Controller
         $happilex = DB::table('happilexes')->orderByDesc('id')->limit(1)->get();
 
         //Ads
-        $sidebarTopAds = DB::table('advertisements')->where('location','sidebar-top')->where('status','display')->inRandomOrder()->get()->first();
-        $sidebarBottomAds = DB::table('advertisements')->where('location','sidebar-bottom')->where('status','display')->inRandomOrder()->first();
-        $sidebarLeaderBoardAds = DB::table('advertisements')->where('location','leaderboard')->where('status','display')->inRandomOrder()->limit(2)->get();
+        $sidebarTopAds = DB::table('advertisements')->where('location', 'sidebar-top')->where('status', 'display')->inRandomOrder()->get()->first();
+        $sidebarBottomAds = DB::table('advertisements')->where('location', 'sidebar-bottom')->where('status', 'display')->inRandomOrder()->first();
+        $sidebarLeaderBoardAds = DB::table('advertisements')->where('location', 'leaderboard')->where('status', 'display')->inRandomOrder()->limit(2)->get();
 
 
         $latestNews = DB::table('news')
@@ -88,14 +60,71 @@ class FrontController extends Controller
             'pages' => $pages,
             'recHappilex' => $happilex,
             'weather' => $this->getWeather(),
-            'sidebarTopAds'=> $sidebarTopAds,
-            'sidebarBottomAds'=> $sidebarBottomAds,
-            'sidebarLeaderBoardAds'=> $sidebarLeaderBoardAds,
+            'sidebarTopAds' => $sidebarTopAds,
+            'sidebarBottomAds' => $sidebarBottomAds,
+            'sidebarLeaderBoardAds' => $sidebarLeaderBoardAds,
         ]);
     }
 
+
+    public function addViewAnalytics()
+    {
+        $analytics = DB::table('analytics')->get()->last();
+        $views = $analytics->views + 1;
+        DB::table('analytics')->where('id', $analytics->id)->update(['views' => $views]);
+    }
+
+    public function addLikesAnalytics()
+    {
+        $analytics = DB::table('analytics')->get()->last();
+        $likes = $analytics->likes + 1;
+        DB::table('analytics')->where('id', $analytics->id)->update(['likes' => $likes]);
+    }
+
+    public function addDislikesAnalytics()
+    {
+        $analytics = DB::table('analytics')->get()->last();
+        $dislikes = $analytics->dislikes + 1;
+        DB::table('analytics')->where('id', $analytics->id)->update(['dislikes' => $dislikes]);
+    }
+
+    public function addAnalytics()
+    {
+        try {
+            $analytics = DB::table('analytics')->get()->last();
+            $visits = $analytics->visits + 1;
+            DB::table('analytics')->where('id', $analytics->id)->update(['visits' => $visits]);
+
+            $data = \Location::get(request()->ip());
+            $agent = new Agent();
+            $device_type = "Unknown";
+            if ($agent->isDesktop()) {
+                $device_type = "Desktop";
+            } else if ($agent->isMobile()) {
+                $device_type = "Mobile";
+            } else if ($agent->isPhone()) {
+                $device_type = "Phone";
+            } else if ($agent->isTablet()) {
+                $device_type = "Tablet";
+            }
+            DB::table('device_analytics')->insert(
+                [
+                    'platform' => $agent->platform(),
+                    'device' => $agent->device(),
+                    'browser' => $agent->browser(),
+                    'ip_address' => request()->ip(),
+                    'device_type' =>  $device_type,
+                    'country_name' =>  $data ?  $data->countryName : 'Ghana',
+                    'created_at' =>  date('Y-m-d h:i:s')
+                ]
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
     public function index()
     {
+        $this->addAnalytics();
         $featured = DB::table('news')
             ->where('categories_id', 'LIKE', '%,9,%')
             ->orWhere('categories_id', 'LIKE', '9,%')
@@ -183,6 +212,7 @@ class FrontController extends Controller
 
     public function article($slug)
     {
+        $this->addViewAnalytics();
         $data = DB::table('news')->where('slug', $slug)->first();
         $comments = DB::table('comments')->where('news_id', $data->id)->where('status', 'approved')->get();
         $views = $data->views + 1;
@@ -227,6 +257,7 @@ class FrontController extends Controller
 
     public function addLike($news_id)
     {
+        $this->addLikesAnalytics();
         $data = DB::table('news')->where('id', $news_id)->first();
         $likes = $data->likes + 1;
         DB::table('news')->where('id', $data->id)->update(['likes' => $likes]);
@@ -235,6 +266,8 @@ class FrontController extends Controller
     }
     public function addDisLike($news_id)
     {
+
+        $this->addDislikesAnalytics();
         $data = DB::table('news')->where('id', $news_id)->first();
         $dislikes = $data->dislikes + 1;
         DB::table('news')->where('id', $data->id)->update(['dislikes' => $dislikes]);
@@ -341,7 +374,7 @@ class FrontController extends Controller
 
     public function viewHappilex($slug)
     {
-
+        $this->addViewAnalytics();
         $data = DB::table('happilexes')->where('slug', $slug)->first();
         $comments = DB::table('happilex_comments')->where('happilex_id', $data->id)->where('status', 'approved')->get();
         $views = $data->views + 1;
@@ -352,6 +385,7 @@ class FrontController extends Controller
 
     public function addHappilexLike($happilex_id)
     {
+        $this->addLikesAnalytics();
         $data = DB::table('happilexes')->where('id', $happilex_id)->first();
         $likes = $data->likes + 1;
         DB::table('happilexes')->where('id', $data->id)->update(['likes' => $likes]);
@@ -361,6 +395,7 @@ class FrontController extends Controller
 
     public function addHappilexDisLike($happilex_id)
     {
+        $this->addDislikesAnalytics();
         $data = DB::table('happilexes')->where('id', $happilex_id)->first();
         $dislikes = $data->dislikes + 1;
         DB::table('happilexes')->where('id', $data->id)->update(['dislikes' => $dislikes]);
@@ -404,6 +439,7 @@ class FrontController extends Controller
 
     public function viewOpinion($slug)
     {
+        $this->addViewAnalytics();
         $data = DB::table('opinions')->where('slug', $slug)->first();
         $views = $data->views + 1;
         DB::table('opinions')->where('id', $data->id)->update(['views' => $views]);
@@ -413,6 +449,7 @@ class FrontController extends Controller
 
     public function addOpinionLike($id)
     {
+        $this->addLikesAnalytics();
         $data = DB::table('opinions')->where('id', $id)->first();
         $likes = $data->likes + 1;
         DB::table('opinions')->where('id', $data->id)->update(['likes' => $likes]);
@@ -422,6 +459,7 @@ class FrontController extends Controller
 
     public function addOpinionDisLike($id)
     {
+        $this->addDislikesAnalytics();
         $data = DB::table('opinions')->where('id', $id)->first();
         $dislikes = $data->dislikes + 1;
         DB::table('opinions')->where('id', $data->id)->update(['dislikes' => $dislikes]);
@@ -456,6 +494,7 @@ class FrontController extends Controller
 
     public function getLegalWork($id)
     {
+        $this->addViewAnalytics();
         $data = DB::table('legal_works')->where('id', $id)->first();
         $comments = DB::table('legal_work_comments')->where('news_id', $data->id)->where('status', 'approved')->get();
         $views = $data->views + 1;
@@ -466,6 +505,7 @@ class FrontController extends Controller
 
     public function addLegalLike($id)
     {
+        $this->addLikesAnalytics();
         $data = DB::table('legal_works')->where('id', $id)->first();
         $likes = $data->likes + 1;
         DB::table('legal_works')->where('id', $data->id)->update(['likes' => $likes]);
@@ -475,6 +515,7 @@ class FrontController extends Controller
 
     public function addLegalDisLike($id)
     {
+        $this->addDislikesAnalytics();
         $data = DB::table('legal_works')->where('id', $id)->first();
         $dislikes = $data->dislikes + 1;
         DB::table('legal_works')->where('id', $data->id)->update(['dislikes' => $dislikes]);
@@ -493,6 +534,7 @@ class FrontController extends Controller
 
     public function viewFirm($slug)
     {
+        $this->addViewAnalytics();
         $data = DB::table('law_firms')->where('slug', $slug)->first();
         return view('frontend.lawfirms.view-firm', ['data' => $data]);
     }
