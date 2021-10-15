@@ -4,12 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Jenssegers\Agent\Agent;
 
 class FrontController extends Controller
 {
+
     public function __construct()
     {
-        // $request->header('User-Agent');
+
+        $data = \Location::get(request()->ip());
+        $agent = new Agent();
+        $device_type = "Unknown";
+        if($agent->isDesktop()){
+            $device_type = "Desktop";
+        }else if( $agent->isMobile()){
+            $device_type = "Mobile";
+        }else if( $agent->isPhone()){
+            $device_type = "Phone";
+        }else if( $agent->isTablet()){
+            $device_type = "Tablet";
+        }
+
+        try {
+            DB::table('device_analytics')->insert(
+                [
+                    'platform' => $agent->platform(),
+                    'device' => $agent->device(),
+                    'browser' =>$agent->browser(),
+                    'ip_address' => request()->ip(),
+                    'device_type' =>  $device_type,
+                    'country_name' =>  $data ?  $data->countryName: 'Ghana',
+                    'created_at' =>  date('Y-m-d h:i:s')
+                ]
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
+
         $categories = DB::table('categories')->where("status", 'Active')->get();
         $setting = DB::table('settings')->first();
         $trending = DB::table('news')->where('status', 'publish')->orderByDesc('views')->get();
