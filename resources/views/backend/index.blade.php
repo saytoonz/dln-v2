@@ -188,10 +188,10 @@
                                                         </div>
                                                         <div class="media-body text-truncate">
                                                             <p class="mb-1"><a class="text-purple m-0"
-                                                                    href="dashboard_v3.html#">{{ $item->browser }}</a>
+                                                                    href="#">{{ $item->browser }}</a>
                                                             </p>
                                                             <p class="m-0"><small><a
-                                                                        href="dashboard_v3.html#">Number
+                                                                        href="#">Number
                                                                         {{ $key + 1 }} in the list</a></small></p>
                                                         </div>
                                                         <div class="ml-auto"><small
