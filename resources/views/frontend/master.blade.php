@@ -6,17 +6,20 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url('img/favicon.jpg') }}">
-    @yield('title')
-    <title>{{ $setting->title }}</title>
+
     <meta name="description" content="{{ $setting->description }}">
     <meta name="keywords" content="{{ $setting->keywords }}">
-    <meta property="og:url" content="{{ url('/') }}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{ $setting->title }}" />
-    <meta property="og:description" content="{{ $setting->description }}" />
-    <meta property="og:keywords" content="{{ $setting->keywords }}" />
-    <meta property="og:image" content="{{ url('img/favicon.jpg') }}" />
+    @yield('title')
     <link rel="canonical" href="{{ url('/') }}" />
+    @sectionMissing('title')
+    <title>{{ $setting->title }}</title>
+        <meta property="og:url" content="{{ url('/') }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="{{ $setting->title }}" />
+        <meta property="og:description" content="{{ $setting->description }}" />
+        <meta property="og:keywords" content="{{ $setting->keywords }}" />
+        <meta property="og:image" content="{{ url('img/favicon.jpg') }}" />
+    @endif
 
 
     <link rel="manifest" href="site.html">

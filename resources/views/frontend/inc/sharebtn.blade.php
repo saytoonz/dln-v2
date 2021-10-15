@@ -7,7 +7,7 @@
         </div>
     </li>
     <li>
-        <a class="twitter-share-button" href="https://twitter.com/share?url={{URL::current()}}"></a>
+        <a class="twitter-share-button" href="https://twitter.com/share?url={{URL::current()}}">
         {{-- <a class="twitter-share-button" href="https://twitter.com/intent/tweet" data-size="large"> --}}
             <i class="fab fa-twitter" style="font-size: 34px; color: #1DA1F2;"></i>
         </a>
